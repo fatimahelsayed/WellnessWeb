@@ -259,25 +259,17 @@ nav ul li a:hover:after,
 
 /* main content */
 
-
 .main-content-container {
-    position: relative;
     text-align: center;
     display: block;
     color: #3a493b;
     width: 100%;
-    height: 100vh;
+    height: 100vh; /* Adjust this as needed */
     background: url('../images/background.jpg') no-repeat center center/cover;
-    justify-content: center;
-    align-items: center;
 }
-
-
 
 .intro-body{
     margin: 5%;
-    z-index: 1; 
-
 }
 .intro-body>h1 {
     font-size: 80px;
@@ -346,7 +338,7 @@ nav ul li a:hover:after,
 .section-lead {
     max-width: 600px;
     margin: 1rem auto 1.5rem;
-    font-size: 30px;
+    font-size: 28px;
 }
 
 .service h4 {
@@ -377,13 +369,22 @@ nav ul li a:hover:after,
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    font-size: 18px;
+    font-size: 18;
+    padding-top: 80px;
 }
 
 
 .service i {
     font-size: 3.45rem;
     margin: 1rem 0;
+}
+
+.service svg{
+    background-color: #f9f6df;
+    padding: 10px; 
+    border-radius: 10px; 
+    
+
 }
 
 
@@ -411,15 +412,17 @@ nav ul li a:hover:after,
 }
 
 /* footer */
-
 .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
     display: flex;
     flex-flow: row wrap;
     padding: 30px 30px 20px 30px;
     color: #b7ad76;
     background-color: #3a493b;
     border-top: 1px solid #e5e5e5;
-
 }
 
 .footer>* {
@@ -433,7 +436,6 @@ nav ul li a:hover:after,
 
 .footer__logo {
     font-weight: 510;
-
     color: rgb(234, 231, 227);
     letter-spacing: 0px;
     text-decoration: none;
@@ -444,11 +446,6 @@ nav ul li a:hover:after,
     margin-top: 1.3em;
     font-size: 18px;
     font-weight: 250;
-}
-
-.nav__title {
-    font-weight: 250;
-    font-size: 20px;
 }
 
 .footer address {
@@ -462,7 +459,7 @@ nav ul li a:hover:after,
     justify-content: center;
     height: 36px;
     max-width: max-content;
-    background-color: rgb(33, 33, 33, 0.07);
+    background-color: rgba(33, 33, 33, 0.07);
     border-radius: 100px;
     color: #2f2f2f;
     line-height: 0;
@@ -476,6 +473,7 @@ nav ul li a:hover:after,
     padding-left: 0;
     font-size: 17px;
 }
+
 
 .footer li {
     line-height: 2em;
