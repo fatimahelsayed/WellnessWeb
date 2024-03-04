@@ -457,18 +457,18 @@ nav ul li a:hover:after,
     padding: 10px 20px;
     /* background-color: #3a493b; */
     border: 1px solid;
-    border-color: #3a493b;
+    border-color: #667e67;
     border-radius: 5px;
     cursor: pointer;
     background-color: transparent;
     color: #3a493b;
     
     cursor: pointer;
-    transition: 0.4s ease;
+    transition: 0.3s ease;
 }
 
 .mental-illness-button:hover {
-    background-color: #2f3d30;
+    background-color: #667e67;
     color: #f0f4e8;
 }
 
