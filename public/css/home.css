@@ -42,12 +42,15 @@ body {
 /* navigation part */
 
 .navbar-container {
+    position: sticky;
+    z-index: 99999;
+    top: 0;
     background-color: #fff;
-    height: 80px;   
+    height: 80px;
 }
 
 nav {
-    padding: 15px;
+    padding: 12px;
 }
 
 
@@ -92,7 +95,7 @@ nav ul li a {
     text-decoration: none;
     font-size: 17px;
     letter-spacing: 1.2px;
-    
+
     /* font-family: 'playfair-bold'; */
 
 }
@@ -347,6 +350,7 @@ nav ul li a:hover:after,
     max-width: 600px;
     margin: 1rem auto 1.5rem;
     font-size: 28px;
+    position: relative;
 }
 
 .service h4 {
@@ -361,7 +365,7 @@ nav ul li a:hover:after,
     display: flex;
     -webkit-box-align: center;
     align-items: center;
-    
+
 }
 
 .service {
@@ -378,14 +382,14 @@ nav ul li a:hover:after,
     transition: all 0.3s ease;
     font-size: 18;
     padding-top: 80px;
-    
+
 }
 
 
 .service i {
     font-size: 3.45rem;
     margin: 1rem 0;
-    
+
 }
 
 .service svg {
@@ -470,6 +474,190 @@ nav ul li a:hover:after,
 .mental-illness-button:hover {
     background-color: #667e67;
     color: #f0f4e8;
+}
+
+/* editors picks */
+.editors-pick {
+    padding-left: 13%;
+    padding-right: 13%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    background-color: #fffdfd;
+}
+
+.text-part h1 {
+    margin-top: -15px;
+    font-size: 60px;
+    font-family: 'playfair';
+    color: #3a493b;
+    font-weight: 570;
+    letter-spacing: -.01rem;
+}
+
+.featured {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 200;
+    font-size: 20px;
+    color: #272f27;
+
+}
+
+/* featured article */
+.featured-article {
+    width: 100%;
+    display: flex;
+    background-color: hsl(27, 36%, 95%);
+    border-radius: 25px;
+    overflow: hidden;
+    max-height: 300px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+
+.featured-article img {
+    width: 45%;
+    object-fit: cover;
+}
+
+.featured-article .article-content {
+    width: 60%;
+    position: relative;
+    padding: 70px;
+    font-size: 17px;
+}
+
+.featured-article .article-category {
+    letter-spacing: 2px;
+    color: #496749;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 620;
+}
+
+.featured-article .article-title {
+    letter-spacing: 1px;
+    font-size: 23px;
+    font-weight: 500;
+}
+
+.article-category:hover,
+.article-title:hover {
+    transition: .4s ease-in;
+    color: #bda000;
+    cursor: pointer;
+}
+
+.featured-article .article-summary {
+    font-size: 15px;
+    font-weight: 450;
+}
+
+.featured-article .article-details {
+    font-size: 14px;
+    font-weight: 450;
+    opacity: 60%;
+}
+
+/* other articles */
+.articles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 50px;
+    overflow: hidden;
+    padding-top: 50px;
+    padding-bottom: 60px;
+}
+
+.article {
+    margin-bottom: 17px;
+    display: flex;
+    width: 100%;
+    max-height: 200px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.article img {
+    border-radius: 15px;
+    width: 20%;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 25px;
+}
+
+
+.article .article-content {
+    width: 80%;
+    position: relative;
+    display: block;
+    font-size: 14px;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.article .article-category {
+    letter-spacing: 2px;
+    color: #496749;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 620;
+}
+
+.article .article-title {
+    letter-spacing: 1px;
+    font-size: 19px;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+}
+
+.article .article-category:hover,
+.article .article-title:hover {
+    transition: .4s ease-in;
+    color: #bda000;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 864px) {
+    .editors-pick {
+        padding-left: 10%;
+        padding-right: 10%;
+        padding-top: 5%;
+        padding-bottom: 5%;
+        background-color: #fffdfd;
+    }
+
+    .featured-article {
+        display: block;
+        max-height: 400px;
+    }
+
+    .featured-article img {
+        width: 100%;
+        max-height: 150px;
+        object-fit: cover;
+    }
+
+    .featured-article .article-content {
+        width: 100%;
+        position: relative;
+        padding: 30px;
+        font-size: 17px;
+    }
+
+    .articles
+    {
+        display: block;
+    }
+    .articles img{
+        
+    }
+    .article{
+        margin-bottom: 50px;
+    }
+    .article .article-content
+    {
+        font-size: 12px;
+    }
 }
 
 /* footer */
