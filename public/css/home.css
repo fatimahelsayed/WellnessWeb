@@ -350,7 +350,7 @@ nav ul li a:hover:after,
 }
 
 .service h4 {
-    font-size: 27px;
+    font-size: 22px;
     font-weight: 200;
     color: #716002;
     margin: 1rem 0 0.6rem;
@@ -377,6 +377,7 @@ nav ul li a:hover:after,
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     transition: all 0.3s ease;
+    font-size: 18px;
 }
 
 
