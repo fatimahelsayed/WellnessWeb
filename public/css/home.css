@@ -2,6 +2,26 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'AURUM';
+    src: url(../fonts/AURUM.ttf);
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair';
+    src: url(../fonts/PlayfairDisplay-Regular.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'playfair-bold';
+    src: url(../fonts/PlayfairDisplay-Bold.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -29,6 +49,8 @@ nav {
     margin-left: 16px;
     margin-top: 8px;
     font-weight: 510;
+    font-family: 'playfair';
+
 }
 
 .logo a {
@@ -36,6 +58,8 @@ nav {
     letter-spacing: 0px;
     text-decoration: none;
     font-size: 30px;
+    font-family: 'playfair';
+
 }
 
 nav ul {
@@ -61,6 +85,8 @@ nav ul li a {
     text-decoration: none;
     font-size: 17px;
     letter-spacing: 1.2px;
+    /* font-family: 'playfair-bold'; */
+
 }
 
 nav ul li a {
@@ -233,17 +259,30 @@ nav ul li a:hover:after,
 
 /* main content */
 
+
 .main-content-container {
+    position: relative;
     text-align: center;
     display: block;
     color: #3a493b;
+    width: 100%;
+    height: 100vh;
+    background: url('../images/background.jpg') no-repeat center center/cover;
+    justify-content: center;
+    align-items: center;
 }
+
+
+
 .intro-body{
     margin: 5%;
+    z-index: 1; 
+
 }
 .intro-body>h1 {
     font-size: 80px;
     font-weight: 200;
+    font-family: 'playfair';
 }
 
 .about-us-txt {
@@ -251,13 +290,17 @@ nav ul li a:hover:after,
         cursive;
     font-size: 100px;
     font-weight: 100;
+
 }
 
 .intro-body>p {
     margin-top: -50px;
     margin-left: 100px;
     margin-right: 100px;
-    font-size: 20px;
+    font-size: 19px;
+    letter-spacing: 1px;
+    font-family: 'playfair';
+
 }
 
 .btn {
@@ -292,6 +335,7 @@ nav ul li a:hover:after,
     padding: 30px;
     background-color: #fff;
     font-size: 20px;
+    font-family: 'playfair';
 }
 
 .mission-section h1{
@@ -310,6 +354,8 @@ nav ul li a:hover:after,
     font-weight: 200;
     color: #716002;
     margin: 1rem 0 0.6rem;
+    
+    
 }
 
 .services-grid {
