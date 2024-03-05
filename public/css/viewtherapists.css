@@ -9,7 +9,7 @@
 .card{
     width:320px;
     border-radius:25px;
-    background-color:#e5e5e5;
+    background-color:hsl(27, 36%, 95%);
     flex: 1 0 calc(25.33% - 20px);  
     margin-bottom: 20px; 
 }
