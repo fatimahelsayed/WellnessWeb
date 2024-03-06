@@ -660,6 +660,66 @@ nav ul li a:hover:after,
     }
 }
 
+
+.aboutus-container {
+    position: relative;
+    font-family: Arial;
+
+  }
+
+  .aboutus-container img{
+    border-radius: 40px;
+  }
+  
+  .text-block {
+    position: absolute;
+    top: 130px;
+    left: 70px;
+    background-color: rgba(226, 225, 217, 0.85);
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 20px;
+    color: #3e6a55;
+    font-size: 14px;
+    padding: 40px;
+
+  }
+
+  .text-block h1{
+    font-family: "playfair";
+    font-size: 50px;
+    font-weight: lighter;
+    color: #243b24;
+    transform: translateY(-30px);
+
+  }
+
+  .text-block span{
+    font-family: "playfair-italic";
+  }
+
+  .text-block p{
+    color: #131e13;
+    font-size: 16px;
+    padding: 10px;
+    letter-spacing: 0.5px;
+    transform: translateY(-55px);
+
+  }
+
+  .learn-more-btn{
+    background-color: #f6e169;
+    color: #131e13;
+    padding: 13px;
+    font-size: 15px;
+    border-radius: 2px;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transform: translateY(-40px);
+    text-decoration: none;
+    margin-left: 10px;
+}
 /* footer */
 
 .footer {
