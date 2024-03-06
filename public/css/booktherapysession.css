@@ -55,4 +55,26 @@
     flex: 0 0 100%;
     margin-bottom: 10px;
 }
+.slide-container .schedule{
+    font-size:36px;
+    margin-bottom:40px;
+    text-align:left;
+    font-family: 'playfair-bold';
+}
+.card .times{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: center;
+}
+.card p{
+    color: #716002; 
+    font-size:20px;
+    font-family: 'playfair';
+}
+.times div{
+    padding:20px;
+    width:200px;
+}
 
