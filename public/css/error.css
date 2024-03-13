@@ -1,0 +1,68 @@
+
+body
+{
+  background-color:#141019;
+  background: radial-gradient(at 50% -20%, #928983, #0d060e) fixed;
+}
+
+
+#handboy
+{
+   animation: swing ease-in-out 1.3s infinite alternate;
+    transform-origin: 98% 98%;
+    transform-box: fill-box;
+    
+}
+
+
+#girllight
+{
+   animation: swing ease-in-out 1.3s infinite alternate;
+    transform-origin: 0% 97%;
+    transform-box: fill-box;
+}
+
+#hairgirl
+{
+    animation: swinghair ease-in-out 1.3s infinite alternate;
+   transform-origin: 60% 0%;
+    transform-box: fill-box;
+  
+}
+
+#zero
+{
+  transform-origin:bottom;
+  transform-box:fill-box;
+  
+}
+
+/*************swing************/
+@keyframes swing {
+    0% { transform: rotate(10deg); }
+    100% { transform: rotate(-10deg); }
+}
+
+
+/*************swing hair************/
+@keyframes swinghair {
+    0% { transform: rotate(6deg); }
+    100% { transform: rotate(-6deg); }
+}
+
+.return {
+    text-decoration: none;
+    font-size: 40px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: rgb(194, 188, 184);
+    font-weight: 500;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+  
+  .return:hover {
+    
+    transition: .3s ease-in; /* Example: scale the element slightly on hover */
+    cursor: pointer;
+    text-shadow: 1px 1px 10px #0d060e; /* Example: add a slight text shadow on hover */
+  }
