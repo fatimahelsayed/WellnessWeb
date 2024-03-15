@@ -1,11 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+body {
+  background-color: rgb(234, 231, 227);
+  color: #3a493b;
+}
 .title {
   text-align: center;
-  color: #fbfbfb;
   font-weight: 300;
   font-size: 40px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'playfair';
 }
 
 .login-page {
@@ -17,7 +20,7 @@
 .form {
   position: relative;
   z-index: 1;
-  background: #e8e0d9;
+  background: #3a493b;
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
@@ -41,7 +44,7 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #535f51;
+  background: #71816e;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -55,7 +58,8 @@
 .form .login-btn:hover,
 .form .login-btn:active,
 .form .login-btn:focus {
-  background: #3b4730;
+  background: #9cb198;
+  font-size: 15px;
   transition: all .3s ease-in;
 }
 
@@ -67,11 +71,11 @@
 .form .message {
   margin: 15px 0 0;
   color: #b3b3b3;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .form .message a {
-  color: #9e6666;
+  color: #c18080;
   text-decoration: none;
 }
 
@@ -120,12 +124,3 @@
   color: #EF3B3A;
 }
 
-body {
-  background: #000000;
-  /* fallback for old browsers */
-  background: rgb(0, 0, 0);
-  background: linear-gradient(90deg, rgb(107, 137, 88) 0%, rgb(145, 174, 142) 50%);
-  font-family: "Roboto", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
