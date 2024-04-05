@@ -26110,3 +26110,41 @@ pre>code.highlight {
 .ct-footer-links li+li {
     margin-left: 1rem;
 }
+.user-form-container {
+    align-items: center;
+    text-align: center;
+}
+.form-title{
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+.userForm {
+    padding: 5px;
+    display: block;
+}
+
+.user-input {
+    margin: 5px;
+    padding: 5px;
+    width: 60%;
+    border: none;
+    transition: all .5s ease-in;
+    max-width: 500px;
+}
+
+.btn-add-form {
+    margin: 5px;
+    padding: 5px;
+    width: 60%;
+    max-width: 500px;
+    background-color:#8898aa;
+    font-weight: 400px;
+    font-size: 17px;
+    color: white;
+    transition: .2s ease-in;
+}
+
+.btn-add-form:hover {
+    color: white;
+    background-color: #8898aa;
+}

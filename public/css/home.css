@@ -794,6 +794,7 @@ nav ul li a:hover:after,
 
 .footer a {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .footer__nav {
@@ -808,6 +809,10 @@ nav ul li a:hover:after,
 
 .nav__ul a {
     color: #999;
+}
+.nav__ul a:hover {
+    color: #dad3d3;
+    transition: .3s ease;
 }
 
 .nav__ul--extra {
