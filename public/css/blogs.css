@@ -32,6 +32,7 @@ body {
     font-family: sans-serif;
     color: #222;
     margin: 0;
+    background-color: rgb(243, 241, 238);
   }
   
   h1,
@@ -113,8 +114,8 @@ body {
   }
   
   blockquote {
-    background: linear-gradient(45deg, #f1e7c2, transparent);
-    color: #956c04;
+    background: linear-gradient(45deg, #f2eacb, transparent);
+    color: #906e18;
     margin-left: 0;
     margin-right: 0;
     padding: 1em;
