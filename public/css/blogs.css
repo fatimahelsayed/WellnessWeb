@@ -66,6 +66,7 @@ body {
     margin-left: auto;
     margin-right: auto;
     padding: 24px;
+    padding-right: 200px;
   }
   
 
@@ -127,4 +128,20 @@ body {
     margin: 0 16px 16px -20px;
     border-radius: 50%;
   }
-  
+.content-img-container {
+  width: 400px; /* Adjust as needed */
+  height: 280px; /* Adjust as needed */
+  overflow: hidden;
+  border-top-right-radius: 100px; /* Half of height */
+  border-bottom-right-radius: 100px; /* Half of height */
+  position: absolute;
+  top: 50%; /* Adjust as needed */
+  right: 0;
+  transform: translateY(-50%) rotateY(180deg); /* Center vertically and flip horizontally */
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
