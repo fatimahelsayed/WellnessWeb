@@ -1,0 +1,77 @@
+<nav
+  class="sidenav navbar navbar-vertical fixed-left navbar-expand-xs navbar-dark bg-dark loopple-fixed-start"
+  id="sidenav-main"
+>
+  <div class="navbar-inner">
+    <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <div class="logo-details">
+            <a class="nav-link" aria-disabled="true"
+              ><i class="bx bx-user-circle"></i>
+              <span class="logo-name" style="font-weight: 300; font-size: 15"
+                >Admin</span
+              ></a
+            >
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/main}">
+            <i class="bx bxs-grid-alt"></i>
+
+            <span class="nav-link-text">Dashboard</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/clients}">
+            <i class="fas fa-user-friends"></i>
+            <span class="nav-link-text">Clients</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/employees}">
+            <i class="fas fa-id-badge"></i>
+            <span class="nav-link-text">Employees</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/packages}">
+            <i class="fas fa-cog"></i>
+            <span class="nav-link-text">Packages</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/memberships}">
+            <i class="bx bxs-universal-access" style="color: #ffffff"></i>
+            <span class="nav-link-text">Memerships</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/classes}">
+            <i class="bx bx-dumbbell"></i>
+            <span class="nav-link-text">Classes</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/attendance}">
+            <i class="bx bx-list-check"></i>
+            <span class="nav-link-text">Attendance</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard/clientreq}">
+            <i class="fa fa-desktop"></i>
+            <span class="nav-link-text">Requests</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" th:href="@{/admindashboard}">
+            <i class="fa fa-lock text-danger"></i>
+            <span class="nav-link-text">Log out</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
