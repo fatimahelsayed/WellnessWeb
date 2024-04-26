@@ -1,0 +1,129 @@
+
+@font-face {
+    font-family: 'AURUM';
+    src: url(../fonts/AURUM.ttf);
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair';
+    src: url(../fonts/PlayfairDisplay-Regular.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair-bold';
+    src: url(../fonts/PlayfairDisplay-Bold.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair-italic';
+    src: url(../fonts/PlayfairDisplay-Italic.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+
+body {
+    font-family: sans-serif;
+    color: #222;
+    margin: 0;
+  }
+  
+  h1,
+  h2,
+  h3 {
+    margin: 0 0 0.35em;
+  }
+  
+  h1 {
+    font-size: 40px;
+  }
+  
+  h2 {
+    font-size: 28px;
+  }
+  
+  h3 {
+    font-size: 20px;
+  }
+  
+  p {
+    margin: 0 0 1.15em;
+  }
+  
+  p + h2 {
+    margin-top: 1.5em;
+  }
+  
+  .blogs-container {
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px;
+  }
+  
+
+  .blog-title { 
+    transform: translateY(45px);
+  }
+
+  .blog-topics-title{
+    color: #305844;
+    font-family: 'playfair-bold';
+    font-size: 24px;
+  }
+
+  .blogs-content {
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 28px;
+    font-weight: 500;
+  }
+
+  .topic-problem{
+     max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 24px;
+    transform: translateY(68px);
+    text-transform: uppercase;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 900;
+    letter-spacing: 2px;
+    font-size: 13px;
+
+  }
+  
+  .publish-details {
+    color: #15261e;
+    font-family: 'playfair-bold';
+  }
+  header {
+    color: #305844;
+    font-family: 'playfair-bold';
+  }
+  
+  body > footer {
+    border-top: 2px solid rebeccapurple;
+  }
+  
+  blockquote {
+    background: linear-gradient(45deg, #f1e7c2, transparent);
+    color: #956c04;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 1em;
+    border-radius: 4px;
+  }
+  
+  .img--align-left {
+    float: left; /* replaces the style previously inherited by the browser */
+    margin: 0 16px 16px -20px;
+    border-radius: 50%;
+  }
+  
