@@ -147,23 +147,3 @@ body {
 }
 
 
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.content {
-    /* Adjust styling for content container */
-}
-
-.image-container {
-    /* Adjust styling for image container */
-    align-self: center; /* Align the image vertically */
-}
-
-.image {
-    /* Adjust styling for the image */
-    max-width: 100%;
-    height: auto;
-}
