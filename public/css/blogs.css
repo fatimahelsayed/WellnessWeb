@@ -62,16 +62,16 @@ body {
   }
   
   .blogs-container {
-    max-width: 800px;
+    max-width: 1050px;
     margin-left: auto;
     margin-right: auto;
     padding: 24px;
-    padding-right: 200px;
+    padding-right: 400px;
   }
   
 
   .blog-title { 
-    transform: translateY(45px);
+    transform: translateY(30px);
   }
 
   .blog-topics-title{
@@ -88,11 +88,11 @@ body {
   }
 
   .topic-problem{
-     max-width: 800px;
+    max-width: 1050px;
     margin-left: auto;
     margin-right: auto;
     padding: 24px;
-    transform: translateY(68px);
+    transform: translateY(58px);
     text-transform: uppercase;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: 900;
@@ -144,4 +144,26 @@ body {
   width: 100%;
   height: auto;
   display: block;
+}
+
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.content {
+    /* Adjust styling for content container */
+}
+
+.image-container {
+    /* Adjust styling for image container */
+    align-self: center; /* Align the image vertically */
+}
+
+.image {
+    /* Adjust styling for the image */
+    max-width: 100%;
+    height: auto;
 }
