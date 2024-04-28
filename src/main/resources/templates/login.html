@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WellnessWeb</title>
+    <link rel="shortcut icon"
+    th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
+
+    <!--Fonts-->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/login.css}">
+</head>
+
+
+<body>
+    <!-- navigation bar -->
+    <div th:replace="~{/partials/navbar}"></div>
+    <div class="login-page">
+
+        <h1 class="title">Log in</h1>
+        <div class="form">
+            <form class="login-form" onsubmit="return validateForm()">
+                <input id="username" type="text" placeholder="username" />
+                <span id="username-error" class="error-message"></span>
+                <input id="password" type="password" placeholder="password" />
+                <span id="password-error" class="error-message"></span>
+                <input value="Login" type="submit" class="login-btn">
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+            </form>
+        </div>
+    </div>
+   <!-- footer -->
+   <div th:replace="~{partials/footer}"></div>
+
+    <!-- js -->
+    <script th:src="@{/js/loginValidation.js}"></script>
+</body>
+
+</html>

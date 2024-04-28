@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WellnessWeb</title>
+    <link rel="shortcut icon"
+    th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
+
+    <!--Fonts-->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
+</head>
+
+
+<body>
+    <!-- navigation bar -->
+    <div th:replace="~{/partials/navbar}"></div>
+
+    <div class="main-content-container">
+        <section class="intro-body">
+            <h1>Your Guide into <br>Mentall<span class="about-us-txt"> Wellness</span></h1>
+            <p>Embark on a journey toward improved mental health and overall wellness with our trusted guide. At
+                <i>WellnessWeb</i>, we are committed to being your companion on the path to well-being.
+            </p>
+            <button class="btn btn-join" href="#">Join us</button>
+        </section>
+
+        <section class="mission-section">
+            <h1>Our Mission</h1>
+            <p class="section-lead">We provide you with the tools and insights necessary to fortify your mental
+                health
+                and well-being, empowering you on your journey toward mental resilience and overall wellness </p>
+            <div class="services-grid">
+                <div class="service">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                        style="fill: #3a493b;">
+                        <path
+                            d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z">
+                        </path>
+                        <path d="m8 16 5.991-2L16 8l-6 2z"></path>
+                    </svg>
+                    <h4>Trusted Guidance and Expert Insights</h4>
+                    <p>Discover reliable information on mental health and wellness, with the added feature of
+                        verified
+                        therapists contributing insightful blogs. Engage in a dynamic community through our
+                        commenting
+                        system, fostering discussions and connections.</p>
+                </div>
+
+                <div class="service">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                        style="fill: #3a493b;">
+                        <path
+                            d="M9 20h6v2H9zm7.906-6.288C17.936 12.506 19 11.259 19 9c0-3.859-3.141-7-7-7S5 5.141 5 9c0 2.285 1.067 3.528 2.101 4.73.358.418.729.851 1.084 1.349.144.206.38.996.591 1.921H8v2h8v-2h-.774c.213-.927.45-1.719.593-1.925.352-.503.726-.94 1.087-1.363zm-2.724.213c-.434.617-.796 2.075-1.006 3.075h-2.351c-.209-1.002-.572-2.463-1.011-3.08a20.502 20.502 0 0 0-1.196-1.492C7.644 11.294 7 10.544 7 9c0-2.757 2.243-5 5-5s5 2.243 5 5c0 1.521-.643 2.274-1.615 3.413-.373.438-.796.933-1.203 1.512z">
+                        </path>
+                    </svg>
+                    <h4>Empowering Life Skills and Therapist-Driven Content</h4>
+                    <p>Develop crucial life skills to navigate emotions and relationships while benefiting from
+                        expert-led tutorials uploaded by verified therapists. Our platform goes beyond standard
+                        support,
+                        offering a comprehensive approach to mental well-being.</p>
+                </div>
+
+                <div class="service">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
+                        style="fill: #3a493b;">
+                        <path
+                            d="M4 21h9.62a3.995 3.995 0 0 0 3.037-1.397l5.102-5.952a1 1 0 0 0-.442-1.6l-1.968-.656a3.043 3.043 0 0 0-2.823.503l-3.185 2.547-.617-1.235A3.98 3.98 0 0 0 9.146 11H4c-1.103 0-2 .897-2 2v6c0 1.103.897 2 2 2zm0-8h5.146c.763 0 1.448.423 1.789 1.105l.447.895H7v2h6.014a.996.996 0 0 0 .442-.11l.003-.001.004-.002h.003l.002-.001h.004l.001-.001c.009.003.003-.001.003-.001.01 0 .002-.001.002-.001h.001l.002-.001.003-.001.002-.001.002-.001.003-.001.002-.001c.003 0 .001-.001.002-.001l.003-.002.002-.001.002-.001.003-.001.002-.001h.001l.002-.001h.001l.002-.001.002-.001c.009-.001.003-.001.003-.001l.002-.001a.915.915 0 0 0 .11-.078l4.146-3.317c.262-.208.623-.273.94-.167l.557.186-4.133 4.823a2.029 2.029 0 0 1-1.52.688H4v-6zM16 2h-.017c-.163.002-1.006.039-1.983.705-.951-.648-1.774-.7-1.968-.704L12.002 2h-.004c-.801 0-1.555.313-2.119.878C9.313 3.445 9 4.198 9 5s.313 1.555.861 2.104l3.414 3.586a1.006 1.006 0 0 0 1.45-.001l3.396-3.568C18.688 6.555 19 5.802 19 5s-.313-1.555-.878-2.121A2.978 2.978 0 0 0 16.002 2H16zm1 3c0 .267-.104.518-.311.725L14 8.55l-2.707-2.843C11.104 5.518 11 5.267 11 5s.104-.518.294-.708A.977.977 0 0 1 11.979 4c.025.001.502.032 1.067.485.081.065.163.139.247.222l.707.707.707-.707c.084-.083.166-.157.247-.222.529-.425.976-.478 1.052-.484a.987.987 0 0 1 .701.292c.189.189.293.44.293.707z">
+                        </path>
+                    </svg>
+                    <h4>Effective Well-being Strategies and Personalized Support </h4>
+                    <!-- <p>Utilize practical strategies to boost mental health and well-being, complemented by a streamlined
+                        booking system for therapy sessions with verified professionals. Share your transformative
+                        experiences through blogs, contributing to a supportive and collaborative environment.</p> -->
+                    <p>The platform promotes mental health and well-being with practical strategies and a
+                        streamlined therapy booking system with professionals.
+                        Share your transformative experiences through blogs, fostering a supportive community.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+    </div>
+    <div>
+        <section class="find-help">
+            <h2>Find the help you need <span class="find-help-text">today</span></h2>
+
+            <p>Select a topic suitable to your needs: </p>
+
+            <div class="buttons-container">
+                <button class="mental-illness-button">Anxiety</button>
+                <button class="mental-illness-button">Depression</button>
+                <button class="mental-illness-button">Bipolar Disorder</button>
+                <button class="mental-illness-button">Schizophrenia</button>
+                <button class="mental-illness-button">PTSD</button>
+                <button class="mental-illness-button">Addiction</button>
+                <button class="mental-illness-button">Borderline Personality Disorder</button>
+                <button class="mental-illness-button">Eating Disorders</button>
+                <button class="mental-illness-button">ADHD</button>
+                <button class="mental-illness-button">Stress</button>
+            </div>
+        </section>
+        <section class="editors-pick">
+            <div class="text-part">
+                <h4 class="featured">Featured</h4>
+                <h1>Editor's Picks</h1>
+            </div>
+            <div class="featured-article">
+                <img th:src="@{/images/tied-up-1792237_1280.jpg}" alt="">
+                <div class="article-content">
+                    <a class="article-category">Anxiety</a>
+                    <br>
+                    <a class="article-title">Becoming A Monster</a>
+
+                    <p class="article-summary">
+                        In the labyrinth of anxiety, I found myself becoming a monster – a creature shaped by fear
+                        and uncertainty. Each day blurred into the next, a hazy tapestry of struggles and battles
+                    </p>
+                    <p class="article-details">6 min read</p>
+                </div>
+                </ul>
+            </div>
+            <div class="articles">
+                <div class="article">
+                    <div class="article-content">
+                        <a class="article-category">DEPRESSION</a>
+                        <br>
+                        <a href="" class="article-title">Understanding and Overcoming Depression</a>
+                        <p class="article-summary">Explore the symptoms, treatment options, and strategies for
+                            reclaiming your joy and well-being.</p>
+                        <div class="article-details">18 min read</div>
+                    </div>
+                    <img th:src="@{/images/man-164217_1280.jpg}" alt="">
+                </div>
+                <div class="article">
+                    <div class="article-content">
+                        <a class="article-category">OCD</a>
+                        <br>
+                        <a href="" class="article-title">Coping with Obsessive-Compulsive Disorder (OCD)</a>
+                        <p class="article-summary">Insights into recognizing OCD symptoms, seeking effective
+                            treatment, and managing daily challenges.</p>
+                        <div class="article-details">17 min read</div>
+                    </div>
+                    <img th:src="@{/images/garbage-3259455_1280.jpg}" alt="">
+                </div>
+                <div class="article">
+                    <div class="article-content">
+                        <a class="article-category">BIPOLAR DISORDER</a>
+                        <br>
+                        <a href="" class="article-title">Living with Bipolar: Balancing the Highs and Lows</a>
+                        <p class="article-summary">Understanding the nuances of Bipolar Disorder, exploring
+                            treatment options, and achieving stability.</p>
+                        <div class="article-details">20 min read</div>
+                    </div>
+                    <img th:src="@{/images/floating-1845571_1280.jpg}" alt="">
+                </div>
+                <div class="article">
+                    <div class="article-content">
+                        <a class="article-category">EATING DISORDERS</a>
+                        <br>
+                        <a href="" class="article-title">Breaking Free from Eating Disorders </a>
+                        <p class="article-summary">A comprehensive guide on identifying, addressing, and recovering
+                            from various eating disorders.</p>
+                        <div class="article-details">22 min read</div>
+                    </div>
+                    <img th:src="@{/images/plums-1870672_1280.jpg}" alt="">
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+
+    <div class="aboutus-container">
+        <img th:src="@{/images/final.png}" width="1255" height="650" alt="image">
+        <div class="text-block">
+            <h5 style="    letter-spacing: 2px;
+      ">ABOUT US</h4>
+                <h1>The History of <br> <span>WellnessWeb</span></h1>
+                <p>WellnessWeb was established on 2023 with the purpose
+                    <br> of guiding and aiding patients in need
+                </p>
+
+                <button href="#!" class="learn-more-btn">Learn more</button>
+        </div>
+    </div>
+
+
+    <!-- footer -->
+    <div th:replace="~{partials/footer}"></div>
+</body>
+
+</html>
