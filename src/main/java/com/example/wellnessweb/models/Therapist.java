@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Customer {
+public class Therapist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
@@ -14,18 +14,20 @@ public class Customer {
     private int Age;
     private String Gender;
     private String PhoneNumber;
+    private String Specialization;
     private String Email;
     private String Password;
 
-
-    public Customer() {
+    public Therapist() {
     }
 
-    public Customer(int ID, String Name, int Age, String Gender, String Email, String Password) {
+    public Therapist(int ID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Email, String Password) {
         this.ID = ID;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
+        this.PhoneNumber = PhoneNumber;
+        this.Specialization = Specialization;
         this.Email = Email;
         this.Password = Password;
     }
@@ -68,6 +70,14 @@ public class Customer {
 
     public void setPhoneNumber(String PhoneNumber) {
         this.PhoneNumber = PhoneNumber;
+    }
+
+    public String getSpecialization() {
+        return this.Specialization;
+    }
+
+    public void setSpecialization(String Specialization) {
+        this.Specialization = Specialization;
     }
 
     public String getEmail() {

@@ -6,26 +6,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Customer {
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private String Name;
-    private int Age;
-    private String Gender;
-    private String PhoneNumber;
     private String Email;
     private String Password;
 
-
-    public Customer() {
+    public Admin() {
     }
 
-    public Customer(int ID, String Name, int Age, String Gender, String Email, String Password) {
+    public Admin(int ID, String Name, String Email, String Password) {
         this.ID = ID;
         this.Name = Name;
-        this.Age = Age;
-        this.Gender = Gender;
         this.Email = Email;
         this.Password = Password;
     }
@@ -46,30 +40,6 @@ public class Customer {
         this.Name = Name;
     }
 
-    public int getAge() {
-        return this.Age;
-    }
-
-    public void setAge(int Age) {
-        this.Age = Age;
-    }
-
-    public String getGender() {
-        return this.Gender;
-    }
-
-    public void setGender(String Gender) {
-        this.Gender = Gender;
-    }
-
-    public String getPhoneNumber() {
-        return this.PhoneNumber;
-    }
-
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
-    }
-
     public String getEmail() {
         return this.Email;
     }
@@ -85,6 +55,5 @@ public class Customer {
     public void setPassword(String Password) {
         this.Password = Password;
     }
-
     
 }
