@@ -15,6 +15,7 @@ public class Customer {
     private String Gender;
     private String PhoneNumber;
     private String Email;
+    private String Username;
     private String Password;
 
 
@@ -76,6 +77,14 @@ public class Customer {
 
     public void setEmail(String Email) {
         this.Email = Email;
+    }
+
+    public String getUsername() {
+        return this.Username;
+    }
+
+    public void setUsername(String Username) {
+        this.Username = Username;
     }
 
     public String getPassword() {

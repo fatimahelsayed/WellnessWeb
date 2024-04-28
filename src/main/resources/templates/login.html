@@ -25,12 +25,12 @@
         <h1 class="title">Log in</h1>
         <div class="form">
             <form class="login-form" onsubmit="return validateForm()">
-                <input id="username" type="text" placeholder="username" />
+                <input id="username" type="text" placeholder="Username" />
                 <span id="username-error" class="error-message"></span>
-                <input id="password" type="password" placeholder="password" />
+                <input id="password" type="password" placeholder="Password" />
                 <span id="password-error" class="error-message"></span>
                 <input value="Login" type="submit" class="login-btn">
-                <p class="message">Not registered? <a href="#">Create an account</a></p>
+                <p class="message">Not registered? <a th:href="@{/signup}">Create an account</a></p>
             </form>
         </div>
     </div>
