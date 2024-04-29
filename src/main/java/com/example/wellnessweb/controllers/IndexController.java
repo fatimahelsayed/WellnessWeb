@@ -1,6 +1,7 @@
 package com.example.wellnessweb.controllers;
 
 import java.io.File;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,18 +73,33 @@ public class IndexController {
         mav.addObject("customer", newCustomer);
         return mav;
     }
-
     @PostMapping("/signup")
-    public ModelAndView saveClient(@ModelAttribute Customer customer) {
+    public ModelAndView saveCustomer(@ModelAttribute Customer customer) {
         ModelAndView modelAndView = new ModelAndView();
-        String encoddedEmail = BCrypt.hashpw(customer.getEmail(), BCrypt.gensalt(12));
-        String encoddedPassword = BCrypt.hashpw(customer.getPassword(), BCrypt.gensalt(12));
-        customer.setEmail(encoddedEmail);
-        customer.setPassword(encoddedPassword);
-        this.customerRepository.save(customer);
-        modelAndView.setViewName("redirect:/login");
+
+        boolean emailExists = customerRepository.existsByEmail(customer.getEmail());
+        boolean phoneExists = customerRepository.existsByPhoneNumber(customer.getPhoneNumber());
+        boolean usernameExists = customerRepository.existsByUsername(customer.getUsername());
+    
+        if (emailExists) {
+            modelAndView.setViewName("redirect:/signup?EmailExists");
+            return modelAndView;
+        } else if( phoneExists){
+            modelAndView.setViewName("redirect:/signup?PhoneNumberExists");
+            return modelAndView;
+        }else if (usernameExists) {
+            modelAndView.setViewName("redirect:/signup?UsernameTaken");
+            return modelAndView;
+        }else {
+            String encoddedPassword = BCrypt.hashpw(customer.getPassword(), BCrypt.gensalt(12));
+            customer.setPassword(encoddedPassword);
+            this.customerRepository.save(customer);
+            modelAndView.setViewName("redirect:/login");
+        }
+    
         return modelAndView;
     }
+
 
     @GetMapping("/therapistapply")
     public ModelAndView getTherapistApply() {
@@ -96,30 +112,37 @@ public class IndexController {
     @PostMapping("/therapistapply")
     public ModelAndView saveTherapistRequest(@ModelAttribute TherapistRequest request,
             @RequestParam("file") MultipartFile file) {
-
+    
         ModelAndView modelAndView = new ModelAndView();
         String encoddedPassword = BCrypt.hashpw(request.getPassword(), BCrypt.gensalt(12));
         request.setPassword(encoddedPassword);
         request.setIsAccepted("Pending");
-
+    
         try {
-            // Handle file upload and get file path
-            String fileName = handleFileUpload(file,request);
-
+            boolean emailExists = therapistRequestRepository.existsByEmail(request.getEmail());
+            boolean phoneNumberExists = therapistRequestRepository.existsByPhoneNumber(request.getPhoneNumber());
+    
+            if (emailExists || phoneNumberExists) {
+                modelAndView.setViewName("redirect:/therapistapply?RequestAlreadySent");
+                return modelAndView;
+            }
+    
+            String fileName = handleFileUpload(file, request);
+    
             if (fileName != null) {
                 request.setResume(fileName);
             }
-
+    
             this.therapistRequestRepository.save(request);
-            modelAndView.setViewName("redirect:/therapistapply?requestSent");
+            modelAndView.setViewName("redirect:/therapistapply?RequestSent");
         } catch (Exception e) {
             System.out.println("Error adding class: " + e.getMessage());
             modelAndView.setViewName("error_page");
         }
-
+    
         return modelAndView;
-
     }
+    
 
     private String handleFileUpload(MultipartFile file, TherapistRequest request) {
         String filePath = null;

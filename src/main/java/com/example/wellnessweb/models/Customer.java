@@ -15,8 +15,8 @@ public class Customer implements Serializable {
     private String Name;
     private int Age;
     private String Gender;
-    private String PhoneNumber;
-    private String Email;
+    private String phoneNumber;
+    private String email;
     private String username;
     private String Password;
 
@@ -24,12 +24,15 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(int ID, String Name, int Age, String Gender, String Email, String Password) {
+
+    public Customer(int ID, String Name, int Age, String Gender, String phoneNumber, String email, String username, String Password) {
         this.ID = ID;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
-        this.Email = Email;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.username = username;
         this.Password = Password;
     }
 
@@ -66,19 +69,19 @@ public class Customer implements Serializable {
     }
 
     public String getPhoneNumber() {
-        return this.PhoneNumber;
+        return this.phoneNumber;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
-        return this.Email;
+        return this.email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUsername() {

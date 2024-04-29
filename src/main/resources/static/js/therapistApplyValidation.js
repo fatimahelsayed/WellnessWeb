@@ -71,7 +71,7 @@ function validateForm() {
     // Validate cv type
     if (!allowedExtensions.exec(file.name)) {
       errorMessageElement.innerText = "Please choose a PDF file";
-      return false; 
+      i=false;
     }
   
     return i;

@@ -13,9 +13,9 @@ public class TherapistRequest {
     private String Name;
     private int Age;
     private String Gender;
-    private String PhoneNumber;
+    private String phoneNumber;
     private String Specialization;
-    private String Email;
+    private String email;
     private String Password;
     private String Resume;
     private String isAccepted;
@@ -23,14 +23,14 @@ public class TherapistRequest {
     public TherapistRequest() {
     }
 
-    public TherapistRequest(int ID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Email, String Password, String Resume, String isAccepted) {
+    public TherapistRequest(int ID, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Resume, String isAccepted) {
         this.ID = ID;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
-        this.PhoneNumber = PhoneNumber;
+        this.phoneNumber = phoneNumber;
         this.Specialization = Specialization;
-        this.Email = Email;
+        this.email = email;
         this.Password = Password;
         this.Resume = Resume;
         this.isAccepted = isAccepted;
@@ -69,11 +69,11 @@ public class TherapistRequest {
     }
 
     public String getPhoneNumber() {
-        return this.PhoneNumber;
+        return this.phoneNumber;
     }
 
-    public void setPhoneNumber(String PhoneNumber) {
-        this.PhoneNumber = PhoneNumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getSpecialization() {
@@ -85,11 +85,11 @@ public class TherapistRequest {
     }
 
     public String getEmail() {
-        return this.Email;
+        return this.email;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
