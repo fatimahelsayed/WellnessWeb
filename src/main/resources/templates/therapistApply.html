@@ -20,18 +20,32 @@
 <body>
     <!-- navigation bar -->
     <div th:replace="~{/partials/navbar}"></div>
-    <div class="login-page">
+    <div class="apply-page">
         <h1 class="title">Apply as a Therapist</h1>
         <div class="form">
-            <form class="login-form" onsubmit="validateForm()">
-                <input id="email" type="text" placeholder="email" />
-                <span id="email-error" class="error-message"></span>
-                <input id="Name" type="text" placeholder="name" />
+            <form th:action="@{/therapistapply}" method="post" autocomplete="off" th:object="${request}" id="apply-form" enctype="multipart/form-data" onsubmit="validateForm()">
+                <input id="name" type="text" placeholder="Full Name" th:field="*{Name}" />
                 <span id="name-error" class="error-message"></span>
-                <textarea id="letter" placeholder="cover letter" /></textarea>
-                <span id="letter-error" class="error-message"></span>
-                <input class="therapistFile" type="file" name="" id="">
-                <input value="Apply" type="submit" class="login-btn">
+                <select th:field="*{Gender}" >
+                    <option value="">Gender</option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                </select>
+                <span id="gender-error" class="error-message"></span>
+                <input id="age" type="number" placeholder="Age" th:field="*{Age}"/>
+                <span id="age-error" class="error-message"></span>
+                <input id="phonenum" type="text" placeholder="Phone Number" th:field="*{PhoneNumber}"/>
+                <span id="phonenum-error" class="error-message"></span>
+                <input id="specialization" type="text" placeholder="Specialization" th:field="*{Specialization}" />
+                <span id="specialization-error" class="error-message"></span>
+                <input id="email" type="text" placeholder="Email" th:field="*{Email}" />
+                <span id="email-error" class="error-message"></span>
+                <input id="password" type="password" placeholder="Password" th:field="*{Password}"/>
+                <span id="password-error" class="error-message"></span>
+                <label for="myFile" style="color: white; display: block; width: 200px;">Curriculum Vitae (PDF)</label>
+                <input class="therapistFile" type="file" name="file" id="myFile">
+                <span id="cv-error" class="error-message"></span>
+                <input value="Apply" type="submit" class="apply-btn">
             </form>
         </div>
     </div>
@@ -39,7 +53,7 @@
    <div th:replace="~{partials/footer}"></div>
 
     <!-- js -->
-    <script th:src="@{/js/loginValidation.js}"></script>
+    <script th:src="@{/js/therapistApplyValidation.js}"></script>
 </body>
 
 </html>

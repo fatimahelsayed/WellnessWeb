@@ -1,5 +1,7 @@
 package com.example.wellnessweb.controllers;
 
+import java.io.File;
+
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,12 +10,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.wellnessweb.models.Customer;
+import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.repositories.CustomerRepository;
+import com.example.wellnessweb.repositories.TherapistRequestRepository;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -22,12 +28,18 @@ public class IndexController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private TherapistRequestRepository therapistRequestRepository;
+
+    @Autowired
+    private ServletContext servletContext;
 
     @GetMapping("/home")
     public ModelAndView getHome() {
         ModelAndView mav = new ModelAndView("home.html");
         return mav;
     }
+
     @GetMapping("/login")
     public ModelAndView getLogin() {
         ModelAndView mav = new ModelAndView("login.html");
@@ -76,18 +88,70 @@ public class IndexController {
     @GetMapping("/therapistapply")
     public ModelAndView getTherapistApply() {
         ModelAndView mav = new ModelAndView("therapistApply.html");
+        TherapistRequest newRequest = new TherapistRequest();
+        mav.addObject("request", newRequest);
         return mav;
     }
+
+    @PostMapping("/therapistapply")
+    public ModelAndView saveTherapistRequest(@ModelAttribute TherapistRequest request,
+            @RequestParam("file") MultipartFile file) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        String encoddedPassword = BCrypt.hashpw(request.getPassword(), BCrypt.gensalt(12));
+        request.setPassword(encoddedPassword);
+        request.setIsAccepted("Pending");
+
+        try {
+            // Handle file upload and get file path
+            String fileName = handleFileUpload(file,request);
+
+            if (fileName != null) {
+                request.setResume(fileName);
+            }
+
+            this.therapistRequestRepository.save(request);
+            modelAndView.setViewName("redirect:/therapistapply?requestSent");
+        } catch (Exception e) {
+            System.out.println("Error adding class: " + e.getMessage());
+            modelAndView.setViewName("error_page");
+        }
+
+        return modelAndView;
+
+    }
+
+    private String handleFileUpload(MultipartFile file, TherapistRequest request) {
+        String filePath = null;
+        String fileName = null;
+        try {
+            if (!file.isEmpty()) {
+                fileName = request.getPhoneNumber() + ".pdf"; 
+                String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/cv/";
+                filePath = uploadDir + fileName;
+
+                // Save the uploaded file to the desired location
+                File destFile = new File(filePath);
+                file.transferTo(destFile);
+            }
+        } catch (Exception e) {
+            System.out.println("Error storing file: " + e.getMessage());
+        }
+        return fileName;
+    }
+
     @GetMapping("/therapists")
     public ModelAndView getTherapists() {
         ModelAndView mav = new ModelAndView("viewtherapists.html");
         return mav;
     }
+
     @GetMapping("/blogs")
     public ModelAndView getBlogs() {
         ModelAndView mav = new ModelAndView("blogs.html");
         return mav;
     }
+
     @GetMapping("/content")
     public ModelAndView getContent() {
         ModelAndView mav = new ModelAndView("content.html");
@@ -105,7 +169,5 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("userProfile.html");
         return mav;
     }
-
-
 
 }
