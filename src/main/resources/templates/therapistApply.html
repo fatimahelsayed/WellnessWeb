@@ -23,7 +23,7 @@
     <div class="apply-page">
         <h1 class="title">Apply as a Therapist</h1>
         <div class="form">
-            <form th:action="@{/therapistapply}" method="post" autocomplete="off" th:object="${request}" id="apply-form" enctype="multipart/form-data" onsubmit="validateForm()">
+            <form th:action="@{/therapistapply}" method="post" autocomplete="off" th:object="${request}" class="apply-form" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <input id="name" type="text" placeholder="Full Name" th:field="*{Name}" />
                 <span id="name-error" class="error-message"></span>
                 <select th:field="*{Gender}" >
