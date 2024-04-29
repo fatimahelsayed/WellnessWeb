@@ -6,11 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.repositories.CustomerRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("")
@@ -29,6 +33,26 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("login.html");
         return mav;
     }
+
+    @PostMapping("/login")
+    public RedirectView loginProcess(@RequestParam("username") String username,
+            @RequestParam("password") String password,
+            HttpSession session) {
+        Customer dbCustomer = this.customerRepository.findByUsername(username);
+        if (dbCustomer != null) {
+            Boolean isPasswordMatched = BCrypt.checkpw(password, dbCustomer.getPassword());
+            if (isPasswordMatched) {
+                session.setAttribute("loggedInUser", dbCustomer);
+                return new RedirectView("/profile");
+            } else {
+                return new RedirectView("/login?error=wrongPassword");
+            }
+        } else {
+            return new RedirectView("/login?error=userNotFound");
+
+        }
+    }
+
     @GetMapping("/signup")
     public ModelAndView getSignUp() {
         ModelAndView mav = new ModelAndView("signup.html");

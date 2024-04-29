@@ -24,10 +24,10 @@
 
         <h1 class="title">Log in</h1>
         <div class="form">
-            <form class="login-form" onsubmit="return validateForm()">
-                <input id="username" type="text" placeholder="Username" />
+            <form th:action="@{/login}" method="post" autocomplete="off" class="login-form" onsubmit="return validateForm()">
+                <input id="username" type="text" placeholder="Username" name="username"/>
                 <span id="username-error" class="error-message"></span>
-                <input id="password" type="password" placeholder="Password" />
+                <input id="password" type="password" placeholder="Password" name="password"/>
                 <span id="password-error" class="error-message"></span>
                 <input value="Login" type="submit" class="login-btn">
                 <p class="message">Not registered? <a th:href="@{/signup}">Create an account</a></p>

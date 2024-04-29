@@ -1,51 +1,26 @@
 function validateForm() {
-    const email = document.getElementById('email');
-    const username = document.getElementById('username');
-    const password = document.getElementById('password');
-
-    const emailError = document.getElementById('email-error');
-    const usernameError = document.getElementById('username-error');
-    const passwordError = document.getElementById('password-error');
-
-    let isValid = true;
-    var validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-
+    var username = document.getElementById("username").value.trim();
+    var password = document.getElementById("password").value.trim();
+  
+    // Clear existing error messages
     var errorElements = document.querySelectorAll('.error-message');
     errorElements.forEach(function(element) {
-        element.innerText = "";
+      element.innerText = "";
     });
-
-    // Email validation
-    if (email.value.trim() === '') {
-        email.innerText = 'Email is required';
-        isValid = false;
-    } 
-    else if (email.value.match(validRegex))
-    {
-        emailError.innerText = '';
+  
+    // Validate username
+    if (username === "") {
+      document.getElementById("username-error").innerText = "Please enter your username";
+      return false;
     }
-    else{
-        email.innerText = 'Invalid email';
-        isValid = false;
+  
+    // Validate password
+    if (password === "") {
+      document.getElementById("password-error").innerText = "Please enter your password";
+      return false; 
     }
-    
-    // Username validation
-    if (username.value.trim() === '') {
-        usernameError.innerText = 'Username is required';
-        isValid = false;
-    }else {
-        usernameError.innerText = '';
-    }
-
-    // Password validation
-    if(password.value.trim() === ''){
-        passwordError.innerText = 'Password is required';
-        isValid = false;
-    } else {
-        passwordError.innerText = '';
-    }
-
-    return isValid;
-}
+  
+    return true; 
+  }
 
 

@@ -1,12 +1,14 @@
 package com.example.wellnessweb.models;
 
+import java.io.Serializable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Customer {
+public class Customer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
@@ -15,7 +17,7 @@ public class Customer {
     private String Gender;
     private String PhoneNumber;
     private String Email;
-    private String Username;
+    private String username;
     private String Password;
 
 
@@ -80,11 +82,11 @@ public class Customer {
     }
 
     public String getUsername() {
-        return this.Username;
+        return this.username;
     }
 
-    public void setUsername(String Username) {
-        this.Username = Username;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

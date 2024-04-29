@@ -1,14 +1,18 @@
-<!-- Loopple Templates: https://www.loopple.com/templates | Copyright Loopple (https://www.loopple.com) | This copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
-    <link rel="stylesheet"
-        href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
-    <link rel="stylesheet" href="../../public/css/userprofile.css">
+    <link rel="shortcut icon"
+    th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
+
+    <!--Fonts-->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/userprofile.css}">
 
 </head>
 
@@ -20,32 +24,32 @@
             <div class="collapse navbar-collapse" id="sidenav-collapse-main">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="/userprofile">
+                        <a class="nav-link" th:href="@{/profile}">
                             <span class="nav-link-text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/userprofile/editprofile">
+                        <a class="nav-link" th:href="@{/editprofile}">
                             <span class="nav-link-text">Booked Sessions</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/userprofile/editprofile">
+                        <a class="nav-link" th:href="@{/editprofile}">
                             <span class="nav-link-text">Blogs</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/userprofile/editprofile">
+                        <a class="nav-link" th:href="@{/editprofile}">
                             <span class="nav-link-text">Account Settings</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/logout">
+                        <a class="nav-link" th:href="@{/home}">
                             <span class="nav-link-text">Logout</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/">
+                        <a class="nav-link" th:href="@{/home}">
                             <span class="nav-link-text">Return to Homepage</span>
                         </a>
                     </li>
@@ -80,7 +84,7 @@
                                 aria-expanded="false">
                                 <div class="media align-items-center">
                                     <span class="avatar avatar-sm rounded-circle">
-                                        <img alt="Image placeholder" src="../../public/Images/pfp.webp">
+                                        <img alt="Image placeholder" th:src="@{/Images/pfp.webp}">
                                     </span>
                                     <div class="media-body  ml-2  d-none d-lg-block">
                                         <span class="mb-0 text-sm  font-weight-bold">
@@ -94,12 +98,12 @@
                                     <h6 class="text-overflow m-0">Welcome orchidLover
                                     </h6>
                                 </div>
-                                <a href="/userprofile" class="dropdown-item">
+                                <a th:href="@{/profile}" class="dropdown-item">
 
                                     <span>My profile</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="/logout" class="dropdown-item">
+                                <a th:href="@{/home}" class="dropdown-item">
                                     <i class="fa fa-sign-out-alt"></i>
                                     <span>Logout</span>
                                 </a>
@@ -117,14 +121,14 @@
                             <div class="col-lg-3 order-lg-2">
                                 <div class="card-profile-image">
                                     <a href="#">
-                                        <img src="../../public/images/pfp.webp" class="rounded-circle">
+                                        <img th:src="@{/Images/pfp.webp}" class="rounded-circle">
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                             <div class="d-flex justify-content-between">
-                                <a href="/userprofile/editprofile" class="btn btn-sm mr-4 btn-default">Edit</a>
+                                <a th:href="@{/editprofile}" class="btn btn-sm mr-4 btn-default">Edit</a>
                             </div>
                         </div>
                         <div class="card-body pt-0">
@@ -185,7 +189,7 @@
                                 </div>
                                 <br>
                             </div>
-                            <a href='/userprofile'>
+                            <a  th:href="@{/profile}">
                                 <button class="btn btn-primary text-uppercase">Session
                                     info
                                 </button></a>
