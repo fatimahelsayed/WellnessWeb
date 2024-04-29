@@ -78,6 +78,14 @@
         </dependency>
 
 
+		<dependency>
+			<groupId>org.webjars.npm</groupId>
+			<artifactId>summernote</artifactId>
+			<version>0.8.18</version>
+		</dependency>
+		
+
+
 	</dependencies>
 
 	<build>

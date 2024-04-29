@@ -175,6 +175,12 @@ public class IndexController {
         return mav;
     }
 
+    @GetMapping("/addBlog")
+    public ModelAndView getaddBlog() {
+        ModelAndView mav = new ModelAndView("addBlog.html");
+        return mav;
+    }
+
     @GetMapping("/content")
     public ModelAndView getContent() {
         ModelAndView mav = new ModelAndView("content.html");
