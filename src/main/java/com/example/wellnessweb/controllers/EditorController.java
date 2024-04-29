@@ -13,8 +13,9 @@ public class EditorController {
 
     @GetMapping("/")
     public String showEditor() {
-        return "editor";
+        return "addBlog";
     }
+    
 
     @PostMapping("/save")
     public String saveContent(String content) {
