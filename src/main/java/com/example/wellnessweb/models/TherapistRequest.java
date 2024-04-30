@@ -17,13 +17,14 @@ public class TherapistRequest {
     private String Specialization;
     private String email;
     private String Password;
+    private String Image;
     private String Resume;
     private String isAccepted;
 
     public TherapistRequest() {
     }
 
-    public TherapistRequest(int ID, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Resume, String isAccepted) {
+    public TherapistRequest(int ID, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Image, String Resume, String isAccepted) {
         this.ID = ID;
         this.Name = Name;
         this.Age = Age;
@@ -32,10 +33,11 @@ public class TherapistRequest {
         this.Specialization = Specialization;
         this.email = email;
         this.Password = Password;
+        this.Image = Image;
         this.Resume = Resume;
         this.isAccepted = isAccepted;
     }
-
+   
     public int getID() {
         return this.ID;
     }
@@ -98,6 +100,14 @@ public class TherapistRequest {
 
     public void setPassword(String Password) {
         this.Password = Password;
+    }
+
+    public String getImage() {
+        return this.Image;
+    }
+
+    public void setImage(String Image) {
+        this.Image = Image;
     }
 
     public String getResume() {

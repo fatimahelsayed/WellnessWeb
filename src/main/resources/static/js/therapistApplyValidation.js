@@ -7,6 +7,7 @@ function validateForm() {
   var email = document.getElementById("email").value.trim();
   var password = document.getElementById("password").value.trim();
   var fileInput = document.getElementById("myFile");
+  var imageInput = document.getElementById("myImage");
   var i = true;
 
   // Clear existing error messages
@@ -70,6 +71,20 @@ function validateForm() {
     errorMessageElement.innerText = "Please choose a PDF file";
     i = false;
   }
+
+  var image = imageInput.files[0];
+    var allowedExtensions = /\.(jpg|jpeg|png|gif)$/i; // Define allowed image file extensions
+  
+    var errorMessageElement = document.getElementById("image-error");
+    errorMessageElement.innerText = "";
+  
+    if (!image) {
+      errorMessageElement.innerText = "Please choose an image";
+      i = false;
+    } else if (!allowedExtensions.test(image.name)) {
+      errorMessageElement.innerText = "Please choose a valid image file (jpg, jpeg, png, gif)";
+      i = false;
+    }
 
   return i;
 }

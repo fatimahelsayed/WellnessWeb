@@ -111,8 +111,9 @@ public class IndexController {
 
     @PostMapping("/therapistapply")
     public ModelAndView saveTherapistRequest(@ModelAttribute TherapistRequest request,
-            @RequestParam("file") MultipartFile file) {
-    
+                                            @RequestParam("cvFile") MultipartFile cvFile,
+                                            @RequestParam("imageFile") MultipartFile imageFile) {
+
         ModelAndView modelAndView = new ModelAndView();
         String encoddedPassword = BCrypt.hashpw(request.getPassword(), BCrypt.gensalt(12));
         request.setPassword(encoddedPassword);
@@ -126,11 +127,16 @@ public class IndexController {
                 modelAndView.setViewName("redirect:/therapistapply?RequestAlreadySent");
                 return modelAndView;
             }
-    
-            String fileName = handleFileUpload(file, request);
+
+            String fileName = handleFileUpload(cvFile, request.getPhoneNumber());
+            String imageName = handleImageUpload(imageFile, request.getPhoneNumber());
     
             if (fileName != null) {
                 request.setResume(fileName);
+            }
+    
+            if (imageName != null) {
+                request.setImage(imageName);
             }
     
             this.therapistRequestRepository.save(request);
@@ -141,27 +147,58 @@ public class IndexController {
         }
     
         return modelAndView;
-    }
-    
+    }    
 
-    private String handleFileUpload(MultipartFile file, TherapistRequest request) {
-        String filePath = null;
+    private String handleFileUpload(MultipartFile file, String phoneNumber){
         String fileName = null;
         try {
             if (!file.isEmpty()) {
-                fileName = request.getPhoneNumber() + ".pdf"; 
+                String originalFilename = file.getOriginalFilename();
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf('.')).toLowerCase();
+                String newFileName = phoneNumber + fileExtension; 
                 String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/cv/";
-                filePath = uploadDir + fileName;
-
-                // Save the uploaded file to the desired location
-                File destFile = new File(filePath);
-                file.transferTo(destFile);
+                String filePath = uploadDir + newFileName;
+    
+                // Check if the file is a PDF
+                if (fileExtension.equals(".pdf")) {
+                    File destFile = new File(filePath);
+                    file.transferTo(destFile);
+                    fileName = newFileName;
+                } else {
+                    System.out.println("Invalid file format: " + fileExtension);
+                }
             }
         } catch (Exception e) {
             System.out.println("Error storing file: " + e.getMessage());
         }
         return fileName;
     }
+    
+    private String handleImageUpload(MultipartFile file, String phoneNumber){
+        String imageName = null;
+        try {
+            if (!file.isEmpty()) {
+                String originalFilename = file.getOriginalFilename();
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf('.')).toLowerCase();
+                
+                // Check if the file extension is one of the allowed image formats
+                if (fileExtension.equals(".jpg") || fileExtension.equals(".jpeg") || fileExtension.equals(".png") || fileExtension.equals(".gif")) {
+                    String newFileName = phoneNumber + fileExtension; 
+                    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+                    String imagePath = uploadDir + newFileName;
+    
+                    File destImage = new File(imagePath);
+                    file.transferTo(destImage);
+                    imageName = newFileName;
+                } else {
+                    System.out.println("Invalid image format: " + fileExtension);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error storing image: " + e.getMessage());
+        }
+        return imageName;
+    }    
 
     @GetMapping("/therapists")
     public ModelAndView getTherapists() {
