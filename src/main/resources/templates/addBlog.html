@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+</head>
+<body>
+
+<form method="post" th:action="@{/save}">
+    <textarea id="summernote" name="content"></textarea>
+    <button type="submit">Save</button>
+</form>
+
+<!-- Include Summernote JavaScript from Spring Boot resources -->
+<script th:src="@{/js/summernote-bs4.min.js}"></script>
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']], // basic text formatting
+                ['fontsize', ['fontsize']], // font size
+                ['color', ['color']], // font color
+                ['para', ['ul', 'ol', 'paragraph']], // lists
+                ['insert', ['link', 'picture', 'video']], // insert options like link, picture, video
+                ['misc', ['fullscreen', 'codeview', 'help']], // miscellaneous options like fullscreen, code view, help
+            ]
+        });
+    });
+</script>
+
+</body>
+</html>
