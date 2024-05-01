@@ -26320,3 +26320,10 @@ pre>code.highlight {
   {
     color: #ffffff
   }
+
+.custom-btn {
+    background-color: #28a745; 
+    color: #fff; 
+    border: none; 
+}
+
