@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <link rel="stylesheet"
         href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
-        <link rel="stylesheet" href="../../public/css/admindashboard.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
     </head>
 
 <body>
@@ -36,7 +36,7 @@
                                 aria-expanded="false">
                                 <div class="media align-items-center">
                                     <span class="avatar avatar-sm rounded-circle">
-                                        <img alt="Image placeholder" src="assets/user icon.png">
+                                        <img alt="Image placeholder" th:src="@{assets/user icon.png}">
                                     </span>
                                     <div class="media-body  ml-2  d-none d-lg-block">
                                         <span class="mb-0 text-sm  font-weight-bold">Admin</span>
@@ -56,7 +56,7 @@
                                     <span>Settings</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#!" class="dropdown-item">
+                                <a  th:href="@{/home}" class="dropdown-item">
                                     <i class="fa fa-sign-out-alt"></i>
                                     <span>Logout</span>
                                 </a>
@@ -85,25 +85,15 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Username</th>
-                                        <th scope="col">Email</th>
                                         <th scope="col">Age</th>
                                         <th scope="col">Gender</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            anonymous123
-                                        </th>
-                                        <td>
-                                            anonymous@email.com
-                                        </td>
-                                        <td>
-                                            20
-                                        </td>
-                                        <td>
-                                            female
-                                        </td>
+                                    <tr th:each="customer : ${customers}">
+                                        <td th:text="${customer.username}"></td>
+                                        <td th:text="${customer.Age}"></td>
+                                        <td th:text="${customer.Gender}"></td>
                                     </tr>
 
                                 </tbody>
@@ -132,15 +122,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            sahwaamr@gmail.com
-                                        </th>
+                                    <tr th:each="request : ${requests}">
+                                        <td th:text="${request.email}"></td>
+                                        <td th:text="${request.Name}"></td>
                                         <td>
-                                            Sahwa Amr
-                                        </td>
-                                        <td>
-                                           <a href="" class="btn btn-sm btn-primary">View Details</a>
+                                           <a th:href="@{/admindashboard/therapists}" class="btn btn-sm btn-primary">View Details</a>
                                         </td>
                                         
 
@@ -157,7 +143,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Blogs</h5>
-                                    <span class="h2 font-weight-bold mb-0">5</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${blogCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-gradient-warning">
@@ -172,7 +158,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Customers</h5>
-                                    <span class="h2 font-weight-bold mb-0">10</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${customerCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-blue">
@@ -187,7 +173,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Therapists</h5>
-                                    <span class="h2 font-weight-bold mb-0">9</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${therapistCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-yellow">
