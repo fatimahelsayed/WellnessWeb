@@ -90,7 +90,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="customer : ${customers}">
+                                    <tr th:each="customer : ${recentCustomers}">
                                         <td th:text="${customer.username}"></td>
                                         <td th:text="${customer.Age}"></td>
                                         <td th:text="${customer.Gender}"></td>
@@ -122,7 +122,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="request : ${requests}">
+                                    <tr th:each="request : ${recentRequests}">
                                         <td th:text="${request.email}"></td>
                                         <td th:text="${request.Name}"></td>
                                         <td>

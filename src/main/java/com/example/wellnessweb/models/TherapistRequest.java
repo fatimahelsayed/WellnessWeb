@@ -1,9 +1,12 @@
 package com.example.wellnessweb.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class TherapistRequest {
@@ -20,11 +23,12 @@ public class TherapistRequest {
     private String Image;
     private String Resume;
     private String isAccepted;
+    private LocalDate createdAt;
 
     public TherapistRequest() {
     }
 
-    public TherapistRequest(int ID, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Image, String Resume, String isAccepted) {
+    public TherapistRequest(int ID, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Image, String Resume, String isAccepted, LocalDate createdAt) {
         this.ID = ID;
         this.Name = Name;
         this.Age = Age;
@@ -36,8 +40,9 @@ public class TherapistRequest {
         this.Image = Image;
         this.Resume = Resume;
         this.isAccepted = isAccepted;
+        this.createdAt = createdAt;
     }
-   
+
     public int getID() {
         return this.ID;
     }
@@ -126,5 +131,17 @@ public class TherapistRequest {
         this.isAccepted = isAccepted;
     }
 
+    public LocalDate getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDate.now(); 
+    }
 
 }

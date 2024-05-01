@@ -34,11 +34,11 @@ public class AdminController {
     public ModelAndView getAdminDashboard() {
         ModelAndView mav = new ModelAndView("admindashboard.html");
         
-        List<Customer> customers = this.customerRepository.findAll();
-        mav.addObject("customers", customers);
+        List<Customer> recentCustomers = this.customerRepository.findTop5ByOrderByCreatedAtDesc();
+        mav.addObject("recentCustomers", recentCustomers);
 
-        List<TherapistRequest> requests = this.therapistRequestRepository.findAll();
-        mav.addObject("requests", requests);
+        List<TherapistRequest> recentRequests = this.therapistRequestRepository.findTop5ByOrderByCreatedAtDesc();
+        mav.addObject("recentRequests", recentRequests);
 
         long blogCount = this.blogsRepository.count();
         long customerCount = this.customerRepository.count();
