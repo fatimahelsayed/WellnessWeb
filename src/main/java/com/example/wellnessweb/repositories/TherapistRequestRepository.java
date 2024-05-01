@@ -8,4 +8,5 @@ public interface TherapistRequestRepository extends JpaRepository<TherapistReque
     boolean existsByEmail(String email);
     boolean existsByPhoneNumber(String phoneNumber);
     List<TherapistRequest> findTop5ByOrderByCreatedAtDesc();
+    TherapistRequest findById(int id);
 }

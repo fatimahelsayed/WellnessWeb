@@ -1,9 +1,6 @@
 package com.example.wellnessweb.controllers;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -147,6 +145,14 @@ public class AdminController {
         mav.addObject("therapists", therapists);
 
         return mav;
+    }
+
+    @GetMapping("/therapistrequestdetails/{id}")
+    public ModelAndView viewTherapistRequestDetails(@PathVariable("id") int id) {
+        ModelAndView modelAndView = new ModelAndView("therapistRequestDetails.html");
+        TherapistRequest request = this.therapistRequestRepository.findById(id);
+        modelAndView.addObject("request", request);
+        return modelAndView;
     }
 
     private MediaType determineMediaType(String extension) {

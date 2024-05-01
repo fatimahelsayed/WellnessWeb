@@ -164,12 +164,9 @@
                                         <td th:text="${request.Name}"></td>
                                         <td th:text="${request.email}"></td>
                                         <td>
-                                           <a th:href="@{/admindashboard/therapistsrequests}" class="btn btn-sm btn-primary">View Details</a>
+                                            <a th:href="@{/admindashboard/therapistrequestdetails/{id}(id=${request.ID})}" class="btn btn-sm btn-primary">View Details</a>
                                         </td>
-                                        
-
                                     </tr>
-
                                 </tbody>
                             </table>
                         </div>

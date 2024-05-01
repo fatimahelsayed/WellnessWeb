@@ -12,7 +12,7 @@ import jakarta.persistence.PrePersist;
 public class TherapistRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
     private String Name;
     private int Age;
     private String Gender;
@@ -28,8 +28,8 @@ public class TherapistRequest {
     public TherapistRequest() {
     }
 
-    public TherapistRequest(int ID, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Image, String Resume, String isAccepted, LocalDate createdAt) {
-        this.ID = ID;
+    public TherapistRequest(int id, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Image, String Resume, String isAccepted, LocalDate createdAt) {
+        this.id = id;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
@@ -44,11 +44,11 @@ public class TherapistRequest {
     }
 
     public int getID() {
-        return this.ID;
+        return this.id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     public String getName() {
