@@ -1,9 +1,12 @@
 package com.example.wellnessweb.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Therapist {
@@ -17,6 +20,7 @@ public class Therapist {
     private String Specialization;
     private String Email;
     private String Password;
+    private LocalDate createdAt;
 
     public Therapist() {
     }
@@ -95,6 +99,18 @@ public class Therapist {
     public void setPassword(String Password) {
         this.Password = Password;
     }
+    
+    public LocalDate getCreatedAt() {
+        return this.createdAt;
+    }
 
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDate.now(); 
+    }
     
 }

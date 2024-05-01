@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.wellnessweb.models.Customer;
+import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
@@ -52,6 +53,9 @@ public class AdminController {
 
         List<TherapistRequest> recentRequests = this.therapistRequestRepository.findTop5ByOrderByCreatedAtDesc();
         mav.addObject("recentRequests", recentRequests);
+
+        List<Therapist> recentTherapists = this.therapistRepository.findTop5ByOrderByCreatedAtDesc();
+        mav.addObject("recentTherapists", recentTherapists);
 
         long blogCount = this.blogsRepository.count();
         long customerCount = this.customerRepository.count();
@@ -123,6 +127,26 @@ public class AdminController {
         }
 
         return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/customers")
+    public ModelAndView getCustomers() {
+        ModelAndView mav = new ModelAndView("viewCustomers.html");
+
+        List<Customer> customers = this.customerRepository.findAll();
+        mav.addObject("customers", customers);
+
+        return mav;
+    }
+
+    @GetMapping("/therapists")
+    public ModelAndView getTherapists() {
+        ModelAndView mav = new ModelAndView("viewTherapistsAdminDash.html");
+
+        List<Therapist> therapists = this.therapistRepository.findAll();
+        mav.addObject("therapists", therapists);
+
+        return mav;
     }
 
     private MediaType determineMediaType(String extension) {

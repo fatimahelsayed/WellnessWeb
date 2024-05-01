@@ -66,13 +66,11 @@
                 </div>
             </div>
         </nav>
-
-
         <div class="card">
             <div class="card-header border-0">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h3 class="mb-0">Therapist Requests</h3>
+                        <h3 class="mb-0">Therapists</h3>
                     </div>
                 </div>
             </div>
@@ -86,38 +84,18 @@
                             <th scope="col">Phone Number</th>
                             <th scope="col">Specialization</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Resume</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="request : ${requests}">
-                            <td th:text="${request.name}"></td>
-                            <td th:text="${request.age}"></td>
-                            <td th:text="${request.gender}"></td>
-                            <td th:text="${request.phoneNumber}"></td>
-                            <td th:text="${request.specialization}"></td>
-                            <td th:text="${request.email}"></td>
-                            <td>
-                                <a th:href="@{'/admindashboard/downloadResume/' + ${request.phoneNumber}}" th:text="${request.Resume}"></a>
-                            </td>
-                            <td>
-                                <a th:href="@{'/admindashboard/downloadImage/' + ${request.phoneNumber}}" th:text="${request.Image}"></a>
-                            </td>
-                            <td>
-                            <div class="action-buttons">
-                                <form th:action="@{/acceptRequest}" method="post">
-                                    <input type="hidden" name="id" th:value="${request.ID}">
-                                    <button type="submit" class="btn btn-sm btn-success custom-btn">Accept</button>
-                                </form>
-                                <form th:action="@{/declineRequest}" method="post">
-                                    <input type="hidden" name="id" th:value="${request.ID}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Decline</button>
-                                </form>
-                            </div>
-                            </td>
+                        <tr th:each="therapist : ${therapists}">
+                            <td th:text="${therapist.Name}"></td>
+                            <td th:text="${therapist.Age}"></td>
+                            <td th:text="${therapist.Gender}"></td>
+                            <td th:text="${therapist.PhoneNumber}"></td>
+                            <td th:text="${therapist.Specialization}"></td>
+                            <td th:text="${therapist.Email}"></td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>
