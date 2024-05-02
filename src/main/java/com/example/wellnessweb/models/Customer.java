@@ -1,11 +1,13 @@
 package com.example.wellnessweb.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Customer implements Serializable {
@@ -19,13 +21,13 @@ public class Customer implements Serializable {
     private String email;
     private String username;
     private String Password;
+    private LocalDate createdAt;
 
 
     public Customer() {
     }
 
-
-    public Customer(int ID, String Name, int Age, String Gender, String phoneNumber, String email, String username, String Password) {
+    public Customer(int ID, String Name, int Age, String Gender, String phoneNumber, String email, String username, String Password, LocalDate createdAt) {
         this.ID = ID;
         this.Name = Name;
         this.Age = Age;
@@ -34,6 +36,7 @@ public class Customer implements Serializable {
         this.email = email;
         this.username = username;
         this.Password = Password;
+        this.createdAt = createdAt;
     }
 
     public int getID() {
@@ -100,5 +103,17 @@ public class Customer implements Serializable {
         this.Password = Password;
     }
 
+    public LocalDate getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDate.now(); 
+    }
     
 }

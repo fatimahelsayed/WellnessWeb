@@ -1,15 +1,18 @@
 package com.example.wellnessweb.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class TherapistRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
     private String Name;
     private int Age;
     private String Gender;
@@ -17,14 +20,16 @@ public class TherapistRequest {
     private String Specialization;
     private String email;
     private String Password;
+    private String Image;
     private String Resume;
     private String isAccepted;
+    private LocalDate createdAt;
 
     public TherapistRequest() {
     }
 
-    public TherapistRequest(int ID, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Resume, String isAccepted) {
-        this.ID = ID;
+    public TherapistRequest(int id, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Image, String Resume, String isAccepted, LocalDate createdAt) {
+        this.id = id;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
@@ -32,16 +37,18 @@ public class TherapistRequest {
         this.Specialization = Specialization;
         this.email = email;
         this.Password = Password;
+        this.Image = Image;
         this.Resume = Resume;
         this.isAccepted = isAccepted;
+        this.createdAt = createdAt;
     }
 
     public int getID() {
-        return this.ID;
+        return this.id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -100,6 +107,14 @@ public class TherapistRequest {
         this.Password = Password;
     }
 
+    public String getImage() {
+        return this.Image;
+    }
+
+    public void setImage(String Image) {
+        this.Image = Image;
+    }
+
     public String getResume() {
         return this.Resume;
     }
@@ -116,5 +131,17 @@ public class TherapistRequest {
         this.isAccepted = isAccepted;
     }
 
+    public LocalDate getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDate.now(); 
+    }
 
 }

@@ -1,15 +1,19 @@
 package com.example.wellnessweb.models;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Therapist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+    private int TherapistRequestID;
     private String Name;
     private int Age;
     private String Gender;
@@ -17,12 +21,14 @@ public class Therapist {
     private String Specialization;
     private String Email;
     private String Password;
+    private LocalDate createdAt;
 
     public Therapist() {
     }
 
-    public Therapist(int ID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Email, String Password) {
+    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Email, String Password, LocalDate createdAt) {
         this.ID = ID;
+        this.TherapistRequestID = TherapistRequestID;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
@@ -30,6 +36,7 @@ public class Therapist {
         this.Specialization = Specialization;
         this.Email = Email;
         this.Password = Password;
+        this.createdAt = createdAt;
     }
 
     public int getID() {
@@ -38,6 +45,14 @@ public class Therapist {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getTherapistRequestID() {
+        return this.TherapistRequestID;
+    }
+
+    public void setTherapistRequestID(int TherapistRequestID) {
+        this.TherapistRequestID = TherapistRequestID;
     }
 
     public String getName() {
@@ -95,6 +110,18 @@ public class Therapist {
     public void setPassword(String Password) {
         this.Password = Password;
     }
+    
+    public LocalDate getCreatedAt() {
+        return this.createdAt;
+    }
 
+    public void setCreatedAt(LocalDate createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDate.now(); 
+    }
     
 }

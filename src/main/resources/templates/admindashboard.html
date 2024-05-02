@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <link rel="stylesheet"
         href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
-        <link rel="stylesheet" href="../../public/css/admindashboard.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
     </head>
 
 <body>
@@ -36,7 +36,7 @@
                                 aria-expanded="false">
                                 <div class="media align-items-center">
                                     <span class="avatar avatar-sm rounded-circle">
-                                        <img alt="Image placeholder" src="assets/user icon.png">
+                                        <img alt="Image placeholder" th:src="@{assets/user icon.png}">
                                     </span>
                                     <div class="media-body  ml-2  d-none d-lg-block">
                                         <span class="mb-0 text-sm  font-weight-bold">Admin</span>
@@ -56,7 +56,7 @@
                                     <span>Settings</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="#!" class="dropdown-item">
+                                <a  th:href="@{/home}" class="dropdown-item">
                                     <i class="fa fa-sign-out-alt"></i>
                                     <span>Logout</span>
                                 </a>
@@ -85,25 +85,53 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">Username</th>
-                                        <th scope="col">Email</th>
                                         <th scope="col">Age</th>
                                         <th scope="col">Gender</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr th:each="customer : ${recentCustomers}">
+                                        <td th:text="${customer.username}"></td>
+                                        <td th:text="${customer.Age}"></td>
+                                        <td th:text="${customer.Gender}"></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Recent Therapists</h3>
+                                </div>
+                                <div class="col text-right">
+                                    <a th:href="@{/admindashboard/therapists}" class="btn btn-sm btn-primary">See all</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
                                     <tr>
-                                        <th scope="row">
-                                            anonymous123
-                                        </th>
-                                        <td>
-                                            anonymous@email.com
-                                        </td>
-                                        <td>
-                                            20
-                                        </td>
-                                        <td>
-                                            female
-                                        </td>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Specialization</th>
+                                        <th scope="col">Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="therapist : ${recentTherapists}">
+                                        <td th:text="${therapist.Name}"></td>
+                                        <td th:text="${therapist.Age}"></td>
+                                        <td th:text="${therapist.Gender}"></td>
+                                        <td th:text="${therapist.PhoneNumber}"></td>
+                                        <td th:text="${therapist.Specialization}"></td>
+                                        <td th:text="${therapist.Email}"></td>
                                     </tr>
 
                                 </tbody>
@@ -118,7 +146,7 @@
                                     <h3 class="mb-0">Therapist Requests</h3>
                                 </div>
                                 <div class="col text-right">
-                                    <a th:href="@{/admindashboard/clientrequests}" class="btn btn-sm btn-primary">See all</a>
+                                    <a th:href="@{/admindashboard/therapistsrequests}" class="btn btn-sm btn-primary">See all</a>
                                 </div>
                             </div>
                         </div>
@@ -126,26 +154,19 @@
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">Email</th>
                                         <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            sahwaamr@gmail.com
-                                        </th>
+                                    <tr th:each="request : ${recentRequests}">
+                                        <td th:text="${request.Name}"></td>
+                                        <td th:text="${request.email}"></td>
                                         <td>
-                                            Sahwa Amr
+                                            <a th:href="@{/admindashboard/therapistrequestdetails/{id}(id=${request.ID})}" class="btn btn-sm btn-primary">View Details</a>
                                         </td>
-                                        <td>
-                                           <a href="" class="btn btn-sm btn-primary">View Details</a>
-                                        </td>
-                                        
-
                                     </tr>
-
                                 </tbody>
                             </table>
                         </div>
@@ -157,7 +178,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Blogs</h5>
-                                    <span class="h2 font-weight-bold mb-0">5</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${blogCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-gradient-warning">
@@ -172,7 +193,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Customers</h5>
-                                    <span class="h2 font-weight-bold mb-0">10</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${customerCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-blue">
@@ -187,7 +208,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Therapists</h5>
-                                    <span class="h2 font-weight-bold mb-0">9</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${therapistCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-yellow">

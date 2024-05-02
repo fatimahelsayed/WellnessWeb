@@ -7,11 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WellnessWeb</title>
     <link rel="shortcut icon"
-    th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
+        th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
 
     <!--Fonts-->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
+    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/login.css}">
 </head>
@@ -23,34 +24,38 @@
     <div class="apply-page">
         <h1 class="title">Apply as a Therapist</h1>
         <div class="form">
-            <form th:action="@{/therapistapply}" method="post" autocomplete="off" th:object="${request}" class="apply-form" enctype="multipart/form-data" onsubmit="return validateForm()">
+            <form th:action="@{/therapistapply}" method="post" autocomplete="off" th:object="${request}"
+                class="apply-form" enctype="multipart/form-data" onsubmit="return validateForm()">
                 <input id="name" type="text" placeholder="Full Name" th:field="*{Name}" />
                 <span id="name-error" class="error-message"></span>
-                <select th:field="*{Gender}" >
+                <select th:field="*{Gender}">
                     <option value="">Gender</option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                 </select>
                 <span id="gender-error" class="error-message"></span>
-                <input id="age" type="number" placeholder="Age" th:field="*{Age}"/>
+                <input id="age" type="number" placeholder="Age" th:field="*{Age}" />
                 <span id="age-error" class="error-message"></span>
-                <input id="phonenum" type="text" placeholder="Phone Number" th:field="*{phoneNumber}"/>
+                <input id="phonenum" type="text" placeholder="Phone Number" th:field="*{phoneNumber}" />
                 <span id="phonenum-error" class="error-message"></span>
                 <input id="specialization" type="text" placeholder="Specialization" th:field="*{Specialization}" />
                 <span id="specialization-error" class="error-message"></span>
                 <input id="email" type="text" placeholder="Email" th:field="*{email}" />
                 <span id="email-error" class="error-message"></span>
-                <input id="password" type="password" placeholder="Password" th:field="*{Password}"/>
+                <input id="password" type="password" placeholder="Password" th:field="*{Password}" />
                 <span id="password-error" class="error-message"></span>
-                <label for="myFile" style="color: white; display: block; width: 200px;">Curriculum Vitae (PDF)</label>
-                <input class="therapistFile" type="file" name="file" id="myFile">
+                <label for="imageFile" style="color: white; display: block; width: 200px;">Image (JPG, JPEG, PNG, GIF)</label>
+                <input type="file" name="imageFile" id="imageFile">
+                <span id="cv-error" class="error-message"></span>
+                <label for="cvFile"  style="color: white; display: block; width: 200px;">Curriculum Vitae (PDF)</label>
+                <input type="file" name="cvFile" id="cvFile">
                 <span id="cv-error" class="error-message"></span>
                 <input value="Apply" type="submit" class="apply-btn">
             </form>
         </div>
     </div>
-   <!-- footer -->
-   <div th:replace="~{partials/footer}"></div>
+    <!-- footer -->
+    <div th:replace="~{partials/footer}"></div>
 
     <!-- js -->
     <script th:src="@{/js/therapistApplyValidation.js}"></script>
