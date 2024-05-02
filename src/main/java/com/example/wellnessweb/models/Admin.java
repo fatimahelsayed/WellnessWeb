@@ -11,16 +11,18 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private String Name;
-    private String Email;
+    private String phoneNumber;
+    private String email;
     private String Password;
 
     public Admin() {
     }
 
-    public Admin(int ID, String Name, String Email, String Password) {
+    public Admin(int ID, String Name, String phoneNumber, String email, String Password) {
         this.ID = ID;
         this.Name = Name;
-        this.Email = Email;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
         this.Password = Password;
     }
 
@@ -40,12 +42,20 @@ public class Admin {
         this.Name = Name;
     }
 
-    public String getEmail() {
-        return this.Email;
+    public String getPhoneNumber() {
+        return this.phoneNumber;
     }
 
-    public void setEmail(String Email) {
-        this.Email = Email;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

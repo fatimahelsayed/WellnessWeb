@@ -3,6 +3,7 @@ package com.example.wellnessweb.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
@@ -12,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,16 +21,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.wellnessweb.models.Admin;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
+import com.example.wellnessweb.repositories.AdminRepository;
 import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
-
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -46,6 +47,9 @@ public class AdminController {
 
     @Autowired
     private TherapistRepository therapistRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
 
     @Autowired
     TherapistRequestRepository therapistRequestRepository;
@@ -165,6 +169,7 @@ public class AdminController {
         modelAndView.addObject("request", request);
         return modelAndView;
     }
+
     @PostMapping("/therapistsrequests/acceptRequest")
     public ModelAndView acceptRequest(@RequestParam("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -186,7 +191,7 @@ public class AdminController {
             this.therapistRepository.save(therapist);
 
             String emailBody = "Hello, " + request.getName()
-            + ". \n\nCongratulations! Your therapist request has been accepted. Login and add new therapy sessions instantly!";
+                    + ". \n\nCongratulations! Your therapist request has been accepted. Login and add new therapy sessions instantly!";
             sendEmail(request.getEmail(), "Welcome to WellnessWeb", emailBody);
 
             modelAndView.setViewName("redirect:/admindashboard/therapistsrequests");
@@ -208,7 +213,7 @@ public class AdminController {
             this.therapistRequestRepository.save(request);
 
             String emailBody = "Hello, " + request.getName()
-            + ". \n\nWe regret to inform you that your therapist request has been declined.";
+                    + ". \n\nWe regret to inform you that your therapist request has been declined.";
             sendEmail(request.getEmail(), "Welcome to WellnessWeb", emailBody);
 
             modelAndView.setViewName("redirect:/admindashboard/therapistsrequests");
@@ -220,7 +225,37 @@ public class AdminController {
         return modelAndView;
     }
 
-        private void sendEmail(String recipientEmail, String subject, String body) {
+    @GetMapping("/addadmin")
+    public ModelAndView getAddAdmin() {
+        ModelAndView mav = new ModelAndView("addAdmin.html");
+        Admin admin = new Admin();
+        mav.addObject("admin", admin);
+        return mav;
+    }
+
+    @PostMapping("/addadmin")
+    public ModelAndView saveAdmin(@ModelAttribute Admin admin) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        boolean emailExists = this.adminRepository.existsByEmail(admin.getEmail());
+        boolean phoneExists = this.adminRepository.existsByPhoneNumber(admin.getPhoneNumber());
+
+        if (emailExists) {
+            modelAndView.setViewName("redirect:/admindashboard/addadmin?EmailExists");
+            return modelAndView;
+        } else if (phoneExists) {
+            modelAndView.setViewName("redirect:/admindashboard/addadmin?PhoneNumberExists");
+            return modelAndView;
+        } else {
+            String encoddedPassword = BCrypt.hashpw(admin.getPassword(), BCrypt.gensalt(12));
+            admin.setPassword(encoddedPassword);
+            this.adminRepository.save(admin);
+            modelAndView.setViewName("redirect:/admindashboard/addadmin?AddedSuccessfully");
+        }
+        return modelAndView;
+    }
+
+    private void sendEmail(String recipientEmail, String subject, String body) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(recipientEmail);
