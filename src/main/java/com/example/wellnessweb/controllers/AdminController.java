@@ -9,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,13 +70,13 @@ public class AdminController {
     @GetMapping("/therapistsrequests")
     public ModelAndView getTherapistRequests() {
         ModelAndView mav = new ModelAndView("viewTherapistsRequests.html");
-
-        List<TherapistRequest> requests = this.therapistRequestRepository.findAll();
+    
+        List<TherapistRequest> requests = this.therapistRequestRepository.findByIsAccepted("Pending");
         mav.addObject("requests", requests);
-
+    
         return mav;
     }
-
+    
     @GetMapping("/downloadResume/{phoneNumber}")
     public ResponseEntity<Resource> downloadResume(@PathVariable("phoneNumber") String phoneNumber) {
         String resumeFileName = phoneNumber + ".pdf";
@@ -152,6 +153,52 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView("therapistRequestDetails.html");
         TherapistRequest request = this.therapistRequestRepository.findById(id);
         modelAndView.addObject("request", request);
+        return modelAndView;
+    }
+
+    @PostMapping("/therapistsrequests/acceptRequest")
+    public ModelAndView acceptRequest(@RequestParam("id") int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            TherapistRequest request = therapistRequestRepository.findById(id);
+            request.setIsAccepted("Accepted");
+            this.therapistRequestRepository.save(request);
+
+            Therapist therapist = new Therapist();
+            therapist.setTherapistRequestID(request.getID());
+            therapist.setName(request.getName());
+            therapist.setAge(request.getAge());
+            therapist.setGender(request.getGender());
+            therapist.setPhoneNumber(request.getPhoneNumber());
+            therapist.setSpecialization(request.getSpecialization());
+            therapist.setEmail(request.getEmail());
+            therapist.setPassword(request.getPassword());
+
+            this.therapistRepository.save(therapist);
+
+            modelAndView.setViewName("redirect:/admindashboard/therapistsrequests");
+        } catch (Exception e) {
+            System.out.println("Error accepting request: " + e.getMessage());
+            modelAndView.setViewName("error_page");
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/therapistsrequests/declineRequest")
+    public ModelAndView declineRequest(@RequestParam("id") int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            TherapistRequest request = this.therapistRequestRepository.findById(id);
+
+            request.setIsAccepted("Declined");
+            this.therapistRequestRepository.save(request);
+            modelAndView.setViewName("redirect:/admindashboard/therapistsrequests");
+        } catch (Exception e) {
+            System.out.println("Error declining request: " + e.getMessage());
+            modelAndView.setViewName("error_page");
+        }
+
         return modelAndView;
     }
 

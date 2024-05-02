@@ -13,6 +13,7 @@ public class Therapist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+    private int TherapistRequestID;
     private String Name;
     private int Age;
     private String Gender;
@@ -25,8 +26,9 @@ public class Therapist {
     public Therapist() {
     }
 
-    public Therapist(int ID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Email, String Password) {
+    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Email, String Password, LocalDate createdAt) {
         this.ID = ID;
+        this.TherapistRequestID = TherapistRequestID;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
@@ -34,6 +36,7 @@ public class Therapist {
         this.Specialization = Specialization;
         this.Email = Email;
         this.Password = Password;
+        this.createdAt = createdAt;
     }
 
     public int getID() {
@@ -42,6 +45,14 @@ public class Therapist {
 
     public void setID(int ID) {
         this.ID = ID;
+    }
+
+    public int getTherapistRequestID() {
+        return this.TherapistRequestID;
+    }
+
+    public void setTherapistRequestID(int TherapistRequestID) {
+        this.TherapistRequestID = TherapistRequestID;
     }
 
     public String getName() {

@@ -107,14 +107,14 @@
                             </td>
                             <td>
                             <div class="action-buttons">
-                                <form th:action="@{/acceptRequest}" method="post">
+                                <form th:action="@{/admindashboard/therapistsrequests/acceptRequest}" method="post">
                                     <input type="hidden" name="id" th:value="${request.ID}">
                                     <button type="submit" class="btn btn-sm btn-success custom-btn">Accept</button>
                                 </form>
-                                <form th:action="@{/declineRequest}" method="post">
+                                <form th:action="@{/admindashboard/therapistsrequests/declineRequest}" method="post">
                                     <input type="hidden" name="id" th:value="${request.ID}">
                                     <button type="submit" class="btn btn-sm btn-danger">Decline</button>
-                                </form>
+                                </form>                                
                             </div>
                             </td>
                         </tr>
