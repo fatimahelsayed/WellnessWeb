@@ -5,9 +5,25 @@
     <title>Add a Blog</title>
 
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}" />
-    <link rel="stylesheet" type="text/css" th:href="@{/CSS/blogs.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/addblog.css}" />
 </head>
 <body>
+
+    <div th:replace="~{/partials/navbar}"></div>
+
+    <div class="why-blog">
+    <h1>Why blogging?</h1>
+    <p>For individuals grappling with mental illness, blogging can be a transformative tool, 
+        offering a myriad of benefits that extend beyond the digital realm. <br> From providing an expressive outlet to
+         fostering community and advocacy, blogging holds the potential to become a vital lifeline in the journey 
+         towards mental wellness.
+
+    </p>
+
+</div>
+
+<div class="start-blogging">Start blogging now.</div>
+
 <form method="post" action="/save">
     <h2>What is the title?</h2>
     <input type="text" name="content-title" />
@@ -26,5 +42,10 @@
     <button type="submit">Save</button>
     
 </form>
+
+<div th:replace="~{partials/footer}"></div>
+
 </body>
+
+
 </html>

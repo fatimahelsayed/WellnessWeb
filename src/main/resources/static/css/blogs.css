@@ -29,7 +29,6 @@
 
 
 body {
-    font-family: sans-serif;
     color: #222;
     margin: 0;
     background-color: rgb(243, 241, 238);
@@ -149,3 +148,10 @@ body {
 }
 
 
+
+/* add a blog page */
+
+.why-blog h1{
+  font-family: 'playfair-bold';
+  color: #305844;
+}

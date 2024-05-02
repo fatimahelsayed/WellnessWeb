@@ -1,0 +1,57 @@
+/* add a blog page */
+
+@font-face {
+    font-family: 'AURUM';
+    src: url(../fonts/AURUM.ttf);
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair';
+    src: url(../fonts/PlayfairDisplay-Regular.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair-bold';
+    src: url(../fonts/PlayfairDisplay-Bold.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'playfair-italic';
+    src: url(../fonts/PlayfairDisplay-Italic.ttf);
+    font-weight: 100;
+    font-style: normal;
+}
+
+
+body {
+    color: #222;
+    background-color: rgb(255, 255, 255);
+
+    
+  }
+
+.why-blog h1{
+    font-family: 'playfair-bold';
+    color: #305844;
+    
+  }
+
+  .why-blog p{
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .why-blog {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: rgb(243, 241, 238);
+}
+.start-blogging {
+    font-family: 'playfair';
+}
