@@ -80,7 +80,9 @@ body {
     font-size: 24px;
   }
 
-  .blogs-content {
+  .blogs-content,
+  .blogs-content-intro,
+  .blogs-tw {
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 28px;

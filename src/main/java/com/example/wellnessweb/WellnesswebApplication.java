@@ -9,5 +9,5 @@ public class WellnesswebApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WellnesswebApplication.class, args);
 	}
-
+ 
 }

@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.wellnessweb.models.Illness;
 
-public interface IllnessRepository extends JpaRepository<Illness,Integer>{ 
-    
+import java.util.List;
+
+public interface IllnessRepository extends JpaRepository<Illness, Integer> {
+    List<Illness> findAll();
 }
