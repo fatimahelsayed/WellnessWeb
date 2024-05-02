@@ -64,7 +64,7 @@ public class AdminController {
         List<Customer> recentCustomers = this.customerRepository.findTop5ByOrderByCreatedAtDesc();
         mav.addObject("recentCustomers", recentCustomers);
 
-        List<TherapistRequest> recentRequests = this.therapistRequestRepository.findTop5ByOrderByCreatedAtDesc();
+        List<TherapistRequest> recentRequests = this.therapistRequestRepository.findByIsAcceptedOrderByCreatedAtDesc("Pending");
         mav.addObject("recentRequests", recentRequests);
 
         List<Therapist> recentTherapists = this.therapistRepository.findTop5ByOrderByCreatedAtDesc();

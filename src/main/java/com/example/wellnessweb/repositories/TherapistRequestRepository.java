@@ -10,4 +10,5 @@ public interface TherapistRequestRepository extends JpaRepository<TherapistReque
     List<TherapistRequest> findTop5ByOrderByCreatedAtDesc();
     TherapistRequest findById(int id);
     List<TherapistRequest> findByIsAccepted(String isAccepted);
+    List<TherapistRequest> findByIsAcceptedOrderByCreatedAtDesc(String isAccepted);
 }
