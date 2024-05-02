@@ -7,6 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +26,9 @@ import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
+
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -42,6 +49,9 @@ public class AdminController {
 
     @Autowired
     TherapistRequestRepository therapistRequestRepository;
+
+    @Autowired
+    private JavaMailSender emailSender;
 
     @GetMapping("")
     public ModelAndView getAdminDashboard() {
@@ -70,13 +80,13 @@ public class AdminController {
     @GetMapping("/therapistsrequests")
     public ModelAndView getTherapistRequests() {
         ModelAndView mav = new ModelAndView("viewTherapistsRequests.html");
-    
+
         List<TherapistRequest> requests = this.therapistRequestRepository.findByIsAccepted("Pending");
         mav.addObject("requests", requests);
-    
+
         return mav;
     }
-    
+
     @GetMapping("/downloadResume/{phoneNumber}")
     public ResponseEntity<Resource> downloadResume(@PathVariable("phoneNumber") String phoneNumber) {
         String resumeFileName = phoneNumber + ".pdf";
@@ -155,7 +165,6 @@ public class AdminController {
         modelAndView.addObject("request", request);
         return modelAndView;
     }
-
     @PostMapping("/therapistsrequests/acceptRequest")
     public ModelAndView acceptRequest(@RequestParam("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
@@ -176,6 +185,10 @@ public class AdminController {
 
             this.therapistRepository.save(therapist);
 
+            String emailBody = "Hello, " + request.getName()
+            + ". \n\nCongratulations! Your therapist request has been accepted. Login and add new therapy sessions instantly!";
+            sendEmail(request.getEmail(), "Welcome to WellnessWeb", emailBody);
+
             modelAndView.setViewName("redirect:/admindashboard/therapistsrequests");
         } catch (Exception e) {
             System.out.println("Error accepting request: " + e.getMessage());
@@ -193,6 +206,11 @@ public class AdminController {
 
             request.setIsAccepted("Declined");
             this.therapistRequestRepository.save(request);
+
+            String emailBody = "Hello, " + request.getName()
+            + ". \n\nWe regret to inform you that your therapist request has been declined.";
+            sendEmail(request.getEmail(), "Welcome to WellnessWeb", emailBody);
+
             modelAndView.setViewName("redirect:/admindashboard/therapistsrequests");
         } catch (Exception e) {
             System.out.println("Error declining request: " + e.getMessage());
@@ -200,6 +218,20 @@ public class AdminController {
         }
 
         return modelAndView;
+    }
+
+        private void sendEmail(String recipientEmail, String subject, String body) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(recipientEmail);
+            message.setSubject(subject);
+            message.setText(body);
+
+            emailSender.send(message);
+            System.out.println("Email sent successfully to: " + recipientEmail);
+        } catch (MailException e) {
+            System.err.println("Error sending email: " + e.getMessage());
+        }
     }
 
     private MediaType determineMediaType(String extension) {
