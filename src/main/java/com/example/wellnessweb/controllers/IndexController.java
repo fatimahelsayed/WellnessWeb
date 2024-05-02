@@ -1,6 +1,7 @@
 package com.example.wellnessweb.controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
@@ -16,11 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.wellnessweb.models.Customer;
+import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.repositories.CustomerRepository;
+import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
 
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -33,7 +35,7 @@ public class IndexController {
     private TherapistRequestRepository therapistRequestRepository;
 
     @Autowired
-    private ServletContext servletContext;
+    private TherapistRepository therapistRepository;
 
     @GetMapping("/home")
     public ModelAndView getHome() {
@@ -203,6 +205,17 @@ public class IndexController {
     @GetMapping("/therapists")
     public ModelAndView getTherapists() {
         ModelAndView mav = new ModelAndView("viewtherapists.html");
+        List<Therapist> therapists = this.therapistRepository.findAll();
+        List<TherapistRequest> requests = new ArrayList<>();
+        for(Therapist therapist : therapists)
+        {
+            int requestId = therapist.getTherapistRequestID();
+            TherapistRequest therapistInfo = this.therapistRequestRepository.findById(requestId);
+            requests.add(therapistInfo);
+        }        
+        mav.addObject("therapists", therapists);
+        mav.addObject("requests", requests);
+
         return mav;
     }
 

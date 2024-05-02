@@ -7,11 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>WellnessWeb</title>
     <link rel="shortcut icon"
-    th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
+        th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
 
     <!--Fonts-->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
+    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/viewtherapists.css}">
 </head>
@@ -31,130 +32,32 @@
         </section>
         <div class="slide-container">
             <div class="slide-content">
-                <div class="card-wrapper">
-                    <div class="card">
-                        <div class="image-content">
-                            <span class="overlay"></span>
-                            <div class="card-image">
-                                <img src="../../public/images/therapist.jpg" alt="therapist picture" class="card-image">
+                <div class="card-wrapper" th:each="therapist : ${therapists}">
+                    <div th:each="request : ${requests}">
+                        <div class="card">
+                            <div class="image-content">
+                                <span class="overlay"></span>
+                                <div class="card-image">
+                                    <div th:if="${request.ID == therapist.TherapistRequestID}">
+                                        <img th:src="@{'/Images/' + ${request.Image}}" alt="therapist picture"
+                                            class="card-image">
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="card-content">
-                            <h2 class="name">Jana Hani</h2>
-                            <p class="description">An experienced psychotherapist, committed to providing clients with a
-                                safe, judgment-free space to gain more insight about their experiences and work through
-                                their concerns by using scientific and evidence-based practices in person and online.
-                            </p>
-
-                            <a href="booktherapysession.html">
-                                <button class="button">View More</button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image-content">
-                            <span class="overlay"></span>
-                            <div class="card-image">
-                                <img src="../../public/images/therapist.jpg" alt="therapist picture" class="card-image">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name">Jana Hani</h2>
-                            <p class="description">An experienced psychotherapist, committed to providing clients with a
-                                safe, judgment-free space to gain more insight about their experiences and work through
-                                their concerns by using scientific and evidence-based practices in person and online.
-                            </p>
-
-                            <a href="booktherapysession.html">
-                                <button class="button">View More</button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image-content">
-                            <span class="overlay"></span>
-                            <div class="card-image">
-                                <img src="../../public/images/therapist.jpg" alt="therapist picture" class="card-image">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name">Jana Hani</h2>
-                            <p class="description">An experienced psychotherapist, committed to providing clients with a
-                                safe, judgment-free space to gain more insight about their experiences and work through
-                                their concerns by using scientific and evidence-based practices in person and online.
-                            </p>
-
-                            <a href="booktherapysession.html">
-                                <button class="button">View More</button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image-content">
-                            <span class="overlay"></span>
-                            <div class="card-image">
-                                <img src="../../public/images/therapist.jpg" alt="therapist picture" class="card-image">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name">Jana Hani</h2>
-                            <p class="description">An experienced psychotherapist, committed to providing clients with a
-                                safe, judgment-free space to gain more insight about their experiences and work through
-                                their concerns by using scientific and evidence-based practices in person and online.
-                            </p>
-
-                            <a href="booktherapysession.html">
-                                <button class="button">View More</button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image-content">
-                            <span class="overlay"></span>
-                            <div class="card-image">
-                                <img src="../../public/images/therapist.jpg" alt="therapist picture" class="card-image">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name">Jana Hani</h2>
-                            <p class="description">An experienced psychotherapist, committed to providing clients with a
-                                safe, judgment-free space to gain more insight about their experiences and work through
-                                their concerns by using scientific and evidence-based practices in person and online.
-                            </p>
-
-                            <a href="booktherapysession.html">
-                                <button class="button">View More</button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="image-content">
-                            <span class="overlay"></span>
-                            <div class="card-image">
-                                <img src="../../public/images/therapist.jpg" alt="therapist picture" class="card-image">
-                            </div>
-                        </div>
-
-                        <div class="card-content">
-                            <h2 class="name">Jana Hani</h2>
-                            <p class="description">An experienced psychotherapist, committed to providing clients with a
-                                safe, judgment-free space to gain more insight about their experiences and work through
-                                their concerns by using scientific and evidence-based practices in person and online.
-                            </p>
-
-                            <a href="booktherapysession.html">
-                                <button class="button">View More</button>
-                            </a>
+                            <h2 class="name" th:text="${'Name: ' + therapist.Name}"></h2>
+                            <p class="age" th:text="${'Age: ' + therapist.Age}"></p>
+                            <p class="age" th:text="${'Specialization: ' + therapist.Specialization}"></p>
+                            <p class="age" th:text="${'Email: ' + therapist.Email}"></p>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
+    </div>
     </div>
     <!-- footer -->
     <div th:replace="~{partials/footer}"></div>
