@@ -1,0 +1,98 @@
+.contactus-container {
+    position: relative;
+    font-family: Arial;
+    overflow: hidden;
+    display: block;
+    height: 900px;
+}
+
+.contactus-container img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+}
+
+.text-block {
+    background-color: rgba(226, 225, 217, 0.85);
+    border-radius: 20px;
+    color: #3e6a55;
+    font-size: 14px;
+    width: 50%;
+    left: 25%;
+    right: 25%;
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+    font-weight: 300;
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+
+.text-block input {
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.text-block p {
+    font-size: 15px;
+    padding: 30px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+.text-block textarea {
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    height: 100px;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: Arial;
+}
+
+.text-block .contactus-btn {
+    text-transform: uppercase;
+    outline: 0;
+    background: #71816e;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+.form .contactus-btn:hover,
+.form .contactus-btn:active,
+.form .contactus-btn:focus {
+    background: #9cb198;
+    font-size: 15px;
+    transition: all .3s ease-in;
+}
+
+
+@media screen and (max-width: 800px) {
+    .text-block {
+        width: 80%;
+        left: 9%;
+        right: 9%;
+    }
+
+    .text-block p{
+        padding: 30px;
+    }
+
+}

@@ -253,5 +253,10 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("userProfile.html");
         return mav;
     }
+    @GetMapping("/contactus")
+    public ModelAndView getContactUs() {
+        ModelAndView mav = new ModelAndView("contactus.html");
+        return mav;
+    }
 
 }

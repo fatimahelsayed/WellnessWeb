@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WellnessWeb</title>
+    <link rel="shortcut icon"
+    th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
+    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
+
+    <!--Fonts-->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/contactus.css}">
+</head>
+
+
+<body>
+    <!-- navigation bar -->
+    <div th:replace="~{/partials/navbar}"></div>
+    <div class="contactus-container">
+        <img th:src="@{/images/final.png}" alt="image">
+
+        <div class="text-block">
+            <h1 class="title">Contact us</h4>
+                <p>Please use the menu below to provide feedback on the content and design of our site, make a reprint request, or send us comments and questions. We would love to hear from you!</p>
+                <form class="contactus-form" onsubmit="validateForm()">
+                    <input id="email" type="text" placeholder="email" />
+                    <span id="email-error" class="error-message"></span>
+                    <input id="Name" type="text" placeholder="name" />
+                    <span id="name-error" class="error-message"></span>
+                    <textarea id="letter" placeholder="Comments or Questions" /></textarea>
+                    <span id="letter-error" class="error-message"></span>
+                    <input value="Submit" type="submit" class="contactus-btn">
+                </form>
+        </div>
+    </div>
+   <!-- footer -->
+   <div th:replace="~{partials/footer}"></div>
+
+    <!-- js -->
+    <script th:src="@{/js/loginValidation.js}"></script>
+</body>
+
+</html>
