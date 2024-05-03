@@ -71,7 +71,7 @@
 </div>
 
 <header>
-    <form method="post" action="/blogs/save">
+    <form th:action="@{/blogs/addBlog}" th:object="${blogObj}" method="POST">
         <div class="topic-problem">What topic is your blog related to?
     <select name="topic">
         <option value="">Select an illness</option>
@@ -80,7 +80,7 @@
 </div>
 
 	<div class="blogs-container">
-		<input type="text" class="blog-title" placeholder="Enter Blog Title">
+		<input type="text" class="blog-title" placeholder="Enter Blog Title" th:field="*{titleofBlog}">
 		
 	</div>
 
@@ -89,7 +89,7 @@
 
 <article class="blogs-container">
     <input type = "text" class="blogs-tw"
-     placeholder="Add trigger warnings for readers before proceeding.">
+     placeholder="Add trigger warnings for readers before proceeding." th:field="*{introofBlog}">
 
      
      <p class="publish-details">
@@ -101,7 +101,7 @@
 
 
      <h2 class="blog-topics-title">Content of Blog</h2>
-        <textarea class="blogs-content" placeholder="Enter the content of your blog here..." style="width: 850px; height: 400px;" rows="6" cols="40"></textarea>
+        <textarea class="blogs-content" placeholder="Enter the content of your blog here..." th:field="*{contentofBlog}" style="width: 850px; height: 400px;" rows="6" cols="40"></textarea>
 
 
         <button type="submit" class="publish">Publish your blog</button>
