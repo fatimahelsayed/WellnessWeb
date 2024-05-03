@@ -19,6 +19,7 @@ public class Therapist {
     private String Gender;
     private String PhoneNumber;
     private String Specialization;
+    private String Image;
     private String Email;
     private String Password;
     private LocalDate createdAt;
@@ -26,7 +27,7 @@ public class Therapist {
     public Therapist() {
     }
 
-    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Email, String Password, LocalDate createdAt) {
+    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Image, String Email, String Password, LocalDate createdAt) {
         this.ID = ID;
         this.TherapistRequestID = TherapistRequestID;
         this.Name = Name;
@@ -34,6 +35,7 @@ public class Therapist {
         this.Gender = Gender;
         this.PhoneNumber = PhoneNumber;
         this.Specialization = Specialization;
+        this.Image = Image;
         this.Email = Email;
         this.Password = Password;
         this.createdAt = createdAt;
@@ -93,6 +95,14 @@ public class Therapist {
 
     public void setSpecialization(String Specialization) {
         this.Specialization = Specialization;
+    }
+
+    public String getImage() {
+        return this.Image;
+    }
+
+    public void setImage(String Image) {
+        this.Image = Image;
     }
 
     public String getEmail() {

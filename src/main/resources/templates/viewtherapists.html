@@ -32,33 +32,32 @@
         </section>
         <div class="slide-container">
             <div class="slide-content">
-                <div class="card-wrapper" th:each="therapist : ${therapists}">
-                    <div th:each="request : ${requests}">
+                <div class="card-wrapper">
+                    <div th:each="therapist : ${therapists}">
                         <div class="card">
                             <div class="image-content">
                                 <span class="overlay"></span>
                                 <div class="card-image">
-                                    <div th:if="${request.ID == therapist.TherapistRequestID}">
-                                        <img th:src="@{'/Images/' + ${request.Image}}" alt="therapist picture"
-                                            class="card-image">
-                                    </div>
+                                        <img th:src="@{'/Images/' + ${therapist.Image}}" alt="therapist picture" class="card-image">
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="card-content">
-                            <h2 class="name" th:text="${'Name: ' + therapist.Name}"></h2>
-                            <p class="age" th:text="${'Age: ' + therapist.Age}"></p>
-                            <p class="age" th:text="${'Specialization: ' + therapist.Specialization}"></p>
-                            <p class="age" th:text="${'Email: ' + therapist.Email}"></p>
+                            <div class="card-content">
+                                <h2 class="name" th:text="${'Name: ' + therapist.Name}"></h2>
+                                <p class="age" th:text="${'Age: ' + therapist.Age}"></p>
+                                <p class="specialization" th:text="${'Specialization: ' + therapist.Specialization}">
+                                </p>
+                                <p class="email" th:text="${'Email: ' + therapist.Email}"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
     </div>
-    </div>
+
+
     <!-- footer -->
     <div th:replace="~{partials/footer}"></div>
 </body>

@@ -217,7 +217,7 @@ public class IndexController {
         mav.addObject("requests", requests);
 
         return mav;
-    }
+    }   
 
     @GetMapping("/blogs")
     public ModelAndView getBlogs() {
