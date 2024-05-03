@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add a Blog</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+
+    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}" />
+    <script th:src="@{/richtext/jquery.richtext.min.js}"></script>
+  </head>
+  <body>
+
+
+
+    <form method="post" action="/save">
+
+        <h2>What is the title? </h2>
+        <input type="text"  name="content-title">
+
+        <h2>Write the introduction of blog: </h2>
+        <input type="text" name="content-intro">
+
+        <h2>Write the content below: </h2>
+      <textarea id="richtext" name="content"></textarea>
+      <button type="submit">Save</button>
+    </form>
+
+    <script>
+        $(document).ready(function () {
+          $("#richtext").richText({
+            fontAwesome: true,
+            imageUpload:false,
+            fileUpload:false,
+            table: false,
+
+          });
+        });
+      </script>
+  </body>
+</html>

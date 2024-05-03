@@ -1,30 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Add a Blog</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/addblog.css}" />
+</head>
+<body>
+
+    <div th:replace="~{/partials/navbar}"></div>
+
+    <div class="why-blog">
+    <h1>Why blogging?</h1>
+    <p>For individuals grappling with mental illness, blogging can be a transformative tool, 
+        offering a myriad of benefits that extend beyond the digital realm. <br> From providing an expressive outlet to
+         fostering community and advocacy, blogging holds the potential to become a vital lifeline in the journey 
+         towards mental wellness.
+
+    </p>
+
+</div>
+
+<div class="start-blogging">Start blogging now.</div>
+
+<form method="post" action="/save">
+    <h2>What is the title?</h2>
+    <input type="text" name="content-title" />
+
+    <h2>What topic is your blog related to?</h2>
+    <select name="topic">
+        <option value="">Select an illness</option>
+        <option th:each="illness : ${illnesses}" th:value="${illness.name}" th:text="${illness.name}"></option>
+    </select>
+
+    <h2>Are there any trigger warnings to be considered?</h2>
+    <input type="text" name="content-tw">
+
+    <h2>Write the content below:</h2>
+    <textarea id="richtext" name="content" style="width: 900px; height: 500px;" rows="6" cols="40"></textarea>
+    <button type="submit">Save</button>
+    
+</form>
+
+<div th:replace="~{partials/footer}"></div>
+
+</body>
 
 
-    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}" />
-    <script th:src="@{/richtext/jquery.richtext.min.js}"></script>
-  </head>
-  <body>
-    <h2>Write your blog:</h2>
-
-    <form method="post" action="/save">
-      <textarea id="richtext" name="content"></textarea>
-      <button type="submit">Save</button>
-    </form>
-
-    <script>
-      $(document).ready(function () {
-        $("#richtext").richText({
-          fontAwesome: true,
-        });
-      });
-    </script>
-  </body>
 </html>

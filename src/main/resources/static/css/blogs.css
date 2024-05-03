@@ -29,7 +29,6 @@
 
 
 body {
-    font-family: sans-serif;
     color: #222;
     margin: 0;
     background-color: rgb(243, 241, 238);
@@ -80,7 +79,9 @@ body {
     font-size: 24px;
   }
 
-  .blogs-content {
+  .blogs-content,
+  .blogs-content-intro,
+  .blogs-tw {
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 28px;
@@ -147,3 +148,10 @@ body {
 }
 
 
+
+/* add a blog page */
+
+.why-blog h1{
+  font-family: 'playfair-bold';
+  color: #305844;
+}

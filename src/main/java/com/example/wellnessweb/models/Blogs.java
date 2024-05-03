@@ -17,56 +17,107 @@ public class Blogs {
     private LocalDate Date;
     private LocalTime Time;
     private String Info;
+    private String ContentofBlog;
+    private String TitleofBlog;
+    private String IntroofBlog;
+
+
+    public int getID() {
+        return ID;
+    }
+
+
+    public void setID(int iD) {
+        ID = iD;
+    }
+
+
+    public int getUserID() {
+        return UserID;
+    }
+
+
+    public void setUserID(int userID) {
+        UserID = userID;
+    }
+
+
+    public LocalDate getDate() {
+        return Date;
+    }
+
+
+    public void setDate(LocalDate date) {
+        Date = date;
+    }
+
+
+    public LocalTime getTime() {
+        return Time;
+    }
+
+
+    public void setTime(LocalTime time) {
+        Time = time;
+    }
+
+
+    public String getInfo() {
+        return Info;
+    }
+
+
+    public void setInfo(String info) {
+        Info = info;
+    }
+
+
+    public String getContentofBlog() {
+        return ContentofBlog;
+    }
+
+
+    public void setContentofBlog(String contentofBlog) {
+        ContentofBlog = contentofBlog;
+    }
+
+
+    public String getTitleofBlog() {
+        return TitleofBlog;
+    }
+
+
+    public void setTitleofBlog(String titleofBlog) {
+        TitleofBlog = titleofBlog;
+    }
+
+
+    public String getIntroofBlog() {
+        return IntroofBlog;
+    }
+
+
+    public void setIntroofBlog(String introofBlog) {
+        IntroofBlog = introofBlog;
+    }
+
+
+    public Blogs(int iD, int userID, LocalDate date, LocalTime time, String info, String contentofBlog,
+            String titleofBlog, String introofBlog) {
+        ID = iD;
+        UserID = userID;
+        Date = date;
+        Time = time;
+        Info = info;
+        ContentofBlog = contentofBlog;
+        TitleofBlog = titleofBlog;
+        IntroofBlog = introofBlog;
+    }
+
 
     public Blogs() {
     }
 
-    public Blogs(int ID, int UserID, LocalDate Date, LocalTime Time, String Info) {
-        this.ID = ID;
-        this.UserID = UserID;
-        this.Date = Date;
-        this.Time = Time;
-        this.Info = Info;
-    }
 
-    public int getID() {
-        return this.ID;
-    }
-
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public int getUserID() {
-        return this.UserID;
-    }
-
-    public void setUserID(int UserID) {
-        this.UserID = UserID;
-    }
-
-    public LocalDate getDate() {
-        return this.Date;
-    }
-
-    public void setDate(LocalDate Date) {
-        this.Date = Date;
-    }
-
-    public LocalTime getTime() {
-        return this.Time;
-    }
-
-    public void setTime(LocalTime Time) {
-        this.Time = Time;
-    }
-
-    public String getInfo() {
-        return this.Info;
-    }
-
-    public void setInfo(String Info) {
-        this.Info = Info;
-    }
 
 }
