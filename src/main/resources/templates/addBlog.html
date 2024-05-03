@@ -6,7 +6,55 @@
 
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}" />
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/addblog.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/blogs.css}">
+
+    <style>
+        .blog-title { 
+          transform: translateY(30px);
+          border: none;
+          outline: none;
+          font-size: 40px;
+          font-family: 'playfair-bold';
+          background-color: transparent;
+          color: #305844;
+        }
+
+        .blogs-content,
+  .blogs-content-intro,
+  .blogs-tw {
+    font-size: 17px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 28px;
+    font-weight: 500;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%; 
+    height: 50%;
+  }
+
+  .publish {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 16px;
+  background-color: #305844;
+  color: rgb(243, 241, 238);
+  cursor: pointer;
+  letter-spacing: 1px;
+  border: none;
+  width: 175px;
+  height: 35px;
+}
+
+.publish:hover{
+    transition: .5s ease-in;
+    background-color: #559072;
+    letter-spacing: 1.5px;
+}
+        </style>
+
 </head>
+
+
 <body>
 
     <div th:replace="~{/partials/navbar}"></div>
@@ -22,24 +70,44 @@
 
 </div>
 
-<div class="start-blogging">Start blogging now.</div>
-
-<form method="post" action="/save">
-    <h2>What is the title?</h2>
-    <input type="text" name="content-title" />
-
-    <h2>What topic is your blog related to?</h2>
+<header>
+    <form method="post" action="/blogs/save">
+        <div class="topic-problem">What topic is your blog related to?
     <select name="topic">
         <option value="">Select an illness</option>
         <option th:each="illness : ${illnesses}" th:value="${illness.name}" th:text="${illness.name}"></option>
     </select>
+</div>
 
-    <h2>Are there any trigger warnings to be considered?</h2>
-    <input type="text" name="content-tw">
+	<div class="blogs-container">
+		<input type="text" class="blog-title" placeholder="Enter Blog Title">
+		
+	</div>
 
-    <h2>Write the content below:</h2>
-    <textarea id="richtext" name="content" style="width: 900px; height: 500px;" rows="6" cols="40"></textarea>
-    <button type="submit">Save</button>
+</header>
+
+
+<article class="blogs-container">
+    <input type = "text" class="blogs-tw"
+     placeholder="Add trigger warnings for readers before proceeding.">
+
+     
+     <p class="publish-details">
+        <small>By <em>Author Name</em> ,
+            <em> 02/02/2020</em></small>
+    </p>
+
+
+
+
+     <h2 class="blog-topics-title">Content of Blog</h2>
+        <textarea class="blogs-content" placeholder="Enter the content of your blog here..." style="width: 850px; height: 400px;" rows="6" cols="40"></textarea>
+
+
+        <button type="submit" class="publish">Publish your blog</button>
+
+ </article>
+ 
     
 </form>
 

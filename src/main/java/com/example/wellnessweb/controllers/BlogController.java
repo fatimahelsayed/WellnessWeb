@@ -14,7 +14,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.wellnessweb.models.Illness;
+import com.example.wellnessweb.models.Blogs;
+
+
+import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.IllnessRepository;
+
 
 import java.util.List; 
 
@@ -24,6 +29,9 @@ public class BlogController {
 
     @Autowired
     private IllnessRepository illnessRepository;
+
+    @Autowired
+    private BlogsRepository blogsRepository;
 
     @GetMapping("/addBlog")
     public ModelAndView getIllnesses() {

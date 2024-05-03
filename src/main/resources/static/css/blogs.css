@@ -71,6 +71,12 @@ body {
 
   .blog-title { 
     transform: translateY(30px);
+    border: none;
+    outline: none;
+    font-size: 40px;
+    font-family: 'playfair-bold';
+    background-color: transparent;
+    color: #305844;
   }
 
   .blog-topics-title{
@@ -82,10 +88,15 @@ body {
   .blogs-content,
   .blogs-content-intro,
   .blogs-tw {
-    font-size: 18px;
+    font-size: 17px;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 28px;
     font-weight: 500;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%; 
+    height: 50%;
   }
 
   .topic-problem{
@@ -154,4 +165,12 @@ body {
 .why-blog h1{
   font-family: 'playfair-bold';
   color: #305844;
+}
+
+.publish {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 18px;
+  background-color: #305844;
+  color: rgb(243, 241, 238);
+  cursor: pointer;
 }
