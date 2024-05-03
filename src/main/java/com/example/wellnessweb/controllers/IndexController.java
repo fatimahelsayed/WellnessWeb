@@ -48,6 +48,11 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("login.html");
         return mav;
     }
+    @GetMapping("/employeelogin")
+    public ModelAndView getEmpLogin() {
+        ModelAndView mav = new ModelAndView("empLogin.html");
+        return mav;
+    }
 
     @PostMapping("/login")
     public RedirectView loginProcess(@RequestParam("username") String username,
