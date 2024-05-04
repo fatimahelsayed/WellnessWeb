@@ -47,10 +47,10 @@
                                 </thead>
                                 <tbody>
                                     <tr th:each="therapySess : ${therapySessions}">
-                                        <th scope="row" th:text="therapySess.ID"> </th>
-                                        <td th:text="therapySess.Date"></td>
-                                        <td th:text="therapySess.StartTime"></td>
-                                        <td th:text="therapySess.EndTime"></td>
+                                        <th scope="row" th:text="${therapySess.ID}"> </th>
+                                        <td th:text="${therapySess.Date}"></td>
+                                        <td th:text="${therapySess.StartTime}"></td>
+                                        <td th:text="${therapySess.EndTime}"></td>
                                         <td>
                                             <a href="" class="btn btn-sm btn-primary">Edit</a>
                                             <form method="post" style="display: inline;">
