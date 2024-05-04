@@ -69,21 +69,20 @@
         <div class="container-fluid pt-3">
             <div class="row removable">
                 <div class="col-lg">
-                    <form action="" class="user-form">
+                    <form th:action="@{/therapistdashboard/addsession}" th:object="${newSession}" method="post" class="user-form">
                         <h1>Add a Session</h1>
                         <br>
-                        <label for="date">Date</label>
-                        <input name="date" type="date">
+                        <label for="Date">Date</label>
+                        <input name="Date" type="date"  th:field="*{Date}">
                         <br>
                         <br>
-                        <label for="from">From</label>
-                        <input name="from" type="time">
-                        <label for="to">To</label>
-                        <input name="to" type="time">
+                        <label for="StartTime">From</label>
+                        <input name="StartTime" type="time" th:field="*{StartTime}">
+                        <label for="EndTime">To</label>
+                        <input name="EndTime" type="time"th:field="*{EndTime}">
                         <br>
                         <br>
                         <button class="btn btn-add-form" type="submit">Add Session</button>
-
                     </form>
                 </div>
             </div>

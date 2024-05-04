@@ -13,7 +13,7 @@ public class TherapySession {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private int TherapistID;
+    private int therapistID;
     private LocalDate Date;
     private LocalTime StartTime;
     private LocalTime EndTime;
@@ -24,7 +24,7 @@ public class TherapySession {
 
     public TherapySession(int ID, int TherapistID, LocalDate Date, LocalTime StartTime, LocalTime EndTime, double Price) {
         this.ID = ID;
-        this.TherapistID = TherapistID;
+        this.therapistID = TherapistID;
         this.Date = Date;
         this.StartTime = StartTime;
         this.EndTime = EndTime;
@@ -40,11 +40,11 @@ public class TherapySession {
     }
 
     public int getTherapistID() {
-        return this.TherapistID;
+        return this.therapistID;
     }
 
     public void setTherapistID(int TherapistID) {
-        this.TherapistID = TherapistID;
+        this.therapistID = TherapistID;
     }
 
     public LocalDate getDate() {
