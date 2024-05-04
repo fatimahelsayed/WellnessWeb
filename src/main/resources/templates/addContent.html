@@ -120,9 +120,83 @@
             style="width: 850px; height: 400px"
           ></textarea>
 
+          <div id="subtopics-container">
+            <!-- Subtopic fields will be dynamically added here -->
+          </div>
+          <button type="button" class="publish" onclick="addSubtopic()">
+            Add Subtopic
+          </button>
+          <script>
+            function addSubtopic() {
+         var subtopicContainer = document.getElementById("subtopics-container");
+         var newSubtopicDiv = document.createElement("div");
+       
+         newSubtopicDiv.innerHTML = `
+           <div>
+             <input type="text" class="subtopic-title" th:name="subtopicTitle[]" th:field="*{subtopicList[].subtopicTitle}" placeholder="Enter Subtopic Title" required />
+           </div>
+           <div>
+             <label for="subtopicContent" class="subtopic-title" style="font-size: 22px;">Subtopic Content:</label>
+             <br>
+             <textarea th:name="subtopicContent[]" th:field="*{subtopicList[].subtopicContent}" class="subtopic-content" style="width: 800px; height: 350px;" placeholder="Enter the content of your subtopic here..." required></textarea>
+           </div>
+         `;
+       
+             
+       
+               var styleElement = document.createElement("style");
+               // Define CSS styles
+               var css = `
+                  .subtopic-title {
+                   padding-top: 24px;
+                     border: none;
+               outline: none;
+               font-size: 30px;
+               font-family: "playfair-bold";
+               background-color: transparent;
+               color: #305844;
+               padding-bottom: 20px;
+                   }
+                   
+                  .subtopic-content {
+                     font-size: 17px;
+               font-family: Arial, Helvetica, sans-serif;
+               line-height: 28px;
+               font-weight: 500;
+               border: none;
+               outline: none;
+               background-color: transparent;
+               width: 100%;
+               height: 50%;
+                   }
+               `;
+               // Append CSS styles to the <style> element
+               styleElement.appendChild(document.createTextNode(css));
+               // Append the <style> element to the document's <head>
+               document.head.appendChild(styleElement);
+       
+               subtopicContainer.appendChild(newSubtopicDiv);
+               subtopicsHidden.appendChild(subtopicHidden);
+             }
+           </script>
+          <br />
+
+         
+
           <blockquote>
-            <textarea th:name="quote" th:field="*{quote}" placeholder="Enter the quote"></textarea> <br>
-            <input type="text" th:name="author" th:field="*{authorOfQuote}" placeholder="Author of quote" />
+            <textarea
+              th:name="quote"
+              th:field="*{quote}"
+              placeholder="Enter the quote"
+              style="width: 600px; height: 70px"
+            ></textarea>
+            <br />
+            <input
+              type="text"
+              th:name="author"
+              th:field="*{authorOfQuote}"
+              placeholder="Author of quote"
+            />
           </blockquote>
 
           <h2 class="add-img">Add an image related to the topic</h2>
@@ -137,6 +211,8 @@
         </article>
       </form>
     </header>
+
+ 
 
     <div th:replace="~{partials/footer}"></div>
   </body>

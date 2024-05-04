@@ -1,11 +1,15 @@
 package com.example.wellnessweb.models;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 import javax.persistence.Lob;
 
@@ -23,8 +27,12 @@ public class Content {
     private String quote;
     private String authorOfQuote;
 
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
+ private List<Subtopics> subtopicList;
+
     public Content(int iD, int therapistID, LocalDate date, String illnessName, String contentofArticle,
-            String titleofArticle, String introofArticle, String quote, String authorOfQuote, byte[] image) {
+            String titleofArticle, String introofArticle, String quote, String authorOfQuote, 
+            byte[] image) {
         ID = iD;
         TherapistID = therapistID;
         Date = date;
@@ -34,7 +42,16 @@ public class Content {
         IntroofArticle = introofArticle;
         this.quote = quote;
         this.authorOfQuote = authorOfQuote;
+        this.subtopicList = new ArrayList<>(); // Initialize subtopics with an empty list
         this.image = image;
+    }
+
+    public List<Subtopics> getSubtopicList() {
+        return subtopicList;
+    }
+    
+    public void setSubtopicList(List<Subtopics> subtopicList) {
+        this.subtopicList = subtopicList;
     }
 
     public String getQuote() {
@@ -53,10 +70,9 @@ public class Content {
         this.authorOfQuote = authorOfQuote;
     }
 
-    public Content(){
+    public Content() {
 
     }
-
 
     @Lob
     private byte[] image;
