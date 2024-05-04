@@ -5,34 +5,39 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.wellnessweb.models.Illness;
+import com.example.wellnessweb.models.Blogs;
+import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.IllnessRepository;
 
-import java.util.List; 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@RestController
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+@Controller
 @RequestMapping("/blogs")
 public class BlogController {
 
     @Autowired
     private IllnessRepository illnessRepository;
 
-    @GetMapping("/addBlog")
-    public ModelAndView getIllnesses() {
+    @Autowired
+    private BlogsRepository blogsRepository;
+
+    @GetMapping("addBlog")
+    public ModelAndView getBlogForm() {
         ModelAndView mav = new ModelAndView("addBlog.html");
-        List<Illness> illnesses = this.illnessRepository.findAll();
-
-        mav.addObject("illnesses", illnesses);
-
+        mav.addObject("illnesses", illnessRepository.findAll());
+        Blogs blogObj = new Blogs();
+        mav.addObject("blogObj", blogObj); 
         return mav;
     }
-
+    
+    @PostMapping("addBlog")
+    public ModelAndView saveBlog(@ModelAttribute Blogs blogObj) { // Changed "blogs" to "blog"
+        blogsRepository.save(blogObj);
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("redirect:/home"); 
+        return modelAndView;
+    }
 }

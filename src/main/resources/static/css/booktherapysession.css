@@ -1,80 +1,99 @@
 .intro-body {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
-    flex-direction: column; 
+    flex-direction: column;
 }
-.card-image { 
-    width: 250px; 
+
+.card-image {
+    width: 250px;
     height: 250px;
 }
+
 .card-content {
     margin-top: 20px;
-    max-width: 800px; 
-    text-align: left; 
-    margin: 0 auto; 
-    padding: 0 10px; 
+    max-width: 800px;
+    text-align: left;
+    margin: 0 auto;
+    padding: 0 10px;
 }
-.card-content .name{
-    font-size:40px;
-    font-family: 'playfair-bold';
-}
-.card-content .description{
-    font-size:20px;
+
+.card-content .name {
+    font-size: 40px;
     font-family: 'playfair';
+    padding-bottom: 30px;
+    color: #3a493b;
+}
+
+.card-content .description {
+    font-size: 20px;
+    opacity: 60%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     line-height: 1.5;
 }
+
 .card-content .specialization {
-    color:  #b7ad76;
-    font-family: 'playfair-italic';
-    font-size: 18px; 
-    margin-top: -20px; 
-    margin-bottom: 20px; 
+    color: #b7ad76;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: normal;
+    font-size: 18px;
+    margin-top: -20px;
+    margin-bottom: 5px;
 }
+
 .details {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
-.details div{
-    padding:30px;
-    width:320px;
+
+.details div {
+    padding: 30px;
+    width: 320px;
 }
 
 .details h2 {
-    font-family: 'playfair-bold';
-    color: #716002; 
+    font-family: 'playfair';
+    font-weight: normal;
+    color: #716002;
     flex: 0 0 auto;
     margin-right: 20px;
 }
 
 .details h3 {
-    font-family: 'playfair';
+    opacity: 60%;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: normal;
     flex: 0 0 100%;
     margin-bottom: 10px;
 }
-.slide-container .schedule{
-    font-size:36px;
-    margin-bottom:40px;
-    text-align:left;
-    font-family: 'playfair-bold';
+
+.slide-container .schedule {
+    font-size: 36px;
+    margin-bottom: 40px;
+    text-align: left;
+    font-family: 'playfair';
+    color: #3a493b;
+    font-weight: 570;
+    letter-spacing: -.01rem;
 }
-.card .times{
+
+.card .times {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
-.card p{
-    color: #716002; 
-    font-size:20px;
-    font-family: 'playfair';
-}
-.times div{
-    padding:20px;
-    width:200px;
+
+.card p {
+    color: #716002;
+    font-size: 20px;
 }
 
+.times div {
+    padding: 20px;
+    width: 200px;
+}

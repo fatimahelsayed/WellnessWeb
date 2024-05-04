@@ -38,7 +38,7 @@ body {
 
 .why-blog h1{
     font-family: 'playfair-bold';
-    color: #305844;
+    color: rgb(255, 255, 255);
     
   }
 
@@ -50,7 +50,7 @@ body {
     text-align: center;
     padding: 20px;
     border: 1px solid #ccc;
-    background-color: rgb(243, 241, 238);
+    background-color: #305844;
 }
 .start-blogging {
     font-family: 'playfair';

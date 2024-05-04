@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 body {
+
   background-color: rgb(234, 231, 227);
   color: #3a493b;
 }
@@ -42,6 +43,7 @@ body {
   font-size: 14px;
   cursor: pointer;
 }
+
 .form textarea {
   outline: 0;
   background: #f2f2f2;
@@ -76,7 +78,7 @@ body {
 }
 
 .error-message {
-  color: white;
+  color: rgb(171, 0, 0);
   transition: .3s ease-in;
 }
 
@@ -135,9 +137,11 @@ body {
 .container .info span .fa {
   color: #EF3B3A;
 }
+
 input[type=file] {
-	cursor: pointer;
+  cursor: pointer;
 }
-.letter{
+
+.letter {
   height: 70px;
 }
