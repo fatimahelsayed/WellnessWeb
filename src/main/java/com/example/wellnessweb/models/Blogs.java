@@ -16,10 +16,21 @@ public class Blogs {
     private int UserID;
     private LocalDate Date;
     private LocalTime Time;
-    private String Info;
     private String ContentofBlog;
     private String TitleofBlog;
     private String IntroofBlog;
+    private String illnessName;
+
+
+
+    public String getIllnessName() {
+        return illnessName;
+    }
+
+
+    public void setIllnessName(String illnessName) {
+        this.illnessName = illnessName;
+    }
 
 
     public int getID() {
@@ -62,14 +73,7 @@ public class Blogs {
     }
 
 
-    public String getInfo() {
-        return Info;
-    }
 
-
-    public void setInfo(String info) {
-        Info = info;
-    }
 
 
     public String getContentofBlog() {
@@ -102,16 +106,16 @@ public class Blogs {
     }
 
 
-    public Blogs(int iD, int userID, LocalDate date, LocalTime time, String info, String contentofBlog,
-            String titleofBlog, String introofBlog) {
+    public Blogs(int iD, int userID, LocalDate date, LocalTime time, String contentofBlog,
+            String titleofBlog, String introofBlog, String illnessName) {
         ID = iD;
         UserID = userID;
         Date = date;
         Time = time;
-        Info = info;
         ContentofBlog = contentofBlog;
         TitleofBlog = titleofBlog;
         IntroofBlog = introofBlog;
+        illnessName = illnessName;
     }
 
 

@@ -73,10 +73,11 @@
 <header>
     <form th:action="@{/blogs/addBlog}" th:object="${blogObj}" method="POST">
         <div class="topic-problem">What topic is your blog related to?
-    <select name="topic">
-        <option value="">Select an illness</option>
-        <option th:each="illness : ${illnesses}" th:value="${illness.name}" th:text="${illness.Name}"></option>
-    </select>
+            <select name="illnessName" th:field="*{illnessName}">
+                <option value="">Select an illness</option>
+                <option th:each="illness : ${illnesses}" th:value="${illness.name}" th:text="${illness.Name}"></option>
+            </select>
+            
 </div>
 
 	<div class="blogs-container">
@@ -84,7 +85,6 @@
 		
 	</div>
 
-</header>
 
 
 <article class="blogs-container">
@@ -94,15 +94,14 @@
      
      <p class="publish-details">
         <small>By <em>Author Name</em> ,
-            <em> 02/02/2020</em></small>
-    </p>
+            <em th:text="${#dates.format(#dates.createNow(), 'MM/dd/yyyy')}"></em> </small>
+        </p>
 
 
-
-
-     <h2 class="blog-topics-title">Content of Blog</h2>
-        <textarea class="blogs-content" placeholder="Enter the content of your blog here..." th:name="*{ContentofBlog}"  th:value="${blogObj.ContentofBlog}"
-        style="width: 850px; height: 400px;" rows="6" cols="40"></textarea>
+    <textarea class="blogs-content" placeholder="Enter the content of your first blog here..." 
+    th:field="*{ContentofBlog}" 
+    style="width: 850px; height: 400px;" 
+    rows="40" cols="80"></textarea>
 
 
         <button type="submit" class="publish">Publish your blog</button>
@@ -111,6 +110,9 @@
  
     
 </form>
+
+</header>
+
 
 <div th:replace="~{partials/footer}"></div>
 

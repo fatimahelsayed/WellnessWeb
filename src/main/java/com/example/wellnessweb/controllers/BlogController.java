@@ -1,5 +1,7 @@
 package com.example.wellnessweb.controllers;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +13,7 @@ import com.example.wellnessweb.repositories.IllnessRepository;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 @Controller
@@ -23,6 +25,7 @@ public class BlogController {
 
     @Autowired
     private BlogsRepository blogsRepository;
+    
 
     @GetMapping("addBlog")
     public ModelAndView getBlogForm() {
@@ -34,8 +37,10 @@ public class BlogController {
     }
     
     @PostMapping("addBlog")
-    public ModelAndView saveBlog(@ModelAttribute Blogs blogObj) { // Changed "blogs" to "blog"
-        blogsRepository.save(blogObj);
+public ModelAndView saveBlog(@ModelAttribute Blogs blogObj, @RequestParam("illnessName") String illnessName) {
+     blogObj.setIllnessName(illnessName);
+     blogObj.setDate(LocalDate.now());
+     blogsRepository.save(blogObj);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/home"); 
         return modelAndView;

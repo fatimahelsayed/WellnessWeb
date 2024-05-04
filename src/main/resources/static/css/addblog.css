@@ -45,12 +45,15 @@ body {
   .why-blog p{
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
+    color: rgb(255, 255, 255);
+
   }
   .why-blog {
     text-align: center;
     padding: 20px;
     border: 1px solid #ccc;
     background-color: #305844;
+    color: rgb(255, 255, 255);
 }
 .start-blogging {
     font-family: 'playfair';
