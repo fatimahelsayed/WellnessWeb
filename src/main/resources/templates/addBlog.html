@@ -75,7 +75,7 @@
         <div class="topic-problem">What topic is your blog related to?
     <select name="topic">
         <option value="">Select an illness</option>
-        <option th:each="illness : ${illnesses}" th:value="${Nllness.name}" th:text="${illness.Name}"></option>
+        <option th:each="illness : ${illnesses}" th:value="${illness.name}" th:text="${illness.Name}"></option>
     </select>
 </div>
 
