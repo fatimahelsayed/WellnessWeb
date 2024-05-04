@@ -1,5 +1,6 @@
 package com.example.wellnessweb.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -9,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 
 @Entity
-public class TherapistRequest {
+public class TherapistRequest implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

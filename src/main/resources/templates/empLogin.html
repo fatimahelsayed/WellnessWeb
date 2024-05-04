@@ -24,10 +24,10 @@
 
         <h1 class="title">Employee Log in</h1>
         <div class="form">
-            <form th:action="@{/emplogin}" method="post" autocomplete="off" class="login-form" onsubmit="return validateForm()">
-                <input id="email" type="text" placeholder="email" />
+            <form th:action="@{/employeelogin}" method="post" autocomplete="off" class="login-form" onsubmit="return validateForm()">
+                <input id="email" name="email" type="text" placeholder="email" />
                 <span id="email-error" class="error-message"></span>
-                <input id="password" type="password" placeholder="password" />
+                <input id="password" type="password" placeholder="password" name="Password" />
                 <span id="password-error" class="error-message"></span>
                 <input value="Login" type="submit" class="login-btn">
             </form>

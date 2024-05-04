@@ -1,5 +1,6 @@
 package com.example.wellnessweb.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
@@ -9,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 
 @Entity
-public class Therapist {
+public class Therapist implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
@@ -20,14 +21,14 @@ public class Therapist {
     private String PhoneNumber;
     private String Specialization;
     private String Image;
-    private String Email;
+    private String email;
     private String Password;
     private LocalDate createdAt;
 
     public Therapist() {
     }
 
-    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Image, String Email, String Password, LocalDate createdAt) {
+    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Image, String email, String Password, LocalDate createdAt) {
         this.ID = ID;
         this.TherapistRequestID = TherapistRequestID;
         this.Name = Name;
@@ -36,7 +37,7 @@ public class Therapist {
         this.PhoneNumber = PhoneNumber;
         this.Specialization = Specialization;
         this.Image = Image;
-        this.Email = Email;
+        this.email = email;
         this.Password = Password;
         this.createdAt = createdAt;
     }
@@ -106,11 +107,11 @@ public class Therapist {
     }
 
     public String getEmail() {
-        return this.Email;
+        return this.email;
     }
 
     public void setEmail(String Email) {
-        this.Email = Email;
+        this.email = Email;
     }
 
     public String getPassword() {

@@ -30,9 +30,9 @@
     --cyan: #2bffc6;
     --white: #fff;
     --gray: #8898aa;
-    --gray-dark: #32325d;
+    --gray-dark: #325d4b;
     --lighter: #e9ecef;
-    --bs-body-color: #525f7f;
+    --bs-body-color: #527f6e;
     --bs-primary: #5e72e4;
     --bs-secondary: #f7fafc;
     --bs-success: null;
@@ -40,8 +40,8 @@
     --bs-warning: #3a493b;
     --bs-danger: #f5365c;
     --bs-light: #ced4da;
-    --bs-dark: #212529;
-    --default: #172b4d;
+    --bs-dark: #212923;
+    --default: #174d28;
     --white: #fff;
     --neutral: #fff;
     --darker: black;
@@ -26178,8 +26178,13 @@ pre>code.highlight {
     align-items: center;
     text-align: center;
 }
-
-.select-days {}
+.user-form h1{
+    color: #3a493b;
+}
+.user-form label{
+    padding-right: 5px;
+    font-size: 17px;
+}
 
 .add-client {
     padding: 5px;
@@ -26191,6 +26196,7 @@ pre>code.highlight {
     padding: 5px;
     width: 40%;
     border: none;
+    font-size: 17px;
     transition: all .5s ease-in;
     max-width: 400px;
 }
@@ -26199,7 +26205,8 @@ pre>code.highlight {
     margin: 5px;
     padding: 5px;
     width: 40%;
-    background-color: rgb(239, 172, 172);
+    max-width: 280px;
+    background-color: #71816e;
     font-weight: 400px;
     font-size: 17px;
     color: white;
@@ -26208,7 +26215,7 @@ pre>code.highlight {
 
 .btn-add-form:hover {
     color: white;
-    background-color: rgb(249, 172, 172);
+    background: #3a493b;
 }
 
 .centeredHeader {
@@ -26313,9 +26320,7 @@ pre>code.highlight {
     padding: 10px;
 }
 
-#delete-fix{
-    
-}
+
 .bx bxs-universal-access
   {
     color: #ffffff

@@ -7,4 +7,5 @@ import com.example.wellnessweb.models.Admin;
 public interface AdminRepository extends JpaRepository<Admin,Integer> {
     boolean existsByEmail(String email);
     boolean existsByPhoneNumber(String phoneNumber);
+    Admin findByEmail(String email);
 }

@@ -1,0 +1,218 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Profile Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet"
+        href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
+    </head>
+
+<body>
+    <div th:replace="~{partials/therapistDashSideBar}"></div>
+    <div class="main-content" id="panel">
+        <div th:replace="~{partials/therapistDashNavBar}"></div>
+
+        <div class="container-fluid pt-3">
+            <div class="row removable">
+                <div class="col-lg-8">
+                    <div class="card card-profile">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-3 order-lg-2">
+                                <div class="card-profile-image">
+                                    <a href="#">
+                                        <img th:src="@{'/images/'+ ${therapistReq.Image}}" class="rounded-circle">
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                            <div class="d-flex justify-content-between">
+                                <a href="" class="btn btn-sm mr-4 btn-primary">Edit</a>
+                            </div>
+                        </div>
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="card-profile-stats d-flex justify-content-center">
+                                        <div>
+                                            <span class="heading" th:text="${therapist.Name}"></span>
+                                            <span class="description" th:text="${therapist.Specialization}"></span>
+                                        </div>
+                                        <!-- <div>
+
+                                            <span class="heading">0</span>
+                                            <span class="description">Cart</span>
+                                        </div>
+                                        <div>
+                                            <span class="heading">
+                                                3
+                                            </span>
+                                            <span class="description">wishlist</span>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="text-center">
+                                <h5 class="h3">
+                                    Lana Hamed<span class="font-weight-light">
+                                </h5>
+                            </div> -->
+                            <div class="text-center">
+                                <h5 class="h3" th:text="${therapist.email}"><span class="font-weight-light">
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Recent Customers</h3>
+                                </div>
+                                <div class="col text-right">
+                                    <a href="" class="btn btn-sm btn-primary">See all</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Gender</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            anonymous123
+                                        </th>
+                                        <td>
+                                            anonymous@email.com
+                                        </td>
+                                        <td>
+                                            20
+                                        </td>
+                                        <td>
+                                            female
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Upcoming Sessions</h3>
+                                </div>
+                                <div class="col text-right">
+                                    <a href="" class="btn btn-sm btn-primary">See all</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">From</th>
+                                        <th scope="col">To</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            01
+                                        </th>
+                                        <td>
+                                            20/05/2024
+                                        </td>
+                                        <td>
+                                            5:00 PM
+                                        </td>
+                                        <td>
+                                            6:00 PM
+                                        </td>
+                                        <td>
+                                            Reserved
+                                        </td>
+
+                                        <td>
+                                           <a href="" class="btn btn-sm btn-primary">View Details</a>
+                                        </td>
+                                        
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card card-stats">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Blogs</h5>
+                                    <span class="h2 font-weight-bold mb-0">5</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape text-white rounded-circle shadow bg-gradient-warning">
+                                        <i class='bx bxs-calendar-check'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-stats">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Sessions</h5>
+                                    <span class="h2 font-weight-bold mb-0">9</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape text-white rounded-circle shadow bg-yellow">
+                                        <i class='bx bxs-group'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <script
+        src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/jquery.min.js"></script>
+    <script
+        src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/bootstrap.bundle.min.js"></script>
+    <script
+        src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/js.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script
+        src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/chart.extension.js"></script>
+    <script
+        src="https://rawcdn.githack.com/Loopple/loopple-public-assets/7bb803d2af2ab6d71d429b0cb459c24a4cd0fbb4/argon-dashboard/js/argon.min.js"></script>
+</body>
+
+</html>
