@@ -241,6 +241,11 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("content.html");
         return mav;
     }
+    @GetMapping("/addContent")
+    public ModelAndView getaddContent() {
+        ModelAndView mav = new ModelAndView("addContent.html");
+        return mav;
+    }
 
     @GetMapping("/editprofile")
     public ModelAndView getEditProfile() {

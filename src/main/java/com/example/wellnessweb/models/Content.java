@@ -7,74 +7,122 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import javax.persistence.Lob;
+
 @Entity
 public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private int IllnessID;
     private int TherapistID;
     private LocalDate Date;
-    private String Type;
-    private String Info;
+    private String illnessName;
+    private String ContentofArticle;
+    private String TitleofArticle;
+    private String IntroofArticle;
+    private String quote;
+    private String authorOfQuote;
 
-    public Content() {
+    public Content(int iD, int therapistID, LocalDate date, String illnessName, String contentofArticle,
+            String titleofArticle, String introofArticle, String quote, String authorOfQuote, byte[] image) {
+        ID = iD;
+        TherapistID = therapistID;
+        Date = date;
+        this.illnessName = illnessName;
+        ContentofArticle = contentofArticle;
+        TitleofArticle = titleofArticle;
+        IntroofArticle = introofArticle;
+        this.quote = quote;
+        this.authorOfQuote = authorOfQuote;
+        this.image = image;
     }
 
-    public Content(int ID, int IllnessID, LocalDate Date, String Type, String Info) {
-        this.ID = ID;
-        this.IllnessID = IllnessID;
-        this.Date = Date;
-        this.Type = Type;
-        this.Info = Info;
+    public String getQuote() {
+        return quote;
     }
+
+    public void setQuote(String quote) {
+        this.quote = quote;
+    }
+
+    public String getAuthorOfQuote() {
+        return authorOfQuote;
+    }
+
+    public void setAuthorOfQuote(String authorOfQuote) {
+        this.authorOfQuote = authorOfQuote;
+    }
+
+    public Content(){
+
+    }
+
+
+    @Lob
+    private byte[] image;
 
     public int getID() {
-        return this.ID;
+        return ID;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public int getIllnessID() {
-        return this.IllnessID;
-    }
-
-    public void setIllnessID(int IllnessID) {
-        this.IllnessID = IllnessID;
+    public void setID(int iD) {
+        ID = iD;
     }
 
     public int getTherapistID() {
-        return this.TherapistID;
+        return TherapistID;
     }
 
-    public void setTherapistID(int TherapistID) {
-        this.TherapistID = TherapistID;
+    public void setTherapistID(int therapistID) {
+        TherapistID = therapistID;
     }
 
     public LocalDate getDate() {
-        return this.Date;
+        return Date;
     }
 
-    public void setDate(LocalDate Date) {
-        this.Date = Date;
+    public void setDate(LocalDate date) {
+        Date = date;
     }
 
-    public String getType() {
-        return this.Type;
+    public String getIllnessName() {
+        return illnessName;
     }
 
-    public void setType(String Type) {
-        this.Type = Type;
+    public void setIllnessName(String illnessName) {
+        this.illnessName = illnessName;
     }
 
-    public String getInfo() {
-        return this.Info;
+    public String getContentofArticle() {
+        return ContentofArticle;
     }
 
-    public void setInfo(String Info) {
-        this.Info = Info;
+    public void setContentofArticle(String contentofArticle) {
+        ContentofArticle = contentofArticle;
+    }
+
+    public String getTitleofArticle() {
+        return TitleofArticle;
+    }
+
+    public void setTitleofArticle(String titleofArticle) {
+        TitleofArticle = titleofArticle;
+    }
+
+    public String getIntroofArticle() {
+        return IntroofArticle;
+    }
+
+    public void setIntroofArticle(String introofArticle) {
+        IntroofArticle = introofArticle;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
 }

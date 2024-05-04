@@ -2,42 +2,142 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
-    <title>Add a Blog</title>
+    <title>Add an Article</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/addblog.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/blogs.css}" />
 
+    <style>
+      .blog-title {
+        transform: translateY(30px);
+        border: none;
+        outline: none;
+        font-size: 40px;
+        font-family: "playfair-bold";
+        background-color: transparent;
+        color: #305844;
+      }
 
-    <link rel="stylesheet" th:href="@{/richtext/richtext.min.css}" />
-    <script th:src="@{/richtext/jquery.richtext.min.js}"></script>
+      .add-img {
+        font-size: 25px;
+        border: none;
+        outline: none;
+        font-family: "playfair-bold";
+        background-color: transparent;
+        color: #305844;
+      }
+
+      .blogs-content,
+      .blogs-content-intro,
+      .blogs-tw {
+        font-size: 17px;
+        font-family: Arial, Helvetica, sans-serif;
+        line-height: 28px;
+        font-weight: 500;
+        border: none;
+        outline: none;
+        background-color: transparent;
+        width: 100%;
+        height: 50%;
+      }
+
+      .publish {
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+        font-size: 16px;
+        background-color: #305844;
+        color: rgb(243, 241, 238);
+        cursor: pointer;
+        letter-spacing: 1px;
+        border: none;
+        width: 190px;
+        height: 35px;
+        transform: translateY(30px);
+        margin-bottom: 50px;
+      }
+
+      .publish:hover {
+        transition: 0.5s ease-in;
+        background-color: #559072;
+        letter-spacing: 1.5px;
+      }
+    </style>
   </head>
+
   <body>
+    <div th:replace="~{/partials/navbar}"></div>
 
+    <header>
+      <form
+        th:action="@{/content/addContent}"
+        th:object="${articleObj}"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <div class="topic-problem">
+          What topic is your article related to?
+          <select name="illnessName" th:field="*{illnessName}">
+            <option value="">Select an illness</option>
+            <option
+              th:each="illness : ${illnesses}"
+              th:value="${illness.name}"
+              th:text="${illness.Name}"
+            ></option>
+          </select>
+        </div>
 
+        <div class="blogs-container">
+          <input
+            type="text"
+            class="blog-title"
+            placeholder="Enter Article Title"
+            th:field="*{TitleofArticle}"
+          />
+        </div>
 
-    <form method="post" action="/save">
+        <article class="blogs-container">
+          <textarea
+            class="blogs-tw"
+            placeholder="Add a short introduction to your article"
+            th:field="*{IntroofArticle}"
+            style="width: 600px; height: 200px"
+          ></textarea>
 
-        <h2>What is the title? </h2>
-        <input type="text"  name="content-title">
+          <p class="publish-details">
+            <small
+              >By <em>Author Name</em>,
+              <em
+                th:text="${#dates.format(#dates.createNow(), 'MM/dd/yyyy')}"
+              ></em>
+            </small>
+          </p>
 
-        <h2>Write the introduction of blog: </h2>
-        <input type="text" name="content-intro">
+          <textarea
+            class="blogs-content"
+            placeholder="Enter the content of your article here..."
+            th:field="*{ContentofArticle}"
+            style="width: 850px; height: 400px"
+          ></textarea>
 
-        <h2>Write the content below: </h2>
-      <textarea id="richtext" name="content"></textarea>
-      <button type="submit">Save</button>
-    </form>
+          <blockquote>
+            <textarea th:name="quote" th:field="*{quote}" placeholder="Enter the quote"></textarea> <br>
+            <input type="text" th:name="author" th:field="*{authorOfQuote}" placeholder="Author of quote" />
+          </blockquote>
 
-    <script>
-        $(document).ready(function () {
-          $("#richtext").richText({
-            fontAwesome: true,
-            imageUpload:false,
-            fileUpload:false,
-            table: false,
+          <h2 class="add-img">Add an image related to the topic</h2>
+          <input
+            type="file"
+            name="file"
+            accept="image/*"
+            class="file-upload-label"
+          />
+          <br />
+          <button type="submit" class="publish">Publish your article</button>
+        </article>
+      </form>
+    </header>
 
-          });
-        });
-      </script>
+    <div th:replace="~{partials/footer}"></div>
   </body>
 </html>
