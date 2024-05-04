@@ -11,7 +11,7 @@ public class ReservedTherapySession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private int CustomerID;
-    private int TherapySessionID;
+    private int therapySessionID;
 
     public ReservedTherapySession() {
     }
@@ -19,7 +19,7 @@ public class ReservedTherapySession {
     public ReservedTherapySession(int ID, int CustomerID, int TherapySessionID) {
         this.ID = ID;
         this.CustomerID = CustomerID;
-        this.TherapySessionID = TherapySessionID;
+        this.therapySessionID = TherapySessionID;
     }
 
     public int getID() {
@@ -39,11 +39,11 @@ public class ReservedTherapySession {
     }
 
     public int getTherapySessionID() {
-        return this.TherapySessionID;
+        return this.therapySessionID;
     }
 
     public void setTherapySessionID(int TherapySessionID) {
-        this.TherapySessionID = TherapySessionID;
+        this.therapySessionID = TherapySessionID;
     }
 
 

@@ -15,6 +15,7 @@ import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapySessionRepository;
+import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import jakarta.servlet.http.HttpSession;
@@ -40,6 +41,9 @@ public class TherapistController {
     @Autowired
     private TherapySessionRepository therapySessionRepository;
 
+    @Autowired
+    private ReservedTherapySessionRepository reservedTherapySessionRepository;
+
     @GetMapping("")
     public ModelAndView getTherapistDashboard(HttpSession session) {
 
@@ -55,6 +59,14 @@ public class TherapistController {
         ModelAndView mav = new ModelAndView("sessionsTherapistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         List<TherapySession> therapySessions = this.therapySessionRepository.findByTherapistID(loggedInTherapist.getID());
+        for(TherapySession therapySession : therapySessions)
+        {
+            if(this.reservedTherapySessionRepository.existsByTherapySessionID(therapySession.getID()))
+            {
+                therapySession.setStatus("RESERVED");
+                this.therapySessionRepository.save(therapySession);
+            }
+        }
         mav.addObject("therapySessions", therapySessions);
         return mav;
     }
@@ -69,9 +81,9 @@ public class TherapistController {
     public RedirectView addNewSession(@ModelAttribute TherapySession newSession ,HttpSession session) {
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         newSession.setTherapistID(loggedInTherapist.getID());
+        newSession.setStatus("UNRESERVED");
         this.therapySessionRepository.save(newSession);
         return new RedirectView("/therapistdashboard/addsession");
     }
-    
 
 }

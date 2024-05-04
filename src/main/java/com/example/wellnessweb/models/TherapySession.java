@@ -18,17 +18,19 @@ public class TherapySession {
     private LocalTime StartTime;
     private LocalTime EndTime;
     private double Price;
+    private String Status;
 
     public TherapySession() {
     }
 
-    public TherapySession(int ID, int TherapistID, LocalDate Date, LocalTime StartTime, LocalTime EndTime, double Price) {
+    public TherapySession(int ID, int TherapistID, LocalDate Date, LocalTime StartTime, LocalTime EndTime, double Price, String Status) {
         this.ID = ID;
         this.therapistID = TherapistID;
         this.Date = Date;
         this.StartTime = StartTime;
         this.EndTime = EndTime;
         this.Price = Price;
+        this.Status = Status;
     }
 
     public int getID() {
@@ -78,6 +80,11 @@ public class TherapySession {
     public void setPrice(double Price) {
         this.Price = Price;
     }
+    public String getStatus() {
+        return this.Status;
+    }
 
-    
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
 }
