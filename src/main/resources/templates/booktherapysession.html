@@ -16,29 +16,9 @@
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/booktherapysessions.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
 </head>
-<header class="navbar-container">
-    <nav>
-        <input type="checkbox" id="nav" class="hidden">
-        <label for="nav" class="nav-btn">
-            <i></i>
-            <i></i>
-            <i></i>
-        </label>
-        <div class="logo">
-            <a href="#">WellnessWeb</a>
-        </div>
-        <div class="nav-wrapper">
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="#">Sign Up</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="viewtherapists.html">Connect to a Therapist</a></li>
-            </ul>
-        </div>
-    </nav>
-</header>
 
 <body>
+    <div th:replace="~{/partials/navbar}"></div>
     <div class="main-content-container">
         <section class="intro-body">
             <div class="card-image">
@@ -47,11 +27,6 @@
             <div class="card-content">
                 <h2 class="name">Jana Hani</h2>
                 <h3 class="specialization">Clinical Psychologist specializing in Anxiety Disorders</h3>
-                <p class="description">An experienced psychotherapist, committed to providing clients with a safe,
-                    judgment-free space
-                    to gain more insight about their experiences and work through their concerns by using scientific and
-                    evidence-based
-                    practices in person and online.</p>
             </div>
             <div class="details">
                 <div class="education">
@@ -61,10 +36,6 @@
                 <div class="experience">
                     <h2>Experience:</h2>
                     <h3> Over 10 years of experience in private practice</h3>
-                </div>
-                <div class="certification">
-                    <h2>Certification:</h2>
-                    <h3>Certified Anxiety Specialist (CAS) by the Anxiety Disorder Association of London (ADAL)</h3>
                 </div>
                 <div class="language">
                     <h2>Languages spoken:</h2>

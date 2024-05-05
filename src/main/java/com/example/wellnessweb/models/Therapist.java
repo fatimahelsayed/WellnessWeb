@@ -20,6 +20,9 @@ public class Therapist implements Serializable{
     private String Gender;
     private String PhoneNumber;
     private String Specialization;
+    private String Education;
+    private String Experience;
+    private String Languages;
     private String Image;
     private String email;
     private String Password;
@@ -28,7 +31,7 @@ public class Therapist implements Serializable{
     public Therapist() {
     }
 
-    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Image, String email, String Password, LocalDate createdAt) {
+    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Education, String Experience, String Languages, String Image, String email, String Password, LocalDate createdAt) {
         this.ID = ID;
         this.TherapistRequestID = TherapistRequestID;
         this.Name = Name;
@@ -36,6 +39,9 @@ public class Therapist implements Serializable{
         this.Gender = Gender;
         this.PhoneNumber = PhoneNumber;
         this.Specialization = Specialization;
+        this.Education = Education;
+        this.Experience = Experience;
+        this.Languages = Languages;
         this.Image = Image;
         this.email = email;
         this.Password = Password;
@@ -96,6 +102,30 @@ public class Therapist implements Serializable{
 
     public void setSpecialization(String Specialization) {
         this.Specialization = Specialization;
+    }
+
+    public String getEducation() {
+        return this.Education;
+    }
+
+    public void setEducation(String Education) {
+        this.Education = Education;
+    }
+
+    public String getExperience() {
+        return this.Experience;
+    }
+
+    public void setExperience(String Experience) {
+        this.Experience = Experience;
+    }
+
+    public String getLanguages() {
+        return this.Languages;
+    }
+
+    public void setLanguages(String Languages) {
+        this.Languages = Languages;
     }
 
     public String getImage() {
