@@ -21,45 +21,32 @@
     <!-- navigation bar -->
     <div th:replace="~{/partials/navbar}"></div>
 <header>
-    <div class="topic-problem">Bipolar disorder</div>
+    <div class="topic-problem" th:text="${contentObj.illnessName}"></div>
 	<div class="blogs-container">
-		<h1 class="blog-title">Dealing With Depressive and Manic Episodes</h1>
+		<h1 class="blog-title" th:text="${contentObj.titleofArticle}"></h1>
 		
 	</div>
 </header>
 <main>
 	<article class="blogs-container">
-		<p class="blogs-content">
-			
-Bipolar disorder is a complex mental health condition characterized by extreme mood swings that include emotional highs (mania or hypomania) and lows (depression). 
-These mood episodes can vary in intensity and duration, often causing significant disruptions in daily life, relationships, and functioning. Individuals with bipolar 
-disorder may experience periods of heightened energy, euphoria,
- and impulsivity during manic episodes, followed by profound sadness, hopelessness, and lethargy during depressive episodes.
-		</p>
+		<p class="blogs-content" th:text="${contentObj.introofArticle}">
+			</p>
 
         <p class="publish-details">
 			<small>By <em>Author Name</em> ,
-				<em> 02/02/2020</em></small>
+				<em th:text="${contentObj.date}"> </em></small>
 		</p>
 
 
-        <div class="content-img-container">
-            <img th:src="@{/images/bipolar.jpeg}" alt="Your Image" class="image">
-          </div>
-
-
+		<div class="content-img-container" th:if="${not #strings.isEmpty(base64Image)}">
+			<img th:src="'data:image/jpeg;base64,' + ${base64Image}" alt="illness Image" class="image">
+		</div>
+		
 
 
 
 		<h2 class="blog-topics-title">The First Topic</h2>
-		<p class="blogs-content">
-			Liquorice candy macaroon soufflé jelly cake. Macaroon pie sesame snaps
-			jelly-o.
-			Liquorice candy macaroon soufflé jelly cake. Candy canes ice. Macaroon
-			pie sesame snaps jelly-o.Liquorice candy macaroon soufflé jelly cake. Macaroon pie sesame snaps
-			jelly-o.
-			Liquorice candy macaroon soufflé jelly cake. Candy canes ice. Macaroon
-			pie sesame snaps jelly-o.
+		<p class="blogs-content" th:text="${contentObj.contentofArticle}">
 		</p>
 
 		<h2 class = "blog-topics-title">Another topic to be discussed</h3>
@@ -70,8 +57,8 @@ disorder may experience periods of heightened energy, euphoria,
 			jelly-o.
 		</p>
 		<blockquote>
-			<p>"A quote said by someone that relates to the topic."</p>
-			<footer>- <cite>Author of Quote</cite></footer>
+			<p th:text="${contentObj.quote}"></p>
+			<footer>- <cite th:text="${contentObj.authorOfQuote}"></cite></footer>
 		</blockquote>
 	</article>
     
