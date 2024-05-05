@@ -22,22 +22,21 @@
     <div th:replace="~{/partials/navbar}"></div>
 
 <header>
-    <div class="topic-problem">anxiety and stress</div>
-	<div class="blogs-container">
-		<h1 class="blog-title">Blog Title</h1>
-		
-	</div>
+    <div class="topic-problem" th:text="${blogObj.illnessName}">Anxiety and Stress</div>
+    <div class="blogs-container">
+        <h1 class="blog-title" th:text="${blogObj.titleofBlog}"></h1>
+    </div>
 </header>
 <main>
 	<article class="blogs-container">
-		<p class="blogs-tw">
-			Add trigger warnings for readers before proceeding.
+		<p class="blogs-tw" th:text="${blogObj.introofBlog}">
 		</p>
 
         <p class="publish-details">
 			<small>By <em>Author Name</em> ,
-				<em> 02/02/2020</em></small>
-		</p>
+				<em th:text="${blogObj.date}"></em>
+				</small>
+			</p>
 
 
 
@@ -45,14 +44,8 @@
 
 
 		<h2 class="blog-topics-title">Content of Blog</h2>
-		<p class="blogs-content">
-			Liquorice candy macaroon soufflé jelly cake. Macaroon pie sesame snaps
-			jelly-o.
-			Liquorice candy macaroon soufflé jelly cake. Candy canes ice. Macaroon
-			pie sesame snaps jelly-o.Liquorice candy macaroon soufflé jelly cake. Macaroon pie sesame snaps
-			jelly-o.
-			Liquorice candy macaroon soufflé jelly cake. Candy canes ice. Macaroon
-			pie sesame snaps jelly-o.
+		<p class="blogs-content" th:text="${blogObj.contentofBlog}">
+			
 		</p>
 
 	</article>

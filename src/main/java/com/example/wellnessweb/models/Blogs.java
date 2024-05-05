@@ -1,5 +1,6 @@
 package com.example.wellnessweb.models;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -9,7 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Blogs {
+public class Blogs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
@@ -56,7 +57,6 @@ public class Blogs {
     public LocalDate getDate() {
         return Date;
     }
-
 
     public void setDate(LocalDate date) {
         Date = date;
@@ -115,7 +115,7 @@ public class Blogs {
         ContentofBlog = contentofBlog;
         TitleofBlog = titleofBlog;
         IntroofBlog = introofBlog;
-        illnessName = illnessName;
+        this.illnessName = illnessName;
     }
 
 
