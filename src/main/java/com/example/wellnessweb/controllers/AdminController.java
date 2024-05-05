@@ -184,6 +184,9 @@ public class AdminController {
             therapist.setGender(request.getGender());
             therapist.setPhoneNumber(request.getPhoneNumber());
             therapist.setSpecialization(request.getSpecialization());
+            therapist.setEducation(request.getEducation());
+            therapist.setExperience(request.getEducation());
+            therapist.setLanguages(request.getLanguages());
             therapist.setImage(request.getImage());
             therapist.setEmail(request.getEmail());
             therapist.setPassword(request.getPassword());

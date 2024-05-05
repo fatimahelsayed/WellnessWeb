@@ -15,190 +15,61 @@
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/viewtherapists.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/booktherapysessions.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
+
 </head>
-<header class="navbar-container">
-    <nav>
-        <input type="checkbox" id="nav" class="hidden">
-        <label for="nav" class="nav-btn">
-            <i></i>
-            <i></i>
-            <i></i>
-        </label>
-        <div class="logo">
-            <a href="#">WellnessWeb</a>
-        </div>
-        <div class="nav-wrapper">
-            <ul>
-                <li><a href="home.html">Home</a></li>
-                <li><a href="#">Sign Up</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="viewtherapists.html">Connect to a Therapist</a></li>
-            </ul>
-        </div>
-    </nav>
-</header>
 
 <body>
+    <div th:replace="~{/partials/navbar}"></div>
     <div class="main-content-container">
         <section class="intro-body">
-            <div class="card-image">
-                <img src="../../public/images/therapist.jpg" alt="therapist picture" class="card-image">
-            </div>
             <div class="card-content">
-                <h2 class="name">Jana Hani</h2>
-                <h3 class="specialization">Clinical Psychologist specializing in Anxiety Disorders</h3>
-                <p class="description">An experienced psychotherapist, committed to providing clients with a safe,
-                    judgment-free space
-                    to gain more insight about their experiences and work through their concerns by using scientific and
-                    evidence-based
-                    practices in person and online.</p>
+                <div class="card-image">
+                    <img th:src="@{'/images/'+ ${therapist.Image}}" alt="therapist picture" class="card-image">
+                </div>
+                <h2 class="name" th:text="${therapist.Name}"></h2>
+                <h3 class="specialization" th:text="${therapist.Specialization}"></h3>
             </div>
             <div class="details">
                 <div class="education">
                     <h2>Education:</h2>
-                    <h3>Ph.D. in Clinical Psychology, British Univeristy in Egypt</h3>
+                    <h3 th:text="${therapist.Education}"></h3>
                 </div>
                 <div class="experience">
                     <h2>Experience:</h2>
-                    <h3> Over 10 years of experience in private practice</h3>
-                </div>
-                <div class="certification">
-                    <h2>Certification:</h2>
-                    <h3>Certified Anxiety Specialist (CAS) by the Anxiety Disorder Association of London (ADAL)</h3>
+                    <h3 th:text="${therapist.Experience}"></h3>
                 </div>
                 <div class="language">
                     <h2>Languages spoken:</h2>
-                    <h3>Arabic, English, and German</h3>
+                    <h3 th:text="${therapist.Languages}"></h3>
                 </div>
             </div>
         </section>
         <div class="slide-container">
             <h2 class="schedule">Therapy Session Schedule</h2>
             <div class="card-wrapper">
-                <div class="card">
+                <div th:each="therapysession : ${therapysessions}" class="card">
                     <h2>Day:</h2>
-                    <p >10/03/2024</p>
-                    <div>
-                        <h2>Price:</h2>
-                        <p>500 L.E</p>
-                    </div>
+                    <p th:text="${therapysession.Date}"></p>
                     <div class="times">
                     <div>
                         <h2>Start Time:</h2>
-                        <p>5:30</p>
+                        <p th:text="${therapysession.StartTime}"></p>
                     </div>
                     <div>
                         <h2>End Time:</h2>
-                        <p>7:30</p>
+                        <p th:text="${therapysession.EndTime}"></p>
                     </div>
                     </div>
-                    <a href="">
-                        <button class="button">Book Now</button>
-                    </a>
-                </div>
-                <div class="card">
-                    <h2>Day:</h2>
-                    <p >15/03/2024</p>
-                    <div>
-                        <h2>Price:</h2>
-                        <p>600 L.E</p>
-                    </div>
-                    <div class="times">
-                    <div>
-                        <h2>Start Time:</h2>
-                        <p>7:30</p>
-                    </div>
-                    <div>
-                        <h2>End Time:</h2>
-                        <p>9:30</p>
-                    </div>
-                    </div>
-                    <a href="">
-                        <button class="button">Book Now</button>
-                    </a>
-                </div>
-                <div class="card">
-                    <h2>Day:</h2>
-                    <p >20/03/2024</p>
-                    <div>
-                        <h2>Price:</h2>
-                        <p>300 L.E</p>
-                    </div>
-                    <div class="times">
-                    <div>
-                        <h2>Start Time:</h2>
-                        <p>1:30</p>
-                    </div>
-                    <div>
-                        <h2>End Time:</h2>
-                        <p>3:30</p>
-                    </div>
-                    </div>
-                    <a href="">
-                        <button class="button">Book Now</button>
-                    </a>
+                    <form th:action="@{/therapist/booktherapysession}" method="post">
+                        <input type="hidden" name="sessionId" th:value="${therapysession.ID}">
+                        <button type="submit" class="button">Book Now</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="footer">
-        <div class="footer__addr">
-            <h1 class="footer__logo">WellnessWeb</h1>
-
-            <h2>Contact</h2>
-
-            <address>
-                5534 Somewhere In. The World 22193-10212<br>
-
-            </address>
-        </div>
-
-        <ul class="footer__nav">
-            <li class="nav__item">
-                <h2 class="nav__title">Home</h2>
-
-                <ul class="nav__ul">
-                    <li>
-                        <a href="#">Sign up</a>
-                    </li>
-
-                    <li>
-                        <a href="#">Blogs</a>
-                    </li>
-
-                </ul>
-            </li>
-
-            <li class="nav__item">
-                <h2 class="nav__title">About us</h2>
-
-                <ul class="nav__ul">
-                    <li>
-                        <a href="#">Therapists</a>
-                    </li>
-                    <li><a href="">Our Story</a></li>
-                </ul>
-            </li>
-
-            <li class="nav__item">
-                <h2 class="nav__title">Get in Touch</h2>
-
-                <ul class="nav__ul">
-                    <li>
-                        <a href="#">Contact us</a>
-                    </li>
-
-                    <li>
-                        <a href="#">Book a therapy session</a>
-                    </li>
-
-                </ul>
-            </li>
-        </ul>
-        <div class="legal">
-            <p>&copy; 2024 WellnessWeb. All rights reserved.</p>
-
-    </footer>
+    <!-- footer -->
+    <div th:replace="~{partials/footer}"></div>
 
     <!-- js -->
     <script src="../../public/js/home.js"></script>

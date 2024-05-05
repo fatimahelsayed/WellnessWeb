@@ -7,5 +7,7 @@ import java.util.List;
 
 
 public interface TherapySessionRepository extends JpaRepository<TherapySession,Integer>{ 
+    List<TherapySession> findByTherapistIDAndStatus(int therapistId, String status);
     List<TherapySession> findByTherapistID(int therapistID);
+    TherapySession findByID( int iD);
 }

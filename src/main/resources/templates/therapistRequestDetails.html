@@ -85,6 +85,9 @@
                             <th scope="col">Gender</th>
                             <th scope="col">Phone Number</th>
                             <th scope="col">Specialization</th>
+                            <th scope="col">Education</th>
+                            <th scope="col">Experience</th>
+                            <th scope="col">Languages</th>
                             <th scope="col">Email</th>
                             <th scope="col">Resume</th>
                             <th scope="col">Image</th>
@@ -98,6 +101,9 @@
                             <td th:text="${request.gender}"></td>
                             <td th:text="${request.phoneNumber}"></td>
                             <td th:text="${request.specialization}"></td>
+                            <td th:text="${request.education}"></td>
+                            <td th:text="${request.experience}"></td>
+                            <td th:text="${request.languages}"></td>
                             <td th:text="${request.email}"></td>
                             <td>
                                 <a th:href="@{'/admindashboard/downloadResume/' + ${request.phoneNumber}}" th:text="${request.resume}"></a>

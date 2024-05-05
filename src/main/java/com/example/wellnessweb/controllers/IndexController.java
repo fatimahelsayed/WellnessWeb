@@ -19,12 +19,16 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.wellnessweb.models.Admin;
 import com.example.wellnessweb.models.Customer;
+import com.example.wellnessweb.models.ReservedTherapySession;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
+import com.example.wellnessweb.models.TherapySession;
 import com.example.wellnessweb.repositories.AdminRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
+import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
+import com.example.wellnessweb.repositories.TherapySessionRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -42,6 +46,12 @@ public class IndexController {
 
     @Autowired
     private TherapistRepository therapistRepository;
+
+    @Autowired
+    private TherapySessionRepository therapySessionRepository;
+
+    @Autowired
+    private ReservedTherapySessionRepository reservedTherapySessionRepository;
 
     @GetMapping("/home")
     public ModelAndView getHome() {
@@ -77,7 +87,8 @@ public class IndexController {
                 Therapist dbTherapist = this.therapistRepository.findByEmail(email);
                 Boolean isPasswordMatched = BCrypt.checkpw(password, dbTherapist.getPassword());
                 if (isPasswordMatched) {
-                    TherapistRequest dbTherapistRequest = this.therapistRequestRepository.findById(dbTherapist.getTherapistRequestID());
+                    TherapistRequest dbTherapistRequest = this.therapistRequestRepository
+                            .findById(dbTherapist.getTherapistRequestID());
                     session.setAttribute("therapistReq", dbTherapistRequest);
                     session.setAttribute("loggedInTherapist", dbTherapist);
                     return new RedirectView("/therapistdashboard");
@@ -256,6 +267,48 @@ public class IndexController {
         mav.addObject("requests", requests);
 
         return mav;
+    }
+
+    @GetMapping("/therapist/booktherapysession")
+    public ModelAndView getBookTherapySession(@RequestParam("therapistId") int therapistId) {
+        Therapist therapist = therapistRepository.findById(therapistId);
+        List<TherapySession> therapysessions = this.therapySessionRepository.findByTherapistIDAndStatus(therapistId,
+                "UNRESERVED");
+        ModelAndView mav = new ModelAndView("booktherapysession");
+        mav.addObject("therapist", therapist);
+        mav.addObject("therapysessions", therapysessions);
+        return mav;
+    }
+
+    @PostMapping("/therapist/booktherapysession")
+    public ModelAndView bookTherapySession(@RequestParam("sessionId") int sessionId, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+
+        try {
+            if (loggedInUser != null) {
+                int customerId = loggedInUser.getID();
+
+                TherapySession therapySession = this.therapySessionRepository.findByID(sessionId);
+                    therapySession.setStatus("RESERVED");
+                    therapySessionRepository.save(therapySession);
+
+                    ReservedTherapySession reservedTherapySession = new ReservedTherapySession();
+                    reservedTherapySession.setTherapySessionID(sessionId);
+                    reservedTherapySession.setCustomerID(customerId);
+
+                    this.reservedTherapySessionRepository.save(reservedTherapySession);
+
+                    modelAndView.setViewName("redirect:/therapists?BookedSuccessfully");
+            }
+            else{
+                modelAndView.setViewName("redirect:/login");
+            }
+        } catch (Exception e) {
+            System.out.println("Error booking therapy session: " + e.getMessage());
+            modelAndView.setViewName("error_page");
+        }
+        return modelAndView;
     }
 
     @GetMapping("/blogs")

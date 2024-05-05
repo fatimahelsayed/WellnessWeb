@@ -13,13 +13,16 @@ import jakarta.persistence.PrePersist;
 public class Therapist implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
     private int TherapistRequestID;
     private String Name;
     private int Age;
     private String Gender;
     private String PhoneNumber;
     private String Specialization;
+    private String Education;
+    private String Experience;
+    private String Languages;
     private String Image;
     private String email;
     private String Password;
@@ -28,14 +31,17 @@ public class Therapist implements Serializable{
     public Therapist() {
     }
 
-    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Image, String email, String Password, LocalDate createdAt) {
-        this.ID = ID;
+    public Therapist(int id, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Education, String Experience, String Languages, String Image, String email, String Password, LocalDate createdAt) {
+        this.id = id;
         this.TherapistRequestID = TherapistRequestID;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
         this.PhoneNumber = PhoneNumber;
         this.Specialization = Specialization;
+        this.Education = Education;
+        this.Experience = Experience;
+        this.Languages = Languages;
         this.Image = Image;
         this.email = email;
         this.Password = Password;
@@ -43,11 +49,11 @@ public class Therapist implements Serializable{
     }
 
     public int getID() {
-        return this.ID;
+        return this.id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     public int getTherapistRequestID() {
@@ -96,6 +102,30 @@ public class Therapist implements Serializable{
 
     public void setSpecialization(String Specialization) {
         this.Specialization = Specialization;
+    }
+
+    public String getEducation() {
+        return this.Education;
+    }
+
+    public void setEducation(String Education) {
+        this.Education = Education;
+    }
+
+    public String getExperience() {
+        return this.Experience;
+    }
+
+    public void setExperience(String Experience) {
+        this.Experience = Experience;
+    }
+
+    public String getLanguages() {
+        return this.Languages;
+    }
+
+    public void setLanguages(String Languages) {
+        this.Languages = Languages;
     }
 
     public String getImage() {

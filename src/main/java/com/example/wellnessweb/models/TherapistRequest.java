@@ -19,6 +19,9 @@ public class TherapistRequest implements Serializable{
     private String Gender;
     private String phoneNumber;
     private String Specialization;
+    private String Education;
+    private String Experience;
+    private String Languages;
     private String email;
     private String Password;
     private String Image;
@@ -29,13 +32,16 @@ public class TherapistRequest implements Serializable{
     public TherapistRequest() {
     }
 
-    public TherapistRequest(int id, String Name, int Age, String Gender, String phoneNumber, String Specialization, String email, String Password, String Image, String Resume, String isAccepted, LocalDate createdAt) {
+    public TherapistRequest(int id, String Name, int Age, String Gender, String phoneNumber, String Specialization, String Education, String Experience, String Languages, String email, String Password, String Image, String Resume, String isAccepted, LocalDate createdAt) {
         this.id = id;
         this.Name = Name;
         this.Age = Age;
         this.Gender = Gender;
         this.phoneNumber = phoneNumber;
         this.Specialization = Specialization;
+        this.Education = Education;
+        this.Experience = Experience;
+        this.Languages = Languages;
         this.email = email;
         this.Password = Password;
         this.Image = Image;
@@ -91,6 +97,38 @@ public class TherapistRequest implements Serializable{
     public void setSpecialization(String Specialization) {
         this.Specialization = Specialization;
     }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getEducation() {
+        return this.Education;
+    }
+
+    public void setEducation(String Education) {
+        this.Education = Education;
+    }
+
+    public String getExperience() {
+        return this.Experience;
+    }
+
+    public void setExperience(String Experience) {
+        this.Experience = Experience;
+    }
+
+    public String getLanguages() {
+        return this.Languages;
+    }
+
+    public void setLanguages(String Languages) {
+        this.Languages = Languages;
+    }    
 
     public String getEmail() {
         return this.email;

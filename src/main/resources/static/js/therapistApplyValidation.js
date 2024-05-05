@@ -4,6 +4,9 @@ function validateForm() {
   var age = parseInt(document.getElementById("age").value.trim());
   var phonenum = document.getElementById("phonenum").value.trim();
   var specialization = document.getElementById("specialization").value.trim();
+  var education = document.getElementById("education").value.trim();
+  var experience = document.getElementById("experience").value.trim();
+  var languages = document.getElementById("languages").value.trim();
   var email = document.getElementById("email").value.trim();
   var password = document.getElementById("password").value.trim();
   var fileInput = document.getElementById("myFile");
@@ -43,6 +46,24 @@ function validateForm() {
   // Validate specialization
   if (specialization === "") {
     document.getElementById("specialization-error").innerText = "Please enter your specialization";
+    i = false;
+  }
+
+   // Validate specialization
+   if (education === "") {
+    document.getElementById("education-error").innerText = "Please enter your education";
+    i = false;
+  }
+
+   // Validate specialization
+   if (experience === "") {
+    document.getElementById("experience-error").innerText = "Please enter your experience";
+    i = false;
+  }
+
+   // Validate specialization
+   if (languages === "") {
+    document.getElementById("languages-error").innerText = "Please enter the languages you speak";
     i = false;
   }
 
