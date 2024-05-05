@@ -13,7 +13,7 @@ import jakarta.persistence.PrePersist;
 public class Therapist implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private int id;
     private int TherapistRequestID;
     private String Name;
     private int Age;
@@ -31,8 +31,8 @@ public class Therapist implements Serializable{
     public Therapist() {
     }
 
-    public Therapist(int ID, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Education, String Experience, String Languages, String Image, String email, String Password, LocalDate createdAt) {
-        this.ID = ID;
+    public Therapist(int id, int TherapistRequestID, String Name, int Age, String Gender, String PhoneNumber, String Specialization, String Education, String Experience, String Languages, String Image, String email, String Password, LocalDate createdAt) {
+        this.id = id;
         this.TherapistRequestID = TherapistRequestID;
         this.Name = Name;
         this.Age = Age;
@@ -49,11 +49,11 @@ public class Therapist implements Serializable{
     }
 
     public int getID() {
-        return this.ID;
+        return this.id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setID(int id) {
+        this.id = id;
     }
 
     public int getTherapistRequestID() {

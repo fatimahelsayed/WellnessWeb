@@ -21,10 +21,12 @@ import com.example.wellnessweb.models.Admin;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
+import com.example.wellnessweb.models.TherapySession;
 import com.example.wellnessweb.repositories.AdminRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
+import com.example.wellnessweb.repositories.TherapySessionRepository;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -42,6 +44,9 @@ public class IndexController {
 
     @Autowired
     private TherapistRepository therapistRepository;
+
+    @Autowired
+    private TherapySessionRepository therapySessionRepository;
 
     @GetMapping("/home")
     public ModelAndView getHome() {
@@ -77,7 +82,8 @@ public class IndexController {
                 Therapist dbTherapist = this.therapistRepository.findByEmail(email);
                 Boolean isPasswordMatched = BCrypt.checkpw(password, dbTherapist.getPassword());
                 if (isPasswordMatched) {
-                    TherapistRequest dbTherapistRequest = this.therapistRequestRepository.findById(dbTherapist.getTherapistRequestID());
+                    TherapistRequest dbTherapistRequest = this.therapistRequestRepository
+                            .findById(dbTherapist.getTherapistRequestID());
                     session.setAttribute("therapistReq", dbTherapistRequest);
                     session.setAttribute("loggedInTherapist", dbTherapist);
                     return new RedirectView("/therapistdashboard");
@@ -257,6 +263,16 @@ public class IndexController {
 
         return mav;
     }
+
+    @GetMapping("/therapist/booktherapysession")
+    public ModelAndView bookTherapySession(@RequestParam("therapistId") int therapistId) {
+        Therapist therapist = therapistRepository.findById(therapistId);
+        List<TherapySession> sessions = this.therapySessionRepository.findByTherapistIDAndStatus(therapistId,"UNRESERVED");
+        ModelAndView mav = new ModelAndView("booktherapysession");
+        mav.addObject("therapist", therapist);
+        mav.addObject("sessions", sessions);
+        return mav;
+    }    
 
     @GetMapping("/blogs")
     public ModelAndView getBlogs() {

@@ -38,7 +38,8 @@
                             <div class="image-content">
                                 <span class="overlay"></span>
                                 <div class="card-image">
-                                        <img th:src="@{'/Images/' + ${therapist.Image}}" alt="therapist picture" class="card-image">
+                                    <img th:src="@{'/Images/' + ${therapist.Image}}" alt="therapist picture"
+                                        class="card-image">
                                 </div>
                             </div>
 
@@ -49,12 +50,18 @@
                                 </p>
                                 <p class="email" th:text="${'Email: ' + therapist.Email}"></p>
                             </div>
+                            <div class="action-buttons">
+                                <form th:action="@{/therapist/booktherapysession}" method="get">
+                                    <input type="hidden" name="therapistId" th:value="${therapist.ID}">
+                                    <button type="submit" class="btn btn-sm btn-success custom-btn">View
+                                        Details</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
 
