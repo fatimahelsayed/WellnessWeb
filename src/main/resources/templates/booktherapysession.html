@@ -47,21 +47,21 @@
         <div class="slide-container">
             <h2 class="schedule">Therapy Session Schedule</h2>
             <div class="card-wrapper">
-                <div th:each="session : ${sessions}" class="card">
+                <div th:each="therapysession : ${therapysessions}" class="card">
                     <h2>Day:</h2>
-                    <p th:text="${session.Date}"></p>
+                    <p th:text="${therapysession.Date}"></p>
                     <div class="times">
                     <div>
                         <h2>Start Time:</h2>
-                        <p th:text="${session.StartTime}"></p>
+                        <p th:text="${therapysession.StartTime}"></p>
                     </div>
                     <div>
                         <h2>End Time:</h2>
-                        <p th:text="${session.EndTime}"></p>
+                        <p th:text="${therapysession.EndTime}"></p>
                     </div>
                     </div>
                     <form th:action="@{/therapist/booktherapysession}" method="post">
-                        <input type="hidden" name="sessionId" th:value="${session.ID}">
+                        <input type="hidden" name="sessionId" th:value="${therapysession.ID}">
                         <button type="submit" class="button">Book Now</button>
                     </form>
                 </div>

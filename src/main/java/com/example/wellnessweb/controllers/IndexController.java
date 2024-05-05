@@ -267,10 +267,10 @@ public class IndexController {
     @GetMapping("/therapist/booktherapysession")
     public ModelAndView bookTherapySession(@RequestParam("therapistId") int therapistId) {
         Therapist therapist = therapistRepository.findById(therapistId);
-        List<TherapySession> sessions = this.therapySessionRepository.findByTherapistIDAndStatus(therapistId,"UNRESERVED");
+        List<TherapySession> therapysessions = this.therapySessionRepository.findByTherapistIDAndStatus(therapistId,"UNRESERVED");
         ModelAndView mav = new ModelAndView("booktherapysession");
         mav.addObject("therapist", therapist);
-        mav.addObject("sessions", sessions);
+        mav.addObject("therapysessions", therapysessions);
         return mav;
     }    
 
