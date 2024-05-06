@@ -8,6 +8,7 @@ import com.example.wellnessweb.models.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer,Integer>{ 
     Customer findByUsername(String Username);
+    Customer findByID(int iD);
     boolean existsByEmail(String email);
     boolean existsByPhoneNumber(String phoneNumber);
     boolean existsByUsername(String username);

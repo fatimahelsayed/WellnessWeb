@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <link rel="stylesheet"
         href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/CSS/login.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
 </head>
 
@@ -67,10 +66,12 @@
                 </div>
             </div>
         </nav>
-        <div class="form">
-            <span class="title">Add Admin</span>
-            <form th:action="@{/admindashboard/addadmin}" method="post" autocomplete="off" th:object="${admin}" class="addadmin-form"
+        <div class="container-fluid pt-3">
+            <div class="row removable">
+                <div class="col-lg">
+                <form th:action="@{/admindashboard/addadmin}" method="post" autocomplete="off" th:object="${admin}" class="addadmin-form"
                 onsubmit="return validateForm()">
+                <h1>Add an Session</h1>
                 <input id="name" type="text" placeholder="Name" th:field="*{Name}" />
                 <span id="name-error" class="error-message"></span>
                 <input id="phonenum" type="text" placeholder="Phone Number" th:field="*{phoneNumber}" />
@@ -79,10 +80,12 @@
                 <span id="email-error" class="error-message"></span>
                 <input id="password" type="password" placeholder="Password" th:field="*{Password}" />
                 <span id="password-error" class="error-message"></span>
-                <input value="Add" type="submit" class="addadmin-btn">
+                <button class="btn btn-add-form" type="submit">Add Admin</button>
             </form>
         </div>
+        </div>
     </div>
+</div>
     <script th:src="@{/js/addAdminValidation.js}"></script>
 </body>
 

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.wellnessweb.models.Customer;
+import com.example.wellnessweb.models.ReservedTherapySession;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.models.TherapySession;
@@ -84,6 +86,21 @@ public class TherapistController {
         newSession.setStatus("UNRESERVED");
         this.therapySessionRepository.save(newSession);
         return new RedirectView("/therapistdashboard/addsession");
+    }
+
+    @GetMapping("sessiondetails")
+    public ModelAndView editClientForm(@RequestParam("id") int sessionId) {
+        ModelAndView mav = new ModelAndView("viewSessionDetailsTherapistDash.html");
+        ReservedTherapySession reservedTherapySession = this.reservedTherapySessionRepository.findByTherapySessionID(sessionId);
+        if (reservedTherapySession != null) {
+            TherapySession therapySession = this.therapySessionRepository.findByID(sessionId);
+            Customer customer = this.customerRepository.findByID(reservedTherapySession.getCustomerID());
+            mav.addObject("therapySess", therapySession);
+            mav.addObject("customer", customer);
+        } else {
+            mav.setViewName("redirect:/therapistdashboard/viewsessions");
+        }
+        return mav;
     }
 
 }
