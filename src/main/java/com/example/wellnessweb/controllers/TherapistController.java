@@ -1,11 +1,14 @@
 package com.example.wellnessweb.controllers;
 
+import java.io.File;
 import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -46,14 +49,41 @@ public class TherapistController {
     @Autowired
     private ReservedTherapySessionRepository reservedTherapySessionRepository;
 
-    private void updateAccountFields(Therapist updatedTherapist, Therapist loggedInTherapist) {
+    private String handleImageUpload(MultipartFile file, String phoneNumber) {
+        String imageName = null;
+        try {
+            if (!file.isEmpty()) {
+                String originalFilename = file.getOriginalFilename();
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf('.')).toLowerCase();
+
+                // Check if the file extension is one of the allowed image formats
+                if (fileExtension.equals(".jpg") || fileExtension.equals(".jpeg") || fileExtension.equals(".png")
+                        || fileExtension.equals(".gif")) {
+                    String newFileName = phoneNumber + fileExtension;
+                    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+                    String imagePath = uploadDir + newFileName;
+
+                    File destImage = new File(imagePath);
+                    file.transferTo(destImage);
+                    imageName = newFileName;
+                } else {
+                    System.out.println("Invalid image format: " + fileExtension);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error storing image: " + e.getMessage());
+        }
+        return imageName;
+    }
+
+    private void updateAccountFields(Therapist updatedTherapist, Therapist loggedInTherapist, MultipartFile file) {
         if (updatedTherapist.getName() != null) {
             loggedInTherapist.setName(updatedTherapist.getName());
         }
         if (updatedTherapist.getAge() != 0) {
             loggedInTherapist.setAge(updatedTherapist.getAge());
         }
-        if (updatedTherapist.getEducation() != null && updatedTherapist.getEducation().length() >= 5) {
+        if (updatedTherapist.getEducation() != null && updatedTherapist.getEducation().length() >= 2) {
             loggedInTherapist.setEducation(updatedTherapist.getEducation());
         }
         if (updatedTherapist.getExperience() != null && updatedTherapist.getExperience().length() >= 5) {
@@ -77,6 +107,11 @@ public class TherapistController {
         }
         if (updatedTherapist.getPhoneNumber() != null) {
             loggedInTherapist.setPhoneNumber(updatedTherapist.getPhoneNumber());
+        }
+        if(updatedTherapist.getImage() != null)
+        {
+            String imageName= handleImageUpload(file, loggedInTherapist.getPhoneNumber());
+            loggedInTherapist.setImage(imageName);
         }
 
     }
@@ -151,10 +186,29 @@ public class TherapistController {
 
     @PostMapping("editaccount")
     public ModelAndView updateAccount(@ModelAttribute Therapist therapist, BindingResult bindingResult,
-            HttpSession session) {
+        @RequestParam("imageFile") MultipartFile imageFile, HttpSession session) {
         ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+        updateAccountFields(therapist, loggedInTherapist, imageFile);
+        this.therapistRepository.save(loggedInTherapist);
+        return mav;
+    }
 
+    @GetMapping("changepassword")
+    public ModelAndView getChangePasswordForm(HttpSession session) {
+        ModelAndView mav = new ModelAndView("changePasswordTherapistDash.html");
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+        mav.addObject("therapist", loggedInTherapist);
+        return mav;
+    }
+    @PostMapping("changepassword")
+    public ModelAndView changePassword(@RequestParam("Confirmed-Password") String password, HttpSession session) {
+        ModelAndView mav = new ModelAndView("changePasswordTherapistDash.html");
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+        String encoddedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        loggedInTherapist.setPassword(encoddedPassword);
+        this.therapistRepository.save(loggedInTherapist);
+        mav.setViewName("redirect:/therapistdashboard/editaccount");
         return mav;
     }
 
