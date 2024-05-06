@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @RestController
 @RequestMapping("/therapistdashboard")
 public class TherapistController {
@@ -47,6 +46,41 @@ public class TherapistController {
     @Autowired
     private ReservedTherapySessionRepository reservedTherapySessionRepository;
 
+    private void updateAccountFields(Therapist updatedTherapist, Therapist loggedInTherapist) {
+        if (updatedTherapist.getName() != null) {
+            loggedInTherapist.setName(updatedTherapist.getName());
+        }
+        if (updatedTherapist.getAge() != 0) {
+            loggedInTherapist.setAge(updatedTherapist.getAge());
+        }
+        if (updatedTherapist.getEducation() != null && updatedTherapist.getEducation().length() >= 5) {
+            loggedInTherapist.setEducation(updatedTherapist.getEducation());
+        }
+        if (updatedTherapist.getExperience() != null && updatedTherapist.getExperience().length() >= 5) {
+            loggedInTherapist.setExperience(updatedTherapist.getExperience());
+        }
+        if (updatedTherapist.getLanguages() != null && updatedTherapist.getLanguages().length() >= 4) {
+            loggedInTherapist.setLanguages(updatedTherapist.getLanguages());
+        }
+        if (updatedTherapist.getSpecialization() != null && updatedTherapist.getSpecialization().length() >= 4) {
+            loggedInTherapist.setSpecialization(updatedTherapist.getSpecialization());
+        }
+        if (updatedTherapist.getGender() != null) {
+            loggedInTherapist.setGender(updatedTherapist.getGender());
+        }
+
+        if (updatedTherapist.getEmail() != null) {
+            loggedInTherapist.setEmail(updatedTherapist.getEmail());
+        }
+        if (updatedTherapist.getPassword() != null) {
+            loggedInTherapist.setPassword(updatedTherapist.getPassword());
+        }
+        if (updatedTherapist.getPhoneNumber() != null) {
+            loggedInTherapist.setPhoneNumber(updatedTherapist.getPhoneNumber());
+        }
+
+    }
+
     @GetMapping("")
     public ModelAndView getTherapistDashboard(HttpSession session) {
 
@@ -57,15 +91,15 @@ public class TherapistController {
         mav.addObject("therapist", loggedInTherapist);
         return mav;
     }
+
     @GetMapping("viewsessions")
     public ModelAndView getTherapySessions(HttpSession session) {
         ModelAndView mav = new ModelAndView("sessionsTherapistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
-        List<TherapySession> therapySessions = this.therapySessionRepository.findByTherapistID(loggedInTherapist.getID());
-        for(TherapySession therapySession : therapySessions)
-        {
-            if(this.reservedTherapySessionRepository.existsByTherapySessionID(therapySession.getID()))
-            {
+        List<TherapySession> therapySessions = this.therapySessionRepository
+                .findByTherapistID(loggedInTherapist.getID());
+        for (TherapySession therapySession : therapySessions) {
+            if (this.reservedTherapySessionRepository.existsByTherapySessionID(therapySession.getID())) {
                 therapySession.setStatus("RESERVED");
                 this.therapySessionRepository.save(therapySession);
             }
@@ -73,6 +107,7 @@ public class TherapistController {
         mav.addObject("therapySessions", therapySessions);
         return mav;
     }
+
     @GetMapping("addsession")
     public ModelAndView getSessionForm(HttpSession session) {
         ModelAndView mav = new ModelAndView("addSessionTherapistDash.html");
@@ -80,8 +115,9 @@ public class TherapistController {
         mav.addObject("newSession", new TherapySession());
         return mav;
     }
+
     @PostMapping("addsession")
-    public RedirectView addNewSession(@ModelAttribute TherapySession newSession ,HttpSession session) {
+    public RedirectView addNewSession(@ModelAttribute TherapySession newSession, HttpSession session) {
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         newSession.setTherapistID(loggedInTherapist.getID());
         newSession.setStatus("UNRESERVED");
@@ -92,7 +128,8 @@ public class TherapistController {
     @GetMapping("sessiondetails")
     public ModelAndView editClientForm(@RequestParam("id") int sessionId) {
         ModelAndView mav = new ModelAndView("viewSessionDetailsTherapistDash.html");
-        ReservedTherapySession reservedTherapySession = this.reservedTherapySessionRepository.findByTherapySessionID(sessionId);
+        ReservedTherapySession reservedTherapySession = this.reservedTherapySessionRepository
+                .findByTherapySessionID(sessionId);
         if (reservedTherapySession != null) {
             TherapySession therapySession = this.therapySessionRepository.findByID(sessionId);
             Customer customer = this.customerRepository.findByID(reservedTherapySession.getCustomerID());
@@ -103,6 +140,7 @@ public class TherapistController {
         }
         return mav;
     }
+
     @GetMapping("editaccount")
     public ModelAndView getUpdateAccountForm(HttpSession session) {
         ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
@@ -110,10 +148,13 @@ public class TherapistController {
         mav.addObject("therapist", loggedInTherapist);
         return mav;
     }
+
     @PostMapping("editaccount")
-    public ModelAndView updateAccount(@ModelAttribute Therapist therapist, BindingResult bindingResult, HttpSession session) {
+    public ModelAndView updateAccount(@ModelAttribute Therapist therapist, BindingResult bindingResult,
+            HttpSession session) {
         ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+
         return mav;
     }
 
