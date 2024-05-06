@@ -2324,6 +2324,15 @@ pre code {
     box-shadow: 0 3px 2px rgba(233, 236, 239, 0.05);
 }
 
+.user-form .user-input {
+    margin: 5px;
+    padding: 5px;
+    width: 60%;
+    border: none;
+    transition: all .5s ease-in;
+    max-width: 500px;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .form-control {
         transition: none;
@@ -26182,7 +26191,6 @@ pre>code.highlight {
     color: #3a493b;
 }
 .user-form label{
-    padding-right: 5px;
     font-size: 17px;
 }
 
@@ -26320,7 +26328,9 @@ pre>code.highlight {
     padding: 10px;
 }
 
-
+#delete-fix{
+    
+}
 .bx bxs-universal-access
   {
     color: #ffffff

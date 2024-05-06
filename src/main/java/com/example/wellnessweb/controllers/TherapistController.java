@@ -3,6 +3,7 @@ package com.example.wellnessweb.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -100,6 +101,19 @@ public class TherapistController {
         } else {
             mav.setViewName("redirect:/therapistdashboard/viewsessions");
         }
+        return mav;
+    }
+    @GetMapping("editaccount")
+    public ModelAndView getUpdateAccountForm(HttpSession session) {
+        ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+        mav.addObject("therapist", loggedInTherapist);
+        return mav;
+    }
+    @PostMapping("editaccount")
+    public ModelAndView updateAccount(@ModelAttribute Therapist therapist, BindingResult bindingResult, HttpSession session) {
+        ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         return mav;
     }
 
