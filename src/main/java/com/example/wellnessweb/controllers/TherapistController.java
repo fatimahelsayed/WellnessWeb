@@ -76,44 +76,45 @@ public class TherapistController {
         return imageName;
     }
 
-    private void updateAccountFields(Therapist updatedTherapist, Therapist loggedInTherapist, MultipartFile file) {
-        if (updatedTherapist.getName() != null) {
-            loggedInTherapist.setName(updatedTherapist.getName());
+    private Boolean updateAccountFields(Therapist updatedTherapist, Therapist loggedInTherapist) {
+        Boolean isPasswordMatched = BCrypt.checkpw(updatedTherapist.getPassword(), loggedInTherapist.getPassword());
+        Boolean valid = true;
+        if (isPasswordMatched) {
+            if (updatedTherapist.getName() != null) {
+                loggedInTherapist.setName(updatedTherapist.getName());
+            }
+            if (updatedTherapist.getAge() != 0) {
+                loggedInTherapist.setAge(updatedTherapist.getAge());
+            }
+            if (updatedTherapist.getEducation() != null && updatedTherapist.getEducation().length() >= 3) {
+                loggedInTherapist.setEducation(updatedTherapist.getEducation());
+            }
+            if (updatedTherapist.getExperience() != null && updatedTherapist.getExperience().length() >= 5) {
+                loggedInTherapist.setExperience(updatedTherapist.getExperience());
+            }
+            if (updatedTherapist.getLanguages() != null && updatedTherapist.getLanguages().length() >= 4) {
+                loggedInTherapist.setLanguages(updatedTherapist.getLanguages());
+            }
+            if (updatedTherapist.getSpecialization() != null && updatedTherapist.getSpecialization().length() >= 4) {
+                loggedInTherapist.setSpecialization(updatedTherapist.getSpecialization());
+            }
+            if (updatedTherapist.getGender() != null) {
+                loggedInTherapist.setGender(updatedTherapist.getGender());
+            }
+            if (updatedTherapist.getEmail() != null) {
+                loggedInTherapist.setEmail(updatedTherapist.getEmail());
+            }
+            if (updatedTherapist.getPassword() != null) {
+                loggedInTherapist.setPassword(updatedTherapist.getPassword());
+            }
+            if (updatedTherapist.getPhoneNumber() != null) {
+                loggedInTherapist.setPhoneNumber(updatedTherapist.getPhoneNumber());
+            }
+            
+        } else {
+            valid = false;
         }
-        if (updatedTherapist.getAge() != 0) {
-            loggedInTherapist.setAge(updatedTherapist.getAge());
-        }
-        if (updatedTherapist.getEducation() != null && updatedTherapist.getEducation().length() >= 2) {
-            loggedInTherapist.setEducation(updatedTherapist.getEducation());
-        }
-        if (updatedTherapist.getExperience() != null && updatedTherapist.getExperience().length() >= 5) {
-            loggedInTherapist.setExperience(updatedTherapist.getExperience());
-        }
-        if (updatedTherapist.getLanguages() != null && updatedTherapist.getLanguages().length() >= 4) {
-            loggedInTherapist.setLanguages(updatedTherapist.getLanguages());
-        }
-        if (updatedTherapist.getSpecialization() != null && updatedTherapist.getSpecialization().length() >= 4) {
-            loggedInTherapist.setSpecialization(updatedTherapist.getSpecialization());
-        }
-        if (updatedTherapist.getGender() != null) {
-            loggedInTherapist.setGender(updatedTherapist.getGender());
-        }
-
-        if (updatedTherapist.getEmail() != null) {
-            loggedInTherapist.setEmail(updatedTherapist.getEmail());
-        }
-        if (updatedTherapist.getPassword() != null) {
-            loggedInTherapist.setPassword(updatedTherapist.getPassword());
-        }
-        if (updatedTherapist.getPhoneNumber() != null) {
-            loggedInTherapist.setPhoneNumber(updatedTherapist.getPhoneNumber());
-        }
-        if(updatedTherapist.getImage() != null)
-        {
-            String imageName= handleImageUpload(file, loggedInTherapist.getPhoneNumber());
-            loggedInTherapist.setImage(imageName);
-        }
-
+        return valid;
     }
 
     @GetMapping("")
@@ -178,19 +179,27 @@ public class TherapistController {
 
     @GetMapping("editaccount")
     public ModelAndView getUpdateAccountForm(HttpSession session) {
-        ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
+        ModelAndView mav = new ModelAndView("updateAccountTherapistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+        loggedInTherapist.setPassword("");
         mav.addObject("therapist", loggedInTherapist);
         return mav;
     }
 
     @PostMapping("editaccount")
     public ModelAndView updateAccount(@ModelAttribute Therapist therapist, BindingResult bindingResult,
-        @RequestParam("imageFile") MultipartFile imageFile, HttpSession session) {
+            @RequestParam("imageFile") MultipartFile imageFile, HttpSession session) {
         ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
-        updateAccountFields(therapist, loggedInTherapist, imageFile);
+        Boolean valid = updateAccountFields(therapist, loggedInTherapist);
+        String imageName = handleImageUpload(imageFile, loggedInTherapist.getPhoneNumber());
+        if (imageName != null) {
+            loggedInTherapist.setImage(imageName);
+        }
+        if(valid){
         this.therapistRepository.save(loggedInTherapist);
+        mav.setViewName("redirect:/therapistdashboard");
+        }
         return mav;
     }
 
@@ -201,6 +210,7 @@ public class TherapistController {
         mav.addObject("therapist", loggedInTherapist);
         return mav;
     }
+
     @PostMapping("changepassword")
     public ModelAndView changePassword(@RequestParam("Confirmed-Password") String password, HttpSession session) {
         ModelAndView mav = new ModelAndView("changePasswordTherapistDash.html");
