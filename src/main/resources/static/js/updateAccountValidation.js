@@ -1,6 +1,8 @@
 function validateForm() {
     var username = document.getElementById("username").value.trim();
     var password = document.getElementById("current-password").value.trim();
+
+    //change password fields
     var currpass = document.getElementById("password").value.trim();
     var newpass = document.getElementById("new-pass").value.trim();
     var confrimpass = document.getElementById("confirm-pass").value.trim();

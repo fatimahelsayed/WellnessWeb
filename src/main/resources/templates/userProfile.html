@@ -2,17 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Profile Dashboard</title>
-    <link rel="shortcut icon"
-    th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
-    <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet"
+        href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
 
     <!--Fonts-->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" th:href="@{/CSS/userprofile.css}">
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
 
 </head>
 
@@ -95,7 +96,7 @@
                             </a>
                             <div class="dropdown-menu  dropdown-menu-right ">
                                 <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome orchidLover
+                                    <h6 class="text-overflow m-0">Welcome <span th:text="${customer.Name}"></span>
                                     </h6>
                                 </div>
                                 <a th:href="@{/profile}" class="dropdown-item">
@@ -136,9 +137,7 @@
                                 <div class="col">
                                     <div class="card-profile-stats d-flex justify-content-center">
                                         <div>
-                                            <span class="heading">
-                                                OrchidLover
-                                            </span>
+                                            <span class="heading" th:text="${customer.username}"></span>
                                             <span class="description"></span>
                                         </div>
                                         <!-- <div>
@@ -161,8 +160,8 @@
                                 </h5>
                             </div> -->
                             <div class="text-center">
-                                <h5 class="h3">
-                                    lanahamed@gmail.com<span class="font-weight-light">
+                                <h5 class="h3" th:text="${customer.email}">
+                                    <span class="font-weight-light">
                                 </h5>
                             </div>
                         </div>

@@ -9,11 +9,12 @@
     <link rel="shortcut icon"
     th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--Fonts-->
     <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/login.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/alert.css}">
 </head>
 
 
@@ -24,28 +25,37 @@
 
         <h1 class="title">Sign Up</h1>
         <div class="form">
-            <form th:action="@{/signup}" method="post" autocomplete="off" th:object="${customer}" class="signup-form" onsubmit="return validateForm()">
-                <input id="name" type="text" placeholder="Name" th:field="*{Name}"/>
+            <form autocomplete="off" class="signup-form">
+                <input id="name" type="text" placeholder="Name"/>
                 <span id="name-error" class="error-message"></span>
-                <select th:field="*{Gender}" >
+                <select id="gender" >
                     <option value="">Gender</option>
                     <option value="female">Female</option>
                     <option value="male">Male</option>
                 </select>
                 <span id="gender-error" class="error-message"></span>
-                <input id="age" type="number" placeholder="Age" th:field="*{Age}"/>
+                <input id="age" type="number" placeholder="Age" />
                 <span id="age-error" class="error-message"></span>
-                <input id="phonenum" type="text" placeholder="Phone Number" th:field="*{phoneNumber}"/>
+                <input id="phonenum" type="text" placeholder="Phone Number" />
+                <span id="existing-phonenum-error" class="error-message"></span>
                 <span id="phonenum-error" class="error-message"></span>
-                <input id="email" type="text" placeholder="Email" th:field="*{email}"/>
+                <input id="email" type="text" placeholder="Email" />
+                <span id="existing-email-error" class="error-message"></span>
                 <span id="email-error" class="error-message"></span>
-                <input id="username" type="text" placeholder="Username (use a nickname to be anonymous)" th:field="*{username}"/>
+                <input id="username" type="text" placeholder="Username (use a nickname to be anonymous)"/>
+                <span id="existing-username-error" class="error-message"></span>
                 <span id="username-error" class="error-message"></span>
-                <input id="password" type="password" placeholder="Password" th:field="*{Password}"/>
+                <input id="password" type="password" placeholder="Password" />
                 <span id="password-error" class="error-message"></span>
-                <input value="Sign Up" type="submit" class="login-btn">
+                <input value="Sign Up" type="button" class="login-btn" onclick="signUpAjax()">
                 <p class="message">Already registered? <a th:href="@{/login}">Log in</a></p>
             </form>
+            <div class="alert hide">
+                <span class="fas fa-check-circle"></span>
+                <span class="msg"></span>
+                <div class="close-btn">
+                  <span class="fas fa-times"></span>
+            </div>
         </div>
     </div>
    <!-- footer -->

@@ -12,7 +12,7 @@
         <div class="nav-wrapper">
             <ul>
                 <li><a th:href="@{/home}">Home</a></li>
-                <li><a th:href="@{/signup}">Sign Up</a></li>
+                <li><a th:href="${session.loggedInUser != null ? '/profile' : '/signup'}">Sign Up</a></li>
                 <li><a th:href="@{/home}">About</a></li>
                 <li><a th:href="@{/therapists}">Connect to a Therapist</a></li>
             </ul>

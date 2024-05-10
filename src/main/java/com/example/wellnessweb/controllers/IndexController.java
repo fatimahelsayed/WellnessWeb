@@ -6,10 +6,13 @@ import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +23,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.example.wellnessweb.models.Admin;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.ReservedTherapySession;
+import com.example.wellnessweb.models.ServiceResponse;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.models.TherapySession;
@@ -29,6 +33,9 @@ import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
 import com.example.wellnessweb.repositories.TherapySessionRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -127,30 +134,38 @@ public class IndexController {
     }
 
     @PostMapping("/signup")
-    public ModelAndView saveCustomer(@ModelAttribute Customer customer) {
-        ModelAndView modelAndView = new ModelAndView();
-
+    public ResponseEntity<Object> saveCustomer(@RequestBody String customerJSON, HttpSession session)
+            throws JsonMappingException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Customer customer = objectMapper.readValue(customerJSON, Customer.class);
         boolean emailExists = customerRepository.existsByEmail(customer.getEmail());
         boolean phoneExists = customerRepository.existsByPhoneNumber(customer.getPhoneNumber());
         boolean usernameExists = customerRepository.existsByUsername(customer.getUsername());
+        List<String> errors = new ArrayList<>();
 
         if (emailExists) {
-            modelAndView.setViewName("redirect:/signup?EmailExists");
-            return modelAndView;
-        } else if (phoneExists) {
-            modelAndView.setViewName("redirect:/signup?PhoneNumberExists");
-            return modelAndView;
-        } else if (usernameExists) {
-            modelAndView.setViewName("redirect:/signup?UsernameTaken");
-            return modelAndView;
+            errors.add("EmailExists");
+        }
+        if (phoneExists) {
+            errors.add("PhoneNumberExists");
+        }
+        if (usernameExists) {
+            errors.add("UsernameTaken");
+
         } else {
             String encoddedPassword = BCrypt.hashpw(customer.getPassword(), BCrypt.gensalt(12));
             customer.setPassword(encoddedPassword);
             this.customerRepository.save(customer);
-            modelAndView.setViewName("redirect:/login");
+            session.setAttribute("loggedInUser", customer);
+            // modelAndView.setViewName("redirect:/profile");
+            ServiceResponse<String> response = new ServiceResponse<String>("success", "/profile");
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
         }
-
-        return modelAndView;
+        if (errors.size() > 0) {
+            ServiceResponse<List<String>> response = new ServiceResponse<List<String>>("error", errors);
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        }
+        return null;
     }
 
     @GetMapping("/therapistapply")
@@ -290,18 +305,17 @@ public class IndexController {
                 int customerId = loggedInUser.getID();
 
                 TherapySession therapySession = this.therapySessionRepository.findByID(sessionId);
-                    therapySession.setStatus("RESERVED");
-                    therapySessionRepository.save(therapySession);
+                therapySession.setStatus("RESERVED");
+                therapySessionRepository.save(therapySession);
 
-                    ReservedTherapySession reservedTherapySession = new ReservedTherapySession();
-                    reservedTherapySession.setTherapySessionID(sessionId);
-                    reservedTherapySession.setCustomerID(customerId);
+                ReservedTherapySession reservedTherapySession = new ReservedTherapySession();
+                reservedTherapySession.setTherapySessionID(sessionId);
+                reservedTherapySession.setCustomerID(customerId);
 
-                    this.reservedTherapySessionRepository.save(reservedTherapySession);
+                this.reservedTherapySessionRepository.save(reservedTherapySession);
 
-                    modelAndView.setViewName("redirect:/therapists?BookedSuccessfully");
-            }
-            else{
+                modelAndView.setViewName("redirect:/therapists?BookedSuccessfully");
+            } else {
                 modelAndView.setViewName("redirect:/login");
             }
         } catch (Exception e) {
@@ -334,12 +348,7 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("editUserProfile.html");
         return mav;
     }
-
-    @GetMapping("/profile")
-    public ModelAndView getProfile() {
-        ModelAndView mav = new ModelAndView("userProfile.html");
-        return mav;
-    }
+    
 
     @GetMapping("/contactus")
     public ModelAndView getContactUs() {
