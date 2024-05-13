@@ -168,7 +168,7 @@ public class TherapistController {
         ReservedTherapySession reservedTherapySession = this.reservedTherapySessionRepository
                 .findByTherapySessionID(sessionId);
         if (reservedTherapySession != null) {
-            TherapySession therapySession = this.therapySessionRepository.findByID(sessionId);
+            TherapySession therapySession = this.therapySessionRepository.findById(sessionId);
             Customer customer = this.customerRepository.findByID(reservedTherapySession.getCustomerID());
             mav.addObject("therapySess", therapySession);
             mav.addObject("customer", customer);

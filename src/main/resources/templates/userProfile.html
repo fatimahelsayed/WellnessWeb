@@ -30,7 +30,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/editprofile}">
+                        <a class="nav-link" th:href="@{/profile/bookedSessions}">
                             <span class="nav-link-text">Booked Sessions</span>
                         </a>
                     </li>
@@ -88,15 +88,14 @@
                                         <img alt="Image placeholder" th:src="@{/Images/pfp.webp}">
                                     </span>
                                     <div class="media-body  ml-2  d-none d-lg-block">
-                                        <span class="mb-0 text-sm  font-weight-bold">
-                                            Lana
+                                        <span class="mb-0 text-sm  font-weight-bold" th:text="${customer.username}">
                                         </span>
                                     </div>
                                 </div>
                             </a>
                             <div class="dropdown-menu  dropdown-menu-right ">
                                 <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome <span th:text="${customer.Name}"></span>
+                                    <h6 class="text-overflow m-0">Welcome <span th:text="${customer.username}"></span>
                                     </h6>
                                 </div>
                                 <a th:href="@{/profile}" class="dropdown-item">

@@ -286,7 +286,7 @@ public class IndexController {
 
     @GetMapping("/therapist/booktherapysession")
     public ModelAndView getBookTherapySession(@RequestParam("therapistId") int therapistId) {
-        Therapist therapist = therapistRepository.findById(therapistId);
+        Therapist therapist = therapistRepository.findByID(therapistId);
         List<TherapySession> therapysessions = this.therapySessionRepository.findByTherapistIDAndStatus(therapistId,
                 "UNRESERVED");
         ModelAndView mav = new ModelAndView("booktherapysession");
@@ -304,7 +304,7 @@ public class IndexController {
             if (loggedInUser != null) {
                 int customerId = loggedInUser.getID();
 
-                TherapySession therapySession = this.therapySessionRepository.findByID(sessionId);
+                TherapySession therapySession = this.therapySessionRepository.findById(sessionId);
                 therapySession.setStatus("RESERVED");
                 therapySessionRepository.save(therapySession);
 
