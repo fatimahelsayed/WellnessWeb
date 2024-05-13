@@ -2,9 +2,12 @@ package com.example.wellnessweb.controllers;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +17,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.ReservedTherapySession;
+import com.example.wellnessweb.models.ServiceResponse;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.models.TherapySession;
@@ -23,12 +27,15 @@ import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapySessionRepository;
 import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
@@ -104,10 +111,7 @@ public class TherapistController {
             if (updatedTherapist.getEmail() != null) {
                 loggedInTherapist.setEmail(updatedTherapist.getEmail());
             }
-            if (updatedTherapist.getPassword() != null) {
-                String encoddedPassword = BCrypt.hashpw(updatedTherapist.getPassword(), BCrypt.gensalt(12));
-                loggedInTherapist.setPassword(encoddedPassword);
-            }
+
             if (updatedTherapist.getPhoneNumber() != null) {
                 loggedInTherapist.setPhoneNumber(updatedTherapist.getPhoneNumber());
             }
@@ -194,6 +198,7 @@ public class TherapistController {
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         Boolean valid = updateAccountFields(therapist, loggedInTherapist);
         String imageName = handleImageUpload(imageFile, loggedInTherapist.getPhoneNumber());
+        System.out.println("old pass: " + loggedInTherapist.getPassword());
         if (imageName != null) {
             loggedInTherapist.setImage(imageName);
         }
@@ -214,14 +219,23 @@ public class TherapistController {
     }
 
     @PostMapping("changepassword")
-    public ModelAndView changePassword(@RequestParam("Confirmed-Password") String password, HttpSession session) {
-        ModelAndView mav = new ModelAndView("changePasswordTherapistDash.html");
+    public ResponseEntity<Object> changePassword(@RequestBody Map<String, String> passwordMap,
+            HttpSession session) throws JsonProcessingException {
+                String oldPassword = passwordMap.get("oldPassword");
+                String newPassword = passwordMap.get("newPassword");
+        System.out.println(oldPassword);
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
-        String encoddedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
-        loggedInTherapist.setPassword(encoddedPassword);
-        this.therapistRepository.save(loggedInTherapist);
-        mav.setViewName("redirect:/therapistdashboard/editaccount");
-        return mav;
+        ServiceResponse<String> response;
+        if (BCrypt.checkpw(oldPassword, loggedInTherapist.getPassword())) {
+            String encoddedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+            loggedInTherapist.setPassword(encoddedPassword);
+            session.setAttribute("loggedInTherapist", loggedInTherapist);
+            this.therapistRepository.save(loggedInTherapist);
+            response = new ServiceResponse<String>("success", "/therapistdashboard/editaccount");
+        } else {
+            response = new ServiceResponse<String>("error", "Invalid Old Password");
+        }
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
 }
