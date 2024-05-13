@@ -80,7 +80,7 @@ public class TherapistController {
         Boolean isPasswordMatched = BCrypt.checkpw(updatedTherapist.getPassword(), loggedInTherapist.getPassword());
         Boolean valid = true;
         if (isPasswordMatched) {
-            if (updatedTherapist.getName() != null) {
+            if (updatedTherapist.getName() != null && updatedTherapist.getName().length() >= 5) {
                 loggedInTherapist.setName(updatedTherapist.getName());
             }
             if (updatedTherapist.getAge() != 0) {
@@ -199,6 +199,7 @@ public class TherapistController {
         }
         if (valid) {
             this.therapistRepository.save(loggedInTherapist);
+            session.setAttribute("loggedInTherapist", loggedInTherapist);
             mav.setViewName("redirect:/therapistdashboard");
         }
         return mav;
