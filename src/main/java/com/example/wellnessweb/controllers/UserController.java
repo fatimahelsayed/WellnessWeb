@@ -41,6 +41,15 @@ public class UserController {
         return new ModelAndView("redirect:/login");
     }
 
+    @GetMapping("editaccount")
+    public ModelAndView getUpdateAccountForm(HttpSession session) {
+        ModelAndView mav = new ModelAndView("userProfileEdit.html");
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        mav.addObject("customer", loggedInUser);
+        return mav;
+    }
+
+
     @GetMapping("/bookedSessions")
     public ModelAndView getBookedSessions(HttpSession session) {
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
