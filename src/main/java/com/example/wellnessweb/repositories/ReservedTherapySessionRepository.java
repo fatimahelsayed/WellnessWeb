@@ -10,4 +10,5 @@ public interface ReservedTherapySessionRepository extends JpaRepository<Reserved
     boolean existsByTherapySessionID(int therapySessionID);
     ReservedTherapySession findByTherapySessionID(int therapySessionID);
     ReservedTherapySession findByCustomerID(int customerID);
+    ReservedTherapySession findFirstByCustomerIDOrderByIDDesc(int customerID);
 }

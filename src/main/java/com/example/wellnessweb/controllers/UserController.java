@@ -1,5 +1,7 @@
 package com.example.wellnessweb.controllers;
 
+import java.time.Duration;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,8 +37,15 @@ public class UserController {
         if (session.getAttribute("loggedInUser") != null) {
             Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
             ModelAndView mav = new ModelAndView("userProfile.html");
-            mav.addObject("customer", loggedInUser);
-            return mav;
+            ReservedTherapySession reservedSession = reservedTherapySessionRepository.findFirstByCustomerIDOrderByIDDesc(loggedInUser.getID());
+            if (reservedSession != null) {
+                TherapySession therapySession = this.therapySessionRepository.findById(reservedSession.getTherapySessionID());
+                Therapist therapist = this.therapistRepository.findByID(therapySession.getTherapistID());
+                mav.addObject("therapySession", therapySession);
+                mav.addObject("therapist", therapist);
+                mav.addObject("customer", loggedInUser);
+                return mav;
+            }
         }
         return new ModelAndView("redirect:/login");
     }
@@ -66,4 +75,6 @@ public class UserController {
         return mav;
 
     }
+
+
 }
