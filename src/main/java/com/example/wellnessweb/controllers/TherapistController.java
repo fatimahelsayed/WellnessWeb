@@ -190,7 +190,7 @@ public class TherapistController {
     @PostMapping("editaccount")
     public ModelAndView updateAccount(@ModelAttribute Therapist therapist, BindingResult bindingResult,
             @RequestParam("imageFile") MultipartFile imageFile, HttpSession session) {
-        ModelAndView mav = new ModelAndView("updateAccountTherpaistDash.html");
+        ModelAndView mav = new ModelAndView("updateAccountTherapistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         Boolean valid = updateAccountFields(therapist, loggedInTherapist);
         String imageName = handleImageUpload(imageFile, loggedInTherapist.getPhoneNumber());
