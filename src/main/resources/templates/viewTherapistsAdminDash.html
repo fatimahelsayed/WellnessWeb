@@ -66,44 +66,53 @@
                 </div>
             </div>
         </nav>
-        <div class="card">
-            <div class="card-header border-0">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="mb-0">Therapists</h3>
+        <div class="container-fluid pt-3">
+            <div class="row removable">
+                <div class="col-lg">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h1 class="mb-0">Memberships</h1>
+                                </div>
+                                <div class="col text-right">
+                                    <input class="table-search-bar" placeholder="Search for a Membership" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Specialization</th>
+                                        <th scope="col">Education</th>
+                                        <th scope="col">Experience</th>
+                                        <th scope="col">Languages</th>
+                                        <th scope="col">Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="therapist : ${therapists}">
+                                        <td th:text="${therapist.Name}"></td>
+                                        <td th:text="${therapist.Age}"></td>
+                                        <td th:text="${therapist.Gender}"></td>
+                                        <td th:text="${therapist.PhoneNumber}"></td>
+                                        <td th:text="${therapist.Specialization}"></td>
+                                        <td th:text="${therapist.Education}"></td>
+                                        <td th:text="${therapist.Experience}"></td>
+                                        <td th:text="${therapist.Languages}"></td>
+                                        <td th:text="${therapist.Email}"></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="table-responsive">
-                <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Specialization</th>
-                            <th scope="col">Education</th>
-                            <th scope="col">Experience</th>
-                            <th scope="col">Languages</th>
-                            <th scope="col">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="therapist : ${therapists}">
-                            <td th:text="${therapist.Name}"></td>
-                            <td th:text="${therapist.Age}"></td>
-                            <td th:text="${therapist.Gender}"></td>
-                            <td th:text="${therapist.PhoneNumber}"></td>
-                            <td th:text="${therapist.Specialization}"></td>
-                            <td th:text="${therapist.Education}"></td>
-                            <td th:text="${therapist.Experience}"></td>
-                            <td th:text="${therapist.Languages}"></td>
-                            <td th:text="${therapist.Email}"></td>
-                        </tr>
-
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

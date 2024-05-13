@@ -24,7 +24,7 @@
                                 <img alt="Image placeholder" th:src="@{/images/user icon.png}">
                             </span>
                             <div class="media-body  ml-2  d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">Admin</span>
+                                <span class="mb-0 text-sm  font-weight-bold" th:text="${loggedInTherapist.Name}"></span>
                             </div>
                         </div>
                     </a>
@@ -32,11 +32,7 @@
                         <div class="dropdown-header noti-title">
                             <h6 class="text-overflow m-0">Welcome</h6>
                         </div>
-                        <a href="#!" class="dropdown-item">
-                            <i class="fa fa-user"></i>
-                            <span>My profile</span>
-                        </a>
-                        <a href="#!" class="dropdown-item">
+                        <a th:href="@{/therapistdashboard/editaccount}" class="dropdown-item">
                             <i class="fa fa-tools"></i>
                             <span>Settings</span>
                         </a>

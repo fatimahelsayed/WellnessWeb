@@ -105,12 +105,13 @@ public class TherapistController {
                 loggedInTherapist.setEmail(updatedTherapist.getEmail());
             }
             if (updatedTherapist.getPassword() != null) {
-                loggedInTherapist.setPassword(updatedTherapist.getPassword());
+                String encoddedPassword = BCrypt.hashpw(updatedTherapist.getPassword(), BCrypt.gensalt(12));
+                loggedInTherapist.setPassword(encoddedPassword);
             }
             if (updatedTherapist.getPhoneNumber() != null) {
                 loggedInTherapist.setPhoneNumber(updatedTherapist.getPhoneNumber());
             }
-            
+
         } else {
             valid = false;
         }
@@ -196,9 +197,9 @@ public class TherapistController {
         if (imageName != null) {
             loggedInTherapist.setImage(imageName);
         }
-        if(valid){
-        this.therapistRepository.save(loggedInTherapist);
-        mav.setViewName("redirect:/therapistdashboard");
+        if (valid) {
+            this.therapistRepository.save(loggedInTherapist);
+            mav.setViewName("redirect:/therapistdashboard");
         }
         return mav;
     }
