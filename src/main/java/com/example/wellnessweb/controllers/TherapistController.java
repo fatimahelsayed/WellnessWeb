@@ -124,13 +124,15 @@ public class TherapistController {
 
     @GetMapping("")
     public ModelAndView getTherapistDashboard(HttpSession session) {
-
+        if (session.getAttribute("loggedInTherapist") != null) {
         ModelAndView mav = new ModelAndView("therapistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         TherapistRequest therapistRequest = (TherapistRequest) session.getAttribute("therapistReq");
         mav.addObject("therapistReq", therapistRequest);
         mav.addObject("therapist", loggedInTherapist);
         return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
     }
 
     @GetMapping("viewsessions")
