@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <link rel="stylesheet"
         href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
+        <link rel="stylesheet" type="text/css" th:href="@{/CSS/login.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
 </head>
 
@@ -21,7 +22,7 @@
                 <div class="col-lg">
                 <form th:action="@{/admindashboard/addadmin}" method="post" autocomplete="off" th:object="${admin}" class="addadmin-form"
                 onsubmit="return validateForm()">
-                <h1>Add an Session</h1>
+                <h1>Add an Admin</h1>
                 <input id="name" type="text" placeholder="Name" th:field="*{Name}" />
                 <span id="name-error" class="error-message"></span>
                 <input id="phonenum" type="text" placeholder="Phone Number" th:field="*{phoneNumber}" />

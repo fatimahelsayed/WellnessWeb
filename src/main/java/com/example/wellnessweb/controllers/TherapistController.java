@@ -34,6 +34,7 @@ import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -125,12 +126,12 @@ public class TherapistController {
     @GetMapping("")
     public ModelAndView getTherapistDashboard(HttpSession session) {
         if (session.getAttribute("loggedInTherapist") != null) {
-        ModelAndView mav = new ModelAndView("therapistDash.html");
-        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
-        TherapistRequest therapistRequest = (TherapistRequest) session.getAttribute("therapistReq");
-        mav.addObject("therapistReq", therapistRequest);
-        mav.addObject("therapist", loggedInTherapist);
-        return mav;
+            ModelAndView mav = new ModelAndView("therapistDash.html");
+            Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+            TherapistRequest therapistRequest = (TherapistRequest) session.getAttribute("therapistReq");
+            mav.addObject("therapistReq", therapistRequest);
+            mav.addObject("therapist", loggedInTherapist);
+            return mav;
         }
         return new ModelAndView("redirect:/employeelogin");
     }
@@ -148,6 +149,7 @@ public class TherapistController {
             }
         }
         mav.addObject("therapySessions", therapySessions);
+        mav.addObject("therapist", loggedInTherapist);
         return mav;
     }
 
@@ -169,19 +171,32 @@ public class TherapistController {
     }
 
     @GetMapping("sessiondetails")
-    public ModelAndView editClientForm(@RequestParam("id") int sessionId) {
+    public ModelAndView editClientForm(@RequestParam("id") int sessionId, HttpSession session) {
         ModelAndView mav = new ModelAndView("viewSessionDetailsTherapistDash.html");
         ReservedTherapySession reservedTherapySession = this.reservedTherapySessionRepository
                 .findByTherapySessionID(sessionId);
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         if (reservedTherapySession != null) {
             TherapySession therapySession = this.therapySessionRepository.findById(sessionId);
             Customer customer = this.customerRepository.findByID(reservedTherapySession.getCustomerID());
             mav.addObject("therapySess", therapySession);
             mav.addObject("customer", customer);
+            mav.addObject("therapist", loggedInTherapist);
         } else {
             mav.setViewName("redirect:/therapistdashboard/viewsessions");
         }
         return mav;
+    }
+
+    @PostMapping("/deleteTherapySession/{id}")
+    public ModelAndView deleteTherapySession(@PathVariable("id") int id, HttpSession session) {
+        ModelAndView modelAndView = new ModelAndView();
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+        modelAndView.addObject("therapist", loggedInTherapist);
+        this.therapySessionRepository.deleteById(id);
+        modelAndView.setViewName("redirect:/therapistdashboard/viewsessions?DeleteSuccessful");
+        modelAndView.addObject("therapist", loggedInTherapist);
+        return modelAndView;
     }
 
     @GetMapping("editaccount")
@@ -223,8 +238,8 @@ public class TherapistController {
     @PostMapping("changepassword")
     public ResponseEntity<Object> changePassword(@RequestBody Map<String, String> passwordMap,
             HttpSession session) throws JsonProcessingException {
-                String oldPassword = passwordMap.get("oldPassword");
-                String newPassword = passwordMap.get("newPassword");
+        String oldPassword = passwordMap.get("oldPassword");
+        String newPassword = passwordMap.get("newPassword");
         System.out.println(oldPassword);
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         ServiceResponse<String> response;

@@ -74,18 +74,18 @@
                       <td th:text="${therapySess.EndTime}"></td>
                       <td th:text="${therapySess.Status}"></td>
                       <td>
-                        <a
-                          href=""
-                          class="btn btn-sm btn-primary"
-                          style="background-color: rgb(58, 99, 99)"
-                          >Edit</a
-                        >
-                        <form method="post" style="display: inline">
-                          <input type="hidden" name="id" />
-                          <button type="submit" class="btn btn-sm btn-delete">
+                        <div th:if="${therapySess.Status != 'RESERVED'}">
+                          <form method="post" style="display: inline" th:action="@{/therapistdashboard/deleteTherapySession(id=${therapySess.ID})}">
+                              <button type="submit" class="btn btn-sm btn-delete">
+                                  Delete
+                              </button>
+                          </form>
+                        </div>                      
+                        <div th:if="${therapySess.Status}=='RESERVED'">
+                          <button type="submit" class="btn btn-sm btn-delete" disabled>
                             Delete
                           </button>
-                        </form>
+                        </div>
                       </td>
                       <div th:if="${therapySess.Status}=='RESERVED'">
                         <td>
