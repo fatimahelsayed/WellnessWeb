@@ -26347,3 +26347,6 @@ pre>code.highlight {
     color: white;
     margin-bottom: 20px; 
 }
+.error-message{
+    color: red;
+}

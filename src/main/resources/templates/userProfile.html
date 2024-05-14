@@ -80,13 +80,15 @@
                 <div class="col-lg-8">
                     <h1>Most Recent Session</h1>
                     <div class="card">
-                        <div class="card-header bg-transparent">
+                        <div th:if="${therapist != null}" class="card-header bg-transparent">
                             <div class="fs-8" th:text="'Therapist: ' + 'Dr. ' + ${therapist.name}"></div>
                             <div class="fs-8" th:text="'Date: ' + ${therapySession.Date}"></div>
                             <div class="fs-8" th:text="'Start Time: ' + ${therapySession.StartTime}"></div>
                             <div class="fs-8" th:text="'End Time: ' + ${therapySession.EndTime}"></div>
                         </div>
-
+                        <div th:if="${therapist == null}" class="card-header bg-transparent">
+                            <h3>You do not have any sessions</h3>
+                        </div>
                     </div>
 
                 </div>

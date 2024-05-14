@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Profile Dashboard</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
@@ -26,22 +28,162 @@
             <div class="row removable">
                 <div class="col-lg">
                     <div class="user-form-container">
-                        <h1 class="form-title">Update Account</h1>
-                        <form class="userForm">
-                            <input class="user-input" name="username" placeholder="Username" type="text"><br>
-                            <input class="user-input" name="age" placeholder="Age" type="text"><br>
-                            <input class="user-input" name="fname" placeholder="Password" type="text"><br>
-                            <input class="user-input" name="fname" placeholder="Confirm Password" type="text"><br>
-                            <button class="btn btn-add-form" type="submit">
+                        <form class="user-form" autocomplete="off">
+                            <h1>Update Account</h1>
+                            <input class="user-input" name="Username" id="username" placeholder="Username" type="text"
+                                th:field="*{customer.username}" />
+                            <br>
+                            <span id="username-error" class="error-message"></span>
+                            <br>
+                            <input class="user-input" name="Name" id="name" placeholder="Full name" type="text"
+                                th:field="*{customer.Name}" />
+                            <br>
+                            <span id="name-error" class="error-message"></span>
+                            <br>
+                            <select class="user-input" th:field="*{customer.Gender}">
+                                <option value="">Gender</option>
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                            </select>
+                            <br>
+                            <br>
+                            <input class="user-input" name="Age" placeholder="Age" type="number"
+                                th:field="*{customer.Age}" min="16" max="80"/>
+                            <br>
+                            <br>
+                            <input class="user-input" id="phoneNumber" name="phoneNumber" type="text" placeholder="Phone Number"
+                                th:field="*{customer.phoneNumber}" />
+                            <br>
+                            <span id="phoneNumber-error" class="error-message"></span>
+                            <br>
+                            <input class="user-input" name="email" id="email" type="text" placeholder="Email"
+                                th:field="*{customer.email}" />
+                            <br>
+                            <span id="email-error" class="error-message"></span>
+                            <br>
+                            <input class="user-input" id="password" name="Password" placeholder="Password" type="password" />
+                            <br>
+                            <span id="password-error" class="error-message"></span>
+                            <br>
+                            <br>
+                            <button class="btn btn-primary" type="button" onclick="updateAccountAjax()">
                                 Update Account
                             </button>
+                            <a class="btn btn-primary" th:href="@{/profile/changepassword}">
+                            Change Password
+                            </a>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            function validateForm() {
+                var username = document.getElementById("username").value.trim();
+                var email = document.getElementById("email").value.trim();
+                var phoneNumber = document.getElementById("phoneNumber").value.trim();
+                var password = document.getElementById("password").value.trim();
+                var name = document.getElementById("name").value.trim();
 
+                var errorElements = document.querySelectorAll(".error-message");
+                errorElements.forEach(function (element) {
+                  element.innerText = "";
+                });
+              
+                var valid = true;
 
+                if (name.length > 0 && name.length < 3) {
+                    document.getElementById("username-error").innerText =
+                        "Please enter your username";
+                    valid = false;
+                }
+
+                if (name.length > 0 && name.length < 3) {
+                    document.getElementById("name-error").innerText =
+                        "Please enter a vaild name";
+                    valid = false;
+                }
+
+                if (phoneNumber.length > 0 && phoneNumber.length < 10) {
+                    document.getElementById("phoneNumber-error").innerText =
+                        "Please enter a valid phone number";
+                    valid = false;
+                }
+                if (!/^\d+$/.test(phoneNumber)) {
+                    document.getElementById("phoneNumber-error").innerText =
+                        "Phone number should contain only digits";
+                    valid = false;
+                }
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email.match(emailPattern)) {
+                  document.getElementById("email-error").innerText =
+                    "Please enter a valid email address";
+                  i = false;
+                }
+
+                if (password === "") {
+                    document.getElementById("password-error").innerText =
+                        "Please enter your password";
+                    valid = false;
+                }
+
+                return valid;
+            }
+
+            function updateAccountAjax() {
+                var validForm = validateForm();
+
+                if (validForm) {
+                    var formData = {
+                        name: $("#name").val(),
+                        age: $("#age").val(),
+                        gender: $("#gender").val(),
+                        phoneNumber: $("#phoneNumber").val(),
+                        email: $("#email").val(),
+                        username: $("#username").val(),
+                        password: $("#password").val(),
+                      };
+                      console.log(formData);
+                  
+                      // DO POST
+                      $.ajax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "/profile/editaccount",
+                        data: JSON.stringify(formData),
+                        dataType: "json",
+                        success: function (result) {
+                          if (result.status == "success") {
+                            window.location.href = result.data;
+                            // alertShow("Account created successfully, log in to access it");
+                          } else if (Array.isArray(result.data)) {
+                            result.data.forEach(function (error) {
+                              if (error === "EmailExists") {
+                                document.getElementById("email-error").innerText =
+                                  "This email already exists, please enter a different email";
+                              } else if (error === "PhoneNumberExists") {
+                                document.getElementById("phoneNumber-error").innerText =
+                                  "This phone number already exists, please enter a different number";
+                              } else if (error === "UsernameTaken") {
+                                document.getElementById("username-error").innerText =
+                                  "This username already exists, please enter a different username";
+                              }
+                                else if (error === "IncorrectPassword") {
+                                document.getElementById("password-error").innerText =
+                                  "Incorrect Password, failed to update account details";
+                              }
+                            });
+                            console.log(result);
+                          }
+                        },
+                        error: function (e) {
+                          console.log(result.status);
+                        },
+                      });
+                }
+            }
+              
+        </script>
         <script
             src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/jquery.min.js"></script>
         <script
@@ -54,3 +196,4 @@
         <script
             src="https://rawcdn.githack.com/Loopple/loopple-public-assets/7bb803d2af2ab6d71d429b0cb459c24a4cd0fbb4/argon-dashboard/js/argon.min.js"></script>
 </body>
+</html>

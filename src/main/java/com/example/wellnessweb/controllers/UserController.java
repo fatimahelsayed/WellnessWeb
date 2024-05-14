@@ -1,21 +1,33 @@
 package com.example.wellnessweb.controllers;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.ReservedTherapySession;
+import com.example.wellnessweb.models.ServiceResponse;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.models.TherapySession;
 import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapySessionRepository;
+import com.example.wellnessweb.repositories.CustomerRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import aj.org.objectweb.asm.Attribute;
 import jakarta.servlet.http.HttpSession;
@@ -23,6 +35,8 @@ import jakarta.servlet.http.HttpSession;
 @RestController
 @RequestMapping("/profile")
 public class UserController {
+    @Autowired
+    private CustomerRepository customerRepository;
     @Autowired
     private ReservedTherapySessionRepository reservedTherapySessionRepository;
 
@@ -32,20 +46,69 @@ public class UserController {
     @Autowired
     private TherapistRepository therapistRepository;
 
+    public List<String> checkForExistingFields(Customer customer, Customer loggedInUser) {
+        List<String> errors = new ArrayList<>();
+        if (!loggedInUser.getEmail().equals(customer.getEmail())) {
+            boolean emailExists = customerRepository.existsByEmail(customer.getEmail());
+            if (emailExists) {
+                errors.add("EmailExists");
+            }
+        }
+        if (!loggedInUser.getUsername().equals(customer.getUsername())) {
+            boolean usernameExists = customerRepository.existsByUsername(customer.getUsername());
+            if (usernameExists) {
+                errors.add("UsernameTaken");
+            }
+        }
+        if (customer.getPhoneNumber() != null && loggedInUser.getPhoneNumber() != null) {
+            if (!loggedInUser.getPhoneNumber().equals(customer.getPhoneNumber())) {
+                boolean phoneExists = customerRepository.existsByPhoneNumber(customer.getPhoneNumber());
+                if (phoneExists) {
+                    errors.add("PhoneNumberExists");
+                }
+            }
+        }
+        return errors;
+    }
+
+    public void updateFields(Customer updatedCustomer, Customer loggedInUser) {
+        if (updatedCustomer.getEmail() != null && !loggedInUser.getEmail().equals(updatedCustomer.getEmail())) {
+            loggedInUser.setEmail(updatedCustomer.getEmail());
+        }
+        if (updatedCustomer.getUsername() != null
+                && !loggedInUser.getUsername().equals(updatedCustomer.getUsername())) {
+            loggedInUser.setUsername(updatedCustomer.getUsername());
+        }
+        if (updatedCustomer.getPhoneNumber() != null
+                && !loggedInUser.getPhoneNumber().equals(updatedCustomer.getPhoneNumber())) {
+            loggedInUser.setPhoneNumber(updatedCustomer.getPhoneNumber());
+
+        }
+        if (updatedCustomer.getGender() != null && !updatedCustomer.getGender().equals(loggedInUser.getGender())) {
+            loggedInUser.setName(updatedCustomer.getName());
+        }
+        if (updatedCustomer.getAge() != 0 && updatedCustomer.getAge() != loggedInUser.getAge()) {
+            loggedInUser.setAge(updatedCustomer.getAge());
+        }
+        this.customerRepository.save(loggedInUser);
+    }
+
     @GetMapping("")
     public ModelAndView getProfile(HttpSession session) {
         if (session.getAttribute("loggedInUser") != null) {
             Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
             ModelAndView mav = new ModelAndView("userProfile.html");
-            ReservedTherapySession reservedSession = reservedTherapySessionRepository.findFirstByCustomerIDOrderByIDDesc(loggedInUser.getID());
+            ReservedTherapySession reservedSession = reservedTherapySessionRepository
+                    .findFirstByCustomerIDOrderByIDDesc(loggedInUser.getID());
             if (reservedSession != null) {
-                TherapySession therapySession = this.therapySessionRepository.findById(reservedSession.getTherapySessionID());
+                TherapySession therapySession = this.therapySessionRepository
+                        .findById(reservedSession.getTherapySessionID());
                 Therapist therapist = this.therapistRepository.findByID(therapySession.getTherapistID());
                 mav.addObject("therapySession", therapySession);
                 mav.addObject("therapist", therapist);
-                mav.addObject("customer", loggedInUser);
-                return mav;
             }
+            mav.addObject("customer", loggedInUser);
+            return mav;
         }
         return new ModelAndView("redirect:/login");
     }
@@ -58,14 +121,41 @@ public class UserController {
         return mav;
     }
 
+    @PostMapping("/editaccount")
+    public ResponseEntity<Object> updateCustomer(@RequestBody String customerJSON, HttpSession session)
+            throws JsonMappingException, JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Customer customer = objectMapper.readValue(customerJSON, Customer.class);
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+
+        List<String> errors = checkForExistingFields(customer, loggedInUser);
+
+        Boolean isPasswordMatched = BCrypt.checkpw(customer.getPassword(), loggedInUser.getPassword());
+        if (!isPasswordMatched) {
+            errors.add("IncorrectPassword");
+        }
+
+        if (isPasswordMatched && errors.size() == 0) {
+            updateFields(customer, loggedInUser);
+            session.setAttribute("loggedInUser", loggedInUser);
+            ServiceResponse<String> response = new ServiceResponse<String>("success", "/profile");
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        } else if (errors.size() > 0) {
+            ServiceResponse<List<String>> response = new ServiceResponse<List<String>>("error", errors);
+            return new ResponseEntity<Object>(response, HttpStatus.OK);
+        }
+        return null;
+    }
 
     @GetMapping("/bookedSessions")
     public ModelAndView getBookedSessions(HttpSession session) {
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
         ModelAndView mav = new ModelAndView("userProfileBooked.html");
-        ReservedTherapySession reservedSession = this.reservedTherapySessionRepository.findByCustomerID(loggedInUser.getID());
+        ReservedTherapySession reservedSession = this.reservedTherapySessionRepository
+                .findByCustomerID(loggedInUser.getID());
         if (reservedSession != null) {
-            TherapySession therapySession = this.therapySessionRepository.findById(reservedSession.getTherapySessionID());
+            TherapySession therapySession = this.therapySessionRepository
+                    .findById(reservedSession.getTherapySessionID());
             Therapist therapist = this.therapistRepository.findByID(therapySession.getTherapistID());
             mav.addObject("therapist", therapist);
             mav.addObject("therapySession", therapySession);
@@ -75,6 +165,5 @@ public class UserController {
         return mav;
 
     }
-
 
 }
