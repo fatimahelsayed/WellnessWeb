@@ -1,6 +1,9 @@
 package com.example.wellnessweb.controllers;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -287,8 +290,14 @@ public class IndexController {
     @GetMapping("/therapist/booktherapysession")
     public ModelAndView getBookTherapySession(@RequestParam("therapistId") int therapistId) {
         Therapist therapist = therapistRepository.findByID(therapistId);
-        List<TherapySession> therapysessions = this.therapySessionRepository.findByTherapistIDAndStatus(therapistId,
-                "UNRESERVED");
+
+        LocalDate currentDate = LocalDate.now();
+        LocalTime currentTime = LocalTime.now();
+
+        List<TherapySession> therapysessions = this.therapySessionRepository
+                .findByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(
+                        therapistId, "UNRESERVED", currentDate, currentTime);
+
         ModelAndView mav = new ModelAndView("booktherapysession");
         mav.addObject("therapist", therapist);
         mav.addObject("therapysessions", therapysessions);
@@ -348,7 +357,6 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("editUserProfile.html");
         return mav;
     }
-    
 
     @GetMapping("/contactus")
     public ModelAndView getContactUs() {
