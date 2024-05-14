@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
     <link rel="stylesheet"
         href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
-        <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
-    </head>
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
+</head>
 
 <body>
     <div th:replace="~{partials/therapistDashSideBar}"></div>
@@ -43,7 +43,7 @@
                                             <span class="heading" th:text="${therapist.Name}"></span>
                                             <span class="description" th:text="${therapist.Specialization}"></span>
                                         </div>
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <div class="card">
                         <div class="card-header border-0">
@@ -79,27 +79,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th scope="row">
-                                            01
-                                        </th>
-                                        <td>
-                                            20/05/2024
-                                        </td>
-                                        <td>
-                                            5:00 PM
-                                        </td>
-                                        <td>
-                                            6:00 PM
-                                        </td>
-                                        <td>
-                                            Reserved
-                                        </td>
+                                    <tr th:each="upcomingSess: ${upcomingSessions}">
+                                        <th scope="row" th:text="${upcomingSess.ID}"></th>
+                                        <td th:text="${upcomingSess.date}"></td>
+                                        <td th:text="${upcomingSess.startTime}"></td>
+                                        <td th:text="${upcomingSess.endTime}"></td>
+                                        <td th:text="${upcomingSess.status}"></td>
 
                                         <td>
-                                           <a href="" class="btn btn-sm btn-primary">View Details</a>
+                                        <td>
+                                            <a th:href="@{/therapistdashboard/sessiondetails(id=${upcomingSess.ID})}"
+                                                class="btn btn-sm btn-primary" style="background-color: cadetblue">View
+                                                Details</a>
                                         </td>
-                                        
+
+                                        </td>
+
 
                                     </tr>
 
@@ -124,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="card card-stats">
                         <div class="card-body">
                             <div class="row">
@@ -140,8 +135,8 @@
                             </div>
                         </div>
                     </div>
-                    
-                    
+
+
                 </div>
             </div>
         </div>

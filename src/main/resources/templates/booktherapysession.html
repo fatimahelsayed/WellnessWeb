@@ -49,15 +49,15 @@
             <div class="card-wrapper">
                 <div th:each="therapysession : ${therapysessions}" class="card">
                     <h2>Day:</h2>
-                    <p th:text="${therapysession.Date}"></p>
+                    <p th:text="${therapysession.date}"></p>
                     <div class="times">
                     <div>
                         <h2>Start Time:</h2>
-                        <p th:text="${therapysession.StartTime}"></p>
+                        <p th:text="${therapysession.startTime}"></p>
                     </div>
                     <div>
                         <h2>End Time:</h2>
-                        <p th:text="${therapysession.EndTime}"></p>
+                        <p th:text="${therapysession.endTime}"></p>
                     </div>
                     </div>
                     <form th:action="@{/therapist/booktherapysession}" method="post">

@@ -1,6 +1,8 @@
 package com.example.wellnessweb.controllers;
 
 import java.io.File;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
@@ -129,6 +131,15 @@ public class TherapistController {
             ModelAndView mav = new ModelAndView("therapistDash.html");
             Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
             TherapistRequest therapistRequest = (TherapistRequest) session.getAttribute("therapistReq");
+
+            LocalDate currentDate = LocalDate.now();
+            LocalTime currentTime = LocalTime.now();
+
+            TherapySession upcomingSessions = this.therapySessionRepository
+                .findFirstByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(
+                        loggedInTherapist.getID(), "RESERVED", currentDate, currentTime);
+
+            mav.addObject("upcomingSessions", upcomingSessions);
             mav.addObject("therapistReq", therapistRequest);
             mav.addObject("therapist", loggedInTherapist);
             return mav;
@@ -142,12 +153,7 @@ public class TherapistController {
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         List<TherapySession> therapySessions = this.therapySessionRepository
                 .findByTherapistID(loggedInTherapist.getID());
-        for (TherapySession therapySession : therapySessions) {
-            if (this.reservedTherapySessionRepository.existsByTherapySessionID(therapySession.getID())) {
-                therapySession.setStatus("RESERVED");
-                this.therapySessionRepository.save(therapySession);
-            }
-        }
+                
         mav.addObject("therapySessions", therapySessions);
         mav.addObject("therapist", loggedInTherapist);
         return mav;

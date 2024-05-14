@@ -69,25 +69,25 @@
                   <tbody>
                     <tr th:each="therapySess : ${therapySessions}">
                       <th scope="row" th:text="${therapySess.ID}"></th>
-                      <td th:text="${therapySess.Date}"></td>
-                      <td th:text="${therapySess.StartTime}"></td>
-                      <td th:text="${therapySess.EndTime}"></td>
-                      <td th:text="${therapySess.Status}"></td>
+                      <td th:text="${therapySess.date}"></td>
+                      <td th:text="${therapySess.startTime}"></td>
+                      <td th:text="${therapySess.endTime}"></td>
+                      <td th:text="${therapySess.status}"></td>
                       <td>
-                        <div th:if="${therapySess.Status != 'RESERVED'}">
+                        <div th:if="${therapySess.status != 'RESERVED'}">
                           <form method="post" style="display: inline" th:action="@{/therapistdashboard/deleteTherapySession(id=${therapySess.ID})}">
                               <button type="submit" class="btn btn-sm btn-delete">
                                   Delete
                               </button>
                           </form>
                         </div>                      
-                        <div th:if="${therapySess.Status}=='RESERVED'">
+                        <div th:if="${therapySess.status}=='RESERVED'">
                           <button type="submit" class="btn btn-sm btn-delete" disabled>
                             Delete
                           </button>
                         </div>
                       </td>
-                      <div th:if="${therapySess.Status}=='RESERVED'">
+                      <div th:if="${therapySess.status}=='RESERVED'">
                         <td>
                           <a
                           th:href="@{/therapistdashboard/sessiondetails(id=${therapySess.ID})}"
@@ -96,7 +96,7 @@
                         </td>
                       </div>
                 
-                      <div th:if="${therapySess.Status}!='RESERVED'">
+                      <div th:if="${therapySess.status}!='RESERVED'">
                         <td>
                           <button class="btn btn-sm btn-primary" style="background-color: cadetblue" disabled>View Details</button>
                         </td>

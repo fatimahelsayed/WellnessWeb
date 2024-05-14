@@ -14,20 +14,21 @@ public class TherapySession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private int therapistID;
-    private LocalDate Date;
-    private LocalTime StartTime;
-    private LocalTime EndTime;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String status;
+
 
     public TherapySession() {
     }
 
-    public TherapySession(int ID, int TherapistID, LocalDate Date, LocalTime StartTime, LocalTime EndTime, String status) {
+    public TherapySession(int ID, int TherapistID, LocalDate date, LocalTime startTime, LocalTime endTime, String status) {
         this.ID = ID;
         this.therapistID = TherapistID;
-        this.Date = Date;
-        this.StartTime = StartTime;
-        this.EndTime = EndTime;
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.status = status;
     }
 
@@ -48,28 +49,29 @@ public class TherapySession {
     }
 
     public LocalDate getDate() {
-        return this.Date;
+        return this.date;
     }
 
-    public void setDate(LocalDate Date) {
-        this.Date = Date;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public LocalTime getStartTime() {
-        return this.StartTime;
+        return this.startTime;
     }
 
-    public void setStartTime(LocalTime StartTime) {
-        this.StartTime = StartTime;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
     public LocalTime getEndTime() {
-        return this.EndTime;
+        return this.endTime;
     }
 
-    public void setEndTime(LocalTime EndTime) {
-        this.EndTime = EndTime;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
+
     public String getStatus() {
         return this.status;
     }
