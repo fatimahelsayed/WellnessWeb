@@ -39,6 +39,7 @@
         text-transform: capitalize;
         font-size: 14px;
 
+
     }
 
     .blog-title:hover{
@@ -49,6 +50,23 @@
     .blog-date{
         font-style: italic;
         font-size: 13px;        
+    }
+
+    .btn {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 10px;
+        background-color: #3b4a3b;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #495d4a;
+        color: white;
     }
 
  
@@ -62,7 +80,9 @@
         <div class="container-fluid pt-3">
             <div class="row removable">
                 <div class="col-lg">
-                    <h1>Your Published Blogs</h1>
+                    <h1>Your Published Blogs</h1> <span>                        
+                        <a href="/blogs/addBlog" class="btn">Add a Blog</a>
+                    </span>
 
                         <div th:each="blog : ${userBlogs}" class="blog-item">
                             <a th:href="@{'/blogs/viewblog/' + ${blog.ID}}">
@@ -71,6 +91,7 @@
                             <div class="blog-date" th:text="${blog.Date}"></div>
 
                         </div>
+                    
                 </div>
             </div>
         </div>
