@@ -137,7 +137,6 @@ public class TherapistController {
         if (session.getAttribute("loggedInTherapist") != null) {
             ModelAndView mav = new ModelAndView("therapistDash.html");
             Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
-            TherapistRequest therapistRequest = (TherapistRequest) session.getAttribute("therapistReq");
 
             LocalDate currentDate = LocalDate.now();
             LocalTime currentTime = LocalTime.now();
@@ -147,7 +146,6 @@ public class TherapistController {
                             loggedInTherapist.getID(), "RESERVED", currentDate, currentTime);
 
             mav.addObject("upcomingSessions", upcomingSessions);
-            mav.addObject("therapistReq", therapistRequest);
             mav.addObject("therapist", loggedInTherapist);
             return mav;
         }

@@ -1,0 +1,71 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Profile Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet"
+        href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/login.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
+</head>
+
+<body>
+    <div th:replace="~{partials/adminDashSideBar}"></div>
+    <div class="main-content" id="panel">
+        <div th:replace="~{partials/adminDashNavBar}"></div>
+        <div class="container-fluid pt-3">
+            <div class="row removable">
+                <div class="col-lg">
+                    <form th:action="@{/admindashboard/addtherapist}" method="POST" th:object="${therapist}" class="user-form" onsubmit="return validateForm()" enctype="multipart/form-data" autocomplete="off">
+                        <h1>Update Account</h1>
+                        <input class="user-input" name="Name" placeholder="Full name" type="text"
+                            th:field="*{Name}" />
+                        <span id="name-error" class="error-message"></span>
+                        <br>
+                        <select class="user-input" th:field="*{Gender}">
+                            <option value="">Gender</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                        </select>
+                        <br>
+                        <input class="user-input" name="Age" placeholder="Age" type="text"
+                            th:field="*{Age}" />
+                        <br>
+                        <input class="user-input" name="PhoneNumber" type="text" placeholder="Phone Number"
+                            th:field="*{PhoneNumber}" />
+                        <br>
+                        <input class="user-input" name="Education" id="education" type="text"
+                            placeholder="Major and University" th:field="*{Education}" />
+                        <br>
+                        <input class="user-input" name="Languages" id="Languages" type="text"
+                            placeholder="Languages Spoken" th:field="*{Languages}" />
+                        <br>
+                        <input class="user-input" name="specialization" id="specialization" type="text"
+                            placeholder="Specialization" th:field="*{Specialization}" />
+                        <br>
+                        <input class="user-input" name="email" id="email" type="text" placeholder="Email"
+                            th:field="*{email}" />
+                        <br>
+                        <label for="imageFile">Image (JPG, JPEG, PNG, GIF)</label>
+                        <br>
+                        <input class="user-input" type="file" name="imageFile" id="imageFile" />
+                        <br>
+                        <input class="user-input" id="password" name="Password" placeholder="Password" type="password" th:field="*{Password}" />
+                        <br>
+                        <br>
+                        <button class="btn btn-primary" type="submit">
+                            Add Therapist
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script th:src="@{/js/addAdminValidation.js}"></script>
+</body>
+
+</html>

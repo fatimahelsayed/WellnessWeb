@@ -13,7 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 import javax.persistence.Lob;
- 
+
 @Entity
 public class Subtopics {
     @Id
@@ -26,7 +26,7 @@ public class Subtopics {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "content_id")
     private Content content;
-    
+
     public Subtopics(int iD, String subtopicTitle, String subtopicContent, Content content) {
         ID = iD;
         this.subtopicTitle = subtopicTitle;
@@ -34,13 +34,14 @@ public class Subtopics {
         this.content = content;
     }
 
-    public Subtopics(){
+    public Subtopics() {
 
     }
 
     public int getID() {
         return ID;
     }
+
     public void setID(int iD) {
         ID = iD;
     }
@@ -48,16 +49,19 @@ public class Subtopics {
     public String getSubtopicTitle() {
         return subtopicTitle;
     }
+
     public void setSubtopicTitle(String subtopicTitle) {
         this.subtopicTitle = subtopicTitle;
     }
+
     public String getSubtopicContent() {
         return subtopicContent;
     }
+
     public void setSubtopicContent(String subtopicContent) {
         this.subtopicContent = subtopicContent;
     }
-    
+
     public Content getContent() {
         return content;
     }
@@ -65,6 +69,5 @@ public class Subtopics {
     public void setContent(Content content) {
         this.content = content;
     }
-
 
 }

@@ -13,4 +13,5 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer>{
     boolean existsByPhoneNumber(String phoneNumber);
     boolean existsByUsername(String username);
     List<Customer> findTop5ByOrderByCreatedAtDesc();
+    
 }

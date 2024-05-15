@@ -1,5 +1,6 @@
 package com.example.wellnessweb.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.wellnessweb.models.Admin;
@@ -63,7 +65,8 @@ public class AdminController {
         List<Customer> recentCustomers = this.customerRepository.findTop5ByOrderByCreatedAtDesc();
         mav.addObject("recentCustomers", recentCustomers);
 
-        List<TherapistRequest> recentRequests = this.therapistRequestRepository.findByIsAcceptedOrderByCreatedAtDesc("Pending");
+        List<TherapistRequest> recentRequests = this.therapistRequestRepository
+                .findByIsAcceptedOrderByCreatedAtDesc("Pending");
         mav.addObject("recentRequests", recentRequests);
 
         List<Therapist> recentTherapists = this.therapistRepository.findTop5ByOrderByCreatedAtDesc();
@@ -284,4 +287,99 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/deletetherapist")
+    public ModelAndView deleteTherapist(@RequestParam("id") int therapistID) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            therapistRepository.deleteById(therapistID);
+            modelAndView.setViewName("redirect:/admindashboard/therapists");
+
+        } catch (Exception e) {
+            System.out.println("Error deleting therapist: " + e.getMessage());
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/deletecustomer")
+    public ModelAndView deleteCustomer(@RequestParam("id") int customerID) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            customerRepository.deleteById(customerID);
+            modelAndView.setViewName("redirect:/admindashboard/customers");
+
+        } catch (Exception e) {
+            System.out.println("Error deleting therapist: " + e.getMessage());
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/addtherapist")
+    public ModelAndView getAddTherapist() {
+        ModelAndView mav = new ModelAndView("addTherapistAdminDash.html");
+        Therapist therapist = new Therapist();
+        mav.addObject("therapist", therapist);
+        return mav;
+    }
+
+    @PostMapping("/addtherapist")
+    public ModelAndView saveTherapistRequest(@ModelAttribute Therapist therapist,
+            @RequestParam("imageFile") MultipartFile imageFile) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        String encoddedPassword = BCrypt.hashpw(therapist.getPassword(), BCrypt.gensalt(12));
+        therapist.setPassword(encoddedPassword);
+
+        try {
+            boolean emailExists = therapistRequestRepository.existsByEmail(therapist.getEmail());
+            boolean phoneNumberExists = therapistRequestRepository.existsByPhoneNumber(therapist.getPhoneNumber());
+
+            if (emailExists || phoneNumberExists) {
+                modelAndView.setViewName("redirect:/admindashboard/addtherapist?therapistAlreadyExists");
+                return modelAndView;
+            }
+
+            String imageName = handleImageUpload(imageFile, therapist.getPhoneNumber());
+
+            if (imageName != null) {
+                therapist.setImage(imageName);
+            }
+
+            this.therapistRepository.save(therapist);
+            modelAndView.setViewName("redirect:/admindashboard/therapists");
+        } catch (Exception e) {
+            System.out.println("Error adding class: " + e.getMessage());
+            modelAndView.setViewName("error_page");
+        }
+
+        return modelAndView;
+    }
+
+    private String handleImageUpload(MultipartFile file, String phoneNumber) {
+        String imageName = null;
+        try {
+            if (!file.isEmpty()) {
+                String originalFilename = file.getOriginalFilename();
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf('.')).toLowerCase();
+
+                // Check if the file extension is one of the allowed image formats
+                if (fileExtension.equals(".jpg") || fileExtension.equals(".jpeg") || fileExtension.equals(".png")
+                        || fileExtension.equals(".gif")) {
+                    String newFileName = phoneNumber + fileExtension;
+                    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+                    String imagePath = uploadDir + newFileName;
+
+                    File destImage = new File(imagePath);
+                    file.transferTo(destImage);
+                    imageName = newFileName;
+                } else {
+                    System.out.println("Invalid image format: " + fileExtension);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error storing image: " + e.getMessage());
+        }
+        return imageName;
+    }
 }

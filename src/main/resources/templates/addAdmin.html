@@ -20,7 +20,7 @@
         <div class="container-fluid pt-3">
             <div class="row removable">
                 <div class="col-lg">
-                <form th:action="@{/admindashboard/addadmin}" method="post" autocomplete="off" th:object="${admin}" class="addadmin-form"
+                <form th:action="@{/admindashboard/addadmin}" method="post" autocomplete="off" th:object="${admin}" class="user-form"
                 onsubmit="return validateForm()">
                 <h1>Add an Admin</h1>
                 <input id="name" type="text" placeholder="Name" th:field="*{Name}" />
