@@ -14,13 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.wellnessweb.models.Blogs;
 import com.example.wellnessweb.models.Content;
+import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.Subtopics;
-
+import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.IllnessRepository;
 import com.example.wellnessweb.repositories.ContentRepository;
 import com.example.wellnessweb.repositories.SubtopicRepository;
+import com.example.wellnessweb.repositories.TherapistRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,17 +42,26 @@ public class ContentController {
 
     @Autowired
     private ContentRepository contentRepository;
-
+ 
     @Autowired
     private SubtopicRepository subtopicRepository;
 
+    @Autowired
+    private TherapistRepository therapistRepository;
+
 
     @GetMapping("addContent")
-    public ModelAndView getArticleForm() {
+    public ModelAndView getArticleForm(HttpSession session) {
         ModelAndView mav = new ModelAndView("addContent.html");
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+       
         mav.addObject("illnesses", illnessRepository.findAll());
         Content articleObj = new Content();
+
+        articleObj.setTherapistID(loggedInTherapist.getID()); 
         mav.addObject("articleObj", articleObj);
+        mav.addObject("therapist", loggedInTherapist);
+
         return mav;
     }
     public static String convertToBase64(byte[] imageData) {
@@ -62,10 +74,16 @@ public class ContentController {
         ModelAndView mav = new ModelAndView("content.html");
         Content contentObj = contentRepository.findById(id).orElse(null);
         if (contentObj != null) {
+
+            Therapist author = therapistRepository.findById(contentObj.getTherapistID()).orElse(null);
             byte[] image = contentObj.getImage();
             String base64Image = (image != null) ? Base64.getEncoder().encodeToString(image) : "";
             mav.addObject("contentObj", contentObj);
             mav.addObject("base64Image", base64Image);
+
+            if (author != null) {
+                mav.addObject("authorName", author.getName());
+            }
         }
         return mav;
     }
@@ -73,7 +91,7 @@ public class ContentController {
 
     @Transactional
     @PostMapping("addContent")
-    public ModelAndView saveArticle(@ModelAttribute Content articleObj,
+    public ModelAndView saveArticle(HttpSession session, @ModelAttribute Content articleObj,
                                      @RequestParam("illnessName") String illnessName,
                                      @RequestParam("file") MultipartFile file,
                                      @RequestParam(value = "subtopicTitle", required = false) List<String> subtopicTitle,
@@ -86,7 +104,8 @@ public class ContentController {
                 articleObj.setImage(file.getBytes());
             }
     
-            // Save the Content object first
+            Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+            articleObj.setTherapistID(loggedInTherapist.getID());
             Content savedArticle = contentRepository.save(articleObj);
             
             // Ensure that the ID of the saved content object is not null

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.wellnessweb.models.Blogs;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.repositories.BlogsRepository;
+import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.IllnessRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -30,6 +31,10 @@ public class BlogController {
 
     @Autowired
     private BlogsRepository blogsRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
+
 
     @GetMapping("addBlog")
     public ModelAndView getBlogForm(HttpSession session) {
@@ -56,11 +61,19 @@ public class BlogController {
     }
     
 
-
     @GetMapping("viewblog/{id}")
     public ModelAndView getBlogById(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView("blogs.html");
         Blogs blogObj = blogsRepository.findById(id).orElse(null);
+            
+        if (blogObj != null) {
+            Customer author = customerRepository.findById(blogObj.getUserID()).orElse(null);
+            
+            if (author != null) {
+                mav.addObject("authorUsername", author.getUsername());
+            }
+        }
+        
         mav.addObject("blogObj", blogObj);
         return mav;
     }
