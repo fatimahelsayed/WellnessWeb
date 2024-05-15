@@ -9,8 +9,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.wellnessweb.models.Blogs;
+import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.IllnessRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,23 +32,29 @@ public class BlogController {
     private BlogsRepository blogsRepository;
 
     @GetMapping("addBlog")
-    public ModelAndView getBlogForm() {
+    public ModelAndView getBlogForm(HttpSession session) {
         ModelAndView mav = new ModelAndView("addBlog.html");
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
         mav.addObject("illnesses", illnessRepository.findAll());
         Blogs blogObj = new Blogs();
+        blogObj.setUserID(loggedInUser.getID()); 
+        mav.addObject("customer", loggedInUser);
         mav.addObject("blogObj", blogObj);
         return mav;
     }
-
+    
     @PostMapping("addBlog")
-    public ModelAndView saveBlog(@ModelAttribute Blogs blogObj, @RequestParam("illnessName") String illnessName) {
+    public ModelAndView saveBlog(@ModelAttribute Blogs blogObj, @RequestParam("illnessName") String illnessName, HttpSession session) {
         blogObj.setIllnessName(illnessName);
         blogObj.setDate(LocalDate.now());
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        blogObj.setUserID(loggedInUser.getID());
         blogsRepository.save(blogObj);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/home");
         return modelAndView;
     }
+    
 
 
     @GetMapping("viewblog/{id}")

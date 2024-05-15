@@ -94,11 +94,11 @@
     th:value="${blogObj.IntroofBlog}" th:name="IntroofBlog">
 
      
-     <p class="publish-details">
-        <small>By <em>Author Name</em> ,
-            <em th:text="${#dates.format(#dates.createNow(), 'MM/dd/yyyy')}"></em> </small>
-        </p>
-
+    <p class="publish-details" th:if="${customer != null}">
+        <small>By <em th:text="${customer.username}"></em>, 
+        <em th:text="${#dates.format(#dates.createNow(), 'MM/dd/yyyy')}"></em></small>
+    </p>
+    
 
     <textarea class="blogs-content" placeholder="Enter the content of your first blog here..." 
     th:field="*{ContentofBlog}" 
