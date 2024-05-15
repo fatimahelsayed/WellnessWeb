@@ -156,8 +156,8 @@ public class UserController {
 
     @GetMapping("changepassword")
     public ModelAndView getChangePasswordForm(HttpSession session) {
-        ModelAndView mav = new ModelAndView("changePasswordTherapistDash.html");
-        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInTherapist");
+        ModelAndView mav = new ModelAndView("changePasswordUserProfile.html");
+        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
         mav.addObject("customer", loggedInCustomer);
         return mav;
     }
@@ -168,7 +168,7 @@ public class UserController {
         String oldPassword = passwordMap.get("oldPassword");
         String newPassword = passwordMap.get("newPassword");
         System.out.println(oldPassword);
-        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInTherapist");
+        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
         ServiceResponse<String> response;
         if (BCrypt.checkpw(oldPassword, loggedInCustomer.getPassword())) {
             String encoddedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
