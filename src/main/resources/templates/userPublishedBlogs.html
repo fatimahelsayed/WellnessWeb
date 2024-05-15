@@ -80,6 +80,13 @@
         <div class="container-fluid pt-3">
             <div class="row removable">
                 <div class="col-lg">
+                    <div th:if="${#lists.isEmpty(userBlogs)}">
+                        <h1>You've published no blogs yet</h1>
+                        <a href="/blogs/addBlog" class="btn">Start Blogging</a>
+                    </div>
+
+                    <div th:if="${not #lists.isEmpty(userBlogs)}">
+
                     <h1>Your Published Blogs</h1> <span>                        
                         <a href="/blogs/addBlog" class="btn">Add a Blog</a>
                     </span>
@@ -96,6 +103,8 @@
             </div>
         </div>
     </div>
+</div>
+
         <script
             src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/jquery.min.js"></script>
         <script
