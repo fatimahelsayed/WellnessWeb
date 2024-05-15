@@ -65,20 +65,15 @@ public class BlogController {
     public ModelAndView getBlogById(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView("blogs.html");
         Blogs blogObj = blogsRepository.findById(id).orElse(null);
-        
-        // Check if the blog object is not null
+            
         if (blogObj != null) {
-            // Retrieve the customer corresponding to the userID from the database
             Customer author = customerRepository.findById(blogObj.getUserID()).orElse(null);
             
-            // Check if the author is found
             if (author != null) {
-                // Add the author's username to the model
                 mav.addObject("authorUsername", author.getUsername());
             }
         }
         
-        // Add the blog object to the model
         mav.addObject("blogObj", blogObj);
         return mav;
     }

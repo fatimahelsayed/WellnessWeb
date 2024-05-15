@@ -10,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-
+ 
 import javax.persistence.Lob;
 
 @Entity
@@ -18,7 +18,33 @@ public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private int TherapistID;
+    private int therapistID;
+
+
+    public Content(int iD, int therapistID, LocalDate date, String illnessName, String contentofArticle,
+            String titleofArticle, String introofArticle, String quote, String authorOfQuote,
+            List<Subtopics> subtopicList, byte[] image) {
+        ID = iD;
+        this.therapistID = therapistID;
+        Date = date;
+        this.illnessName = illnessName;
+        ContentofArticle = contentofArticle;
+        TitleofArticle = titleofArticle;
+        IntroofArticle = introofArticle;
+        this.quote = quote;
+        this.authorOfQuote = authorOfQuote;
+        this.subtopicList = subtopicList;
+        this.image = image;
+    }
+
+    public int getTherapistID() {
+        return therapistID;
+    }
+
+    public void setTherapistID(int therapistID) {
+        this.therapistID = therapistID;
+    }
+
     private LocalDate Date;
     private String illnessName;
     private String ContentofArticle;
@@ -30,22 +56,7 @@ public class Content {
     @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
  private List<Subtopics> subtopicList;
 
-    public Content(int iD, int therapistID, LocalDate date, String illnessName, String contentofArticle,
-            String titleofArticle, String introofArticle, String quote, String authorOfQuote, 
-            byte[] image) {
-        ID = iD;
-        TherapistID = therapistID;
-        Date = date;
-        this.illnessName = illnessName;
-        ContentofArticle = contentofArticle;
-        TitleofArticle = titleofArticle;
-        IntroofArticle = introofArticle;
-        this.quote = quote;
-        this.authorOfQuote = authorOfQuote;
-        this.subtopicList = new ArrayList<>(); // Initialize subtopics with an empty list
-        this.image = image;
-    }
-
+   
     public List<Subtopics> getSubtopicList() {
         return subtopicList;
     }
@@ -85,13 +96,7 @@ public class Content {
         ID = iD;
     }
 
-    public int getTherapistID() {
-        return TherapistID;
-    }
-
-    public void setTherapistID(int therapistID) {
-        TherapistID = therapistID;
-    }
+    
 
     public LocalDate getDate() {
         return Date;

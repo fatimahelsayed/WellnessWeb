@@ -17,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.example.wellnessweb.models.Blogs;
+import com.example.wellnessweb.models.Content;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.ReservedTherapySession;
 import com.example.wellnessweb.models.ServiceResponse;
@@ -25,6 +27,8 @@ import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.models.TherapySession;
 import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
+import com.example.wellnessweb.repositories.ContentRepository;
+
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapySessionRepository;
 import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
@@ -49,6 +53,9 @@ public class TherapistController {
 
     @Autowired
     private BlogsRepository blogsRepository;
+
+    @Autowired
+    private ContentRepository contentRepository;
 
     @Autowired
     private TherapistRepository therapistRepository;
@@ -136,8 +143,8 @@ public class TherapistController {
             LocalTime currentTime = LocalTime.now();
 
             TherapySession upcomingSessions = this.therapySessionRepository
-                .findFirstByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(
-                        loggedInTherapist.getID(), "RESERVED", currentDate, currentTime);
+                    .findFirstByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(
+                            loggedInTherapist.getID(), "RESERVED", currentDate, currentTime);
 
             mav.addObject("upcomingSessions", upcomingSessions);
             mav.addObject("therapistReq", therapistRequest);
@@ -153,7 +160,7 @@ public class TherapistController {
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         List<TherapySession> therapySessions = this.therapySessionRepository
                 .findByTherapistID(loggedInTherapist.getID());
-                
+
         mav.addObject("therapySessions", therapySessions);
         mav.addObject("therapist", loggedInTherapist);
         return mav;
@@ -259,6 +266,16 @@ public class TherapistController {
             response = new ServiceResponse<String>("error", "Invalid Old Password");
         }
         return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/publishedArticles")
+    public ModelAndView getTherapistPublishedArticles(HttpSession session) {
+        ModelAndView mav = new ModelAndView("therapistPublishedArticles.html");
+        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+        List<Content> therapistArticles = contentRepository.findAllByTherapistID(loggedInTherapist.getID());
+        mav.addObject("therapist", loggedInTherapist);
+        mav.addObject("therapistArticles", therapistArticles);
+        return mav;
     }
 
 }
