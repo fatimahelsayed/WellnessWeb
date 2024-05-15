@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.wellnessweb.models.Blogs;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.ReservedTherapySession;
 import com.example.wellnessweb.models.ServiceResponse;
@@ -25,6 +26,8 @@ import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapySessionRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
+import com.example.wellnessweb.repositories.BlogsRepository;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +48,9 @@ public class UserController {
 
     @Autowired
     private TherapistRepository therapistRepository;
+
+    @Autowired
+    private BlogsRepository blogsRepository;
 
     public List<String> checkForExistingFields(Customer customer, Customer loggedInUser) {
         List<String> errors = new ArrayList<>();
@@ -164,6 +170,16 @@ public class UserController {
 
         return mav;
 
+    }
+
+    @GetMapping("/publishedBlogs")
+    public ModelAndView getUserPublishedBlogs(HttpSession session) {
+        ModelAndView mav = new ModelAndView("userPublishedBlogs.html");
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        List<Blogs> userBlogs = blogsRepository.findAllByUserID(loggedInUser.getID());
+        mav.addObject("customer", loggedInUser);
+        mav.addObject("userBlogs", userBlogs);
+        return mav;
     }
 
 }
