@@ -45,17 +45,18 @@
 
 
 
-		<h2 class="blog-topics-title">The First Topic</h2>
 		<p class="blogs-content" th:text="${contentObj.contentofArticle}">
 		</p>
 
-		<h2 class = "blog-topics-title">Another topic to be discussed</h3>
-		<p class="blogs-content">
-			Candy canes ice cream biscuit marzipan. Macaroon pie sesame snaps
-			jelly-o.
-			Liquorice candy macaroon soufflé jelly cake. Macaroon pie sesame snaps
-			jelly-o.
-		</p>
+		<div th:if="${contentObj.subtopicList != null}">
+			<!-- Loop through each subtopic -->
+			<div th:each="subtopic : ${contentObj.subtopicList}">
+				<h2 class = "blog-topics-title" th:text="${subtopic.subtopicTitle}"></h2>
+				<p class="blogs-content" th:text="${subtopic.subtopicContent}"></p>
+			</div>
+		</div>
+
+
 		<blockquote>
 			<p th:text="${contentObj.quote}"></p>
 			<footer>- <cite th:text="${contentObj.authorOfQuote}"></cite></footer>
