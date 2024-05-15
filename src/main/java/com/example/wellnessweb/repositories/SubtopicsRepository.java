@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.wellnessweb.models.Illness;
 import com.example.wellnessweb.models.Subtopics;
 
-public interface SubtopicRepository extends JpaRepository<Subtopics,Integer> {
+public interface SubtopicsRepository extends JpaRepository<Subtopics,Integer> {
         List<Subtopics> findAll();
 
 }

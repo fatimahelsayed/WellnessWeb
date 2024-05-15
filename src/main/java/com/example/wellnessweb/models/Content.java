@@ -28,8 +28,8 @@ public class Content {
     private String quote;
     private String authorOfQuote;
 
-    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
- private List<Subtopics> subtopicList;
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Subtopics> subtopicList;
 
  private LocalDate date;
 
