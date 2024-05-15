@@ -64,7 +64,7 @@
                         support,
                         offering a comprehensive approach to mental well-being.</p>
                 </div>
-
+ 
                 <div class="service">
                     <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24"
                         style="fill: #3a493b;">
@@ -124,50 +124,18 @@
                 </ul>
             </div>
             <div class="articles">
-                <div class="article">
+                
+                <div class="article" th:each="article : ${recentArticles}">
                     <div class="article-content">
-                        <a class="article-category">DEPRESSION</a>
+                        <a class="article-category" th:text="${article.illnessName}"></a>
                         <br>
-                        <a href="" class="article-title">Understanding and Overcoming Depression</a>
-                        <p class="article-summary">Explore the symptoms, treatment options, and strategies for
-                            reclaiming your joy and well-being.</p>
+                        <a th:href="@{/content/viewContent/{id}(id=${article.ID})}" class="article-title" th:text="${article.titleofArticle}"></a>
+                        <p class="article-summary" th:text="${article.introofArticle}"></p>
                         <div class="article-details">18 min read</div>
                     </div>
-                    <img th:src="@{/images/man-164217_1280.jpg}" alt="">
+                    <img th:src="'data:image/jpeg;base64,' + ${base64Image}" alt="illness Image">
                 </div>
-                <div class="article">
-                    <div class="article-content">
-                        <a class="article-category">OCD</a>
-                        <br>
-                        <a href="" class="article-title">Coping with Obsessive-Compulsive Disorder (OCD)</a>
-                        <p class="article-summary">Insights into recognizing OCD symptoms, seeking effective
-                            treatment, and managing daily challenges.</p>
-                        <div class="article-details">17 min read</div>
-                    </div>
-                    <img th:src="@{/images/garbage-3259455_1280.jpg}" alt="">
-                </div>
-                <div class="article">
-                    <div class="article-content">
-                        <a class="article-category">BIPOLAR DISORDER</a>
-                        <br>
-                        <a href="" class="article-title">Living with Bipolar: Balancing the Highs and Lows</a>
-                        <p class="article-summary">Understanding the nuances of Bipolar Disorder, exploring
-                            treatment options, and achieving stability.</p>
-                        <div class="article-details">20 min read</div>
-                    </div>
-                    <img th:src="@{/images/floating-1845571_1280.jpg}" alt="">
-                </div>
-                <div class="article">
-                    <div class="article-content">
-                        <a class="article-category">EATING DISORDERS</a>
-                        <br>
-                        <a href="" class="article-title">Breaking Free from Eating Disorders </a>
-                        <p class="article-summary">A comprehensive guide on identifying, addressing, and recovering
-                            from various eating disorders.</p>
-                        <div class="article-details">22 min read</div>
-                    </div>
-                    <img th:src="@{/images/plums-1870672_1280.jpg}" alt="">
-                </div>
+               
             </div>
         </section>
     </div>

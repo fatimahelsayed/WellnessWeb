@@ -21,31 +21,6 @@ public class Content {
     private int therapistID;
 
 
-    public Content(int iD, int therapistID, LocalDate date, String illnessName, String contentofArticle,
-            String titleofArticle, String introofArticle, String quote, String authorOfQuote,
-            List<Subtopics> subtopicList, byte[] image) {
-        ID = iD;
-        this.therapistID = therapistID;
-        Date = date;
-        this.illnessName = illnessName;
-        ContentofArticle = contentofArticle;
-        TitleofArticle = titleofArticle;
-        IntroofArticle = introofArticle;
-        this.quote = quote;
-        this.authorOfQuote = authorOfQuote;
-        this.subtopicList = subtopicList;
-        this.image = image;
-    }
-
-    public int getTherapistID() {
-        return therapistID;
-    }
-
-    public void setTherapistID(int therapistID) {
-        this.therapistID = therapistID;
-    }
-
-    private LocalDate Date;
     private String illnessName;
     private String ContentofArticle;
     private String TitleofArticle;
@@ -56,7 +31,34 @@ public class Content {
     @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
  private List<Subtopics> subtopicList;
 
+ private LocalDate date;
+
+
    
+    public Content(int iD, int therapistID, String illnessName, String contentofArticle, String titleofArticle,
+        String introofArticle, String quote, String authorOfQuote, List<Subtopics> subtopicList, LocalDate date,
+        byte[] image) {
+    ID = iD;
+    this.therapistID = therapistID;
+    this.illnessName = illnessName;
+    ContentofArticle = contentofArticle;
+    TitleofArticle = titleofArticle;
+    IntroofArticle = introofArticle;
+    this.quote = quote;
+    this.authorOfQuote = authorOfQuote;
+    this.subtopicList = subtopicList;
+    this.date = date;
+    this.image = image;
+}
+
+    public LocalDate getDate() {
+    return date;
+}
+
+public void setDate(LocalDate date) {
+    this.date = date;
+}
+
     public List<Subtopics> getSubtopicList() {
         return subtopicList;
     }
@@ -64,6 +66,17 @@ public class Content {
     public void setSubtopicList(List<Subtopics> subtopicList) {
         this.subtopicList = subtopicList;
     }
+
+
+
+    public int getTherapistID() {
+        return therapistID;
+    }
+
+    public void setTherapistID(int therapistID) {
+        this.therapistID = therapistID;
+    }
+
 
     public String getQuote() {
         return quote;
@@ -98,14 +111,7 @@ public class Content {
 
     
 
-    public LocalDate getDate() {
-        return Date;
-    }
-
-    public void setDate(LocalDate date) {
-        Date = date;
-    }
-
+   
     public String getIllnessName() {
         return illnessName;
     }

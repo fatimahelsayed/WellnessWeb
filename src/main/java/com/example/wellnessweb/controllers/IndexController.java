@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.example.wellnessweb.models.Admin;
+import com.example.wellnessweb.models.Content;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.ReservedTherapySession;
 import com.example.wellnessweb.models.ServiceResponse;
@@ -31,6 +32,8 @@ import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.models.TherapistRequest;
 import com.example.wellnessweb.models.TherapySession;
 import com.example.wellnessweb.repositories.AdminRepository;
+import com.example.wellnessweb.repositories.ContentRepository;
+
 import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
@@ -63,11 +66,20 @@ public class IndexController {
     @Autowired
     private ReservedTherapySessionRepository reservedTherapySessionRepository;
 
+    @Autowired
+    private ContentRepository contentRepository;
+
     @GetMapping("/home")
     public ModelAndView getHome() {
         ModelAndView mav = new ModelAndView("home.html");
-        return mav;
+
+            List<Content> recentArticles = contentRepository.findTop4ByOrderByDateDesc();
+            mav.addObject("recentArticles", recentArticles);
+            return mav;
+        
     }
+
+
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
