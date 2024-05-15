@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.example.wellnessweb.models.Blogs;
 import com.example.wellnessweb.models.Content;
 import com.example.wellnessweb.models.Customer;
+import com.example.wellnessweb.models.Illness;
 import com.example.wellnessweb.models.Subtopics;
 import com.example.wellnessweb.models.Therapist;
 import com.example.wellnessweb.repositories.BlogsRepository;
@@ -145,6 +146,22 @@ public class ContentController {
             e.printStackTrace();
             return new ModelAndView("error.html");
         }
+    }
+    
+
+    @GetMapping("/{illnessName}")
+    public ModelAndView getContentByIllnessName(@PathVariable String illnessName) {
+        ModelAndView mav = new ModelAndView("illnesses.html");
+        List<Content> contentList = contentRepository.findAllByIllnessName(illnessName);
+        System.out.println("Content List: " + contentList); // Debugging statement
+        mav.addObject("contentList", contentList);
+
+        Illness illness = illnessRepository.findByName(illnessName);
+        mav.addObject("illnessesDesc", illness.getDescription());
+        mav.addObject("illnessesSymptoms", illness.getSymptoms());
+
+       
+        return mav;
     }
     
      
