@@ -3,6 +3,7 @@ package com.example.wellnessweb.controllers;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -151,6 +152,34 @@ public class UserController {
             return new ResponseEntity<Object>(response, HttpStatus.OK);
         }
         return null;
+    }
+
+    @GetMapping("changepassword")
+    public ModelAndView getChangePasswordForm(HttpSession session) {
+        ModelAndView mav = new ModelAndView("changePasswordUserProfile.html");
+        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
+        mav.addObject("customer", loggedInCustomer);
+        return mav;
+    }
+
+    @PostMapping("changepassword")
+    public ResponseEntity<Object> changePassword(@RequestBody Map<String, String> passwordMap,
+            HttpSession session) throws JsonProcessingException {
+        String oldPassword = passwordMap.get("oldPassword");
+        String newPassword = passwordMap.get("newPassword");
+        System.out.println(oldPassword);
+        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
+        ServiceResponse<String> response;
+        if (BCrypt.checkpw(oldPassword, loggedInCustomer.getPassword())) {
+            String encoddedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+            loggedInCustomer.setPassword(encoddedPassword);
+            session.setAttribute("loggedInUser", loggedInCustomer);
+            this.customerRepository.save(loggedInCustomer);
+            response = new ServiceResponse<String>("success", "/profile/editaccount");
+        } else {
+            response = new ServiceResponse<String>("error", "Invalid Old Password");
+        }
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
     }
 
     @GetMapping("/bookedSessions")
