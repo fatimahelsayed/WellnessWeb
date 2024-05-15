@@ -43,13 +43,12 @@ public class ContentController {
 
     @Autowired
     private ContentRepository contentRepository;
- 
+
     @Autowired
     private SubtopicsRepository subtopicRepository;
 
     @Autowired
     private TherapistRepository therapistRepository;
-
 
     @GetMapping("addContent")
     public ModelAndView getArticleForm(HttpSession session) {
@@ -57,24 +56,23 @@ public class ContentController {
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         mav.addObject("illnesses", illnessRepository.findAll());
         Content articleObj = new Content();
-        
+
         List<Subtopics> subtopicsList = new ArrayList<>();
         subtopicsList.add(new Subtopics());
-            articleObj.setSubtopicList(subtopicsList);
-    
-        articleObj.setTherapistID(loggedInTherapist.getID()); 
+        articleObj.setSubtopicList(subtopicsList);
+
+        articleObj.setTherapistID(loggedInTherapist.getID());
         mav.addObject("articleObj", articleObj);
         mav.addObject("subtopicsList", subtopicsList);
-    
+
         mav.addObject("therapist", loggedInTherapist);
-    
+
         return mav;
     }
-    
+
     public static String convertToBase64(byte[] imageData) {
         return Base64.getEncoder().encodeToString(imageData);
     }
-
 
     @GetMapping("viewContent/{id}")
     public ModelAndView getBlogById(@PathVariable("id") int id) {
@@ -94,26 +92,25 @@ public class ContentController {
         }
         return mav;
     }
-    
 
     @Transactional
     @PostMapping("addContent")
     public ModelAndView saveArticle(HttpSession session, @ModelAttribute Content articleObj,
-                                     @RequestParam("illnessName") String illnessName,
-                                     @RequestParam("file") MultipartFile file,
-                                     @RequestParam("subtopicTitles") List<String> subtopicTitles,
-                                     @RequestParam("subtopicContents") List<String> subtopicContents) {
+            @RequestParam("illnessName") String illnessName,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("subtopicTitles") List<String> subtopicTitles,
+            @RequestParam("subtopicContents") List<String> subtopicContents) {
         try {
             articleObj.setIllnessName(illnessName);
             articleObj.setDate(LocalDate.now());
-    
+
             if (!file.isEmpty()) {
                 articleObj.setImage(file.getBytes());
             }
-    
+
             Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
             articleObj.setTherapistID(loggedInTherapist.getID());
-    
+
             List<Subtopics> subtopics = new ArrayList<>();
             for (int i = 0; i < subtopicTitles.size(); i++) {
                 Subtopics subtopic = new Subtopics();
@@ -123,20 +120,21 @@ public class ContentController {
                 subtopics.add(subtopic);
             }
             articleObj.setSubtopicList(subtopics);
-    
+
             contentRepository.save(articleObj);
-            
+
             return new ModelAndView("redirect:/home");
         } catch (IOException e) {
             e.printStackTrace();
             return new ModelAndView("error.html");
         }
     }
-    
 
     @GetMapping("/{illnessName}")
     public ModelAndView getContentByIllnessName(@PathVariable String illnessName) {
         ModelAndView mav = new ModelAndView("illnesses.html");
+        illnessName = illnessName.replace("_", " ");
+
         List<Content> contentList = contentRepository.findAllByIllnessName(illnessName);
         System.out.println("Content List: " + contentList); // Debugging statement
         mav.addObject("contentList", contentList);
@@ -145,9 +143,7 @@ public class ContentController {
         mav.addObject("illnessesDesc", illness.getDescription());
         mav.addObject("illnessesSymptoms", illness.getSymptoms());
 
-       
         return mav;
     }
-    
-     
+
 }
