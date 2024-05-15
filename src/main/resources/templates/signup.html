@@ -14,7 +14,6 @@
     <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/login.css}">
-    <link rel="stylesheet" type="text/css" th:href="@{/CSS/alert.css}">
 </head>
 
 
@@ -50,12 +49,6 @@
                 <input value="Sign Up" type="button" class="login-btn" onclick="signUpAjax()">
                 <p class="message">Already registered? <a th:href="@{/login}">Log in</a></p>
             </form>
-        </div>
-        <div class="alert hide">
-            <span class="fas fa-check-circle"></span>
-            <span class="msg"></span>
-            <div class="close-btn">
-              <span class="fas fa-times"></span>
         </div>
     </div>
    <!-- footer -->

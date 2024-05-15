@@ -78,7 +78,7 @@ body {
 }
 
 .error-message {
-  color: rgb(171, 0, 0);
+  color: rgb(175, 105, 105);
   transition: .3s ease-in;
 }
 

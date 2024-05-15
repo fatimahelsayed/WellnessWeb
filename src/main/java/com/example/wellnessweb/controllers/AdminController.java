@@ -32,6 +32,8 @@ import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
 
+import jakarta.servlet.http.HttpSession;
+
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -59,38 +61,46 @@ public class AdminController {
     private JavaMailSender emailSender;
 
     @GetMapping("")
-    public ModelAndView getAdminDashboard() {
-        ModelAndView mav = new ModelAndView("admindashboard.html");
+    public ModelAndView getAdminDashboard(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("admindashboard.html");
 
-        List<Customer> recentCustomers = this.customerRepository.findTop5ByOrderByCreatedAtDesc();
-        mav.addObject("recentCustomers", recentCustomers);
+            List<Customer> recentCustomers = this.customerRepository.findTop5ByOrderByCreatedAtDesc();
+            mav.addObject("recentCustomers", recentCustomers);
 
-        List<TherapistRequest> recentRequests = this.therapistRequestRepository
-                .findByIsAcceptedOrderByCreatedAtDesc("Pending");
-        mav.addObject("recentRequests", recentRequests);
+            List<TherapistRequest> recentRequests = this.therapistRequestRepository
+                    .findByIsAcceptedOrderByCreatedAtDesc("Pending");
+            mav.addObject("recentRequests", recentRequests);
 
-        List<Therapist> recentTherapists = this.therapistRepository.findTop5ByOrderByCreatedAtDesc();
-        mav.addObject("recentTherapists", recentTherapists);
+            List<Therapist> recentTherapists = this.therapistRepository.findTop5ByOrderByCreatedAtDesc();
+            mav.addObject("recentTherapists", recentTherapists);
 
-        long blogCount = this.blogsRepository.count();
-        long customerCount = this.customerRepository.count();
-        long therapistCount = this.therapistRepository.count();
+            long blogCount = this.blogsRepository.count();
+            long customerCount = this.customerRepository.count();
+            long therapistCount = this.therapistRepository.count();
 
-        mav.addObject("blogCount", blogCount);
-        mav.addObject("customerCount", customerCount);
-        mav.addObject("therapistCount", therapistCount);
+            mav.addObject("blogCount", blogCount);
+            mav.addObject("customerCount", customerCount);
+            mav.addObject("therapistCount", therapistCount);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
     }
 
     @GetMapping("/therapistsrequests")
-    public ModelAndView getTherapistRequests() {
-        ModelAndView mav = new ModelAndView("viewTherapistsRequests.html");
+    public ModelAndView getTherapistRequests(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("viewTherapistsRequests.html");
 
-        List<TherapistRequest> requests = this.therapistRequestRepository.findByIsAccepted("Pending");
-        mav.addObject("requests", requests);
+            List<TherapistRequest> requests = this.therapistRequestRepository.findByIsAccepted("Pending");
+            mav.addObject("requests", requests);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
     }
 
     @GetMapping("/downloadResume/{phoneNumber}")
@@ -145,31 +155,41 @@ public class AdminController {
     }
 
     @GetMapping("/customers")
-    public ModelAndView getCustomers() {
-        ModelAndView mav = new ModelAndView("viewCustomers.html");
+    public ModelAndView getCustomers(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("viewCustomers.html");
 
-        List<Customer> customers = this.customerRepository.findAll();
-        mav.addObject("customers", customers);
+            List<Customer> customers = this.customerRepository.findAll();
+            mav.addObject("customers", customers);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
     }
 
     @GetMapping("/therapists")
-    public ModelAndView getTherapists() {
-        ModelAndView mav = new ModelAndView("viewTherapistsAdminDash.html");
+    public ModelAndView getTherapists(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("viewTherapistsAdminDash.html");
 
-        List<Therapist> therapists = this.therapistRepository.findAll();
-        mav.addObject("therapists", therapists);
+            List<Therapist> therapists = this.therapistRepository.findAll();
+            mav.addObject("therapists", therapists);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
     }
 
     @GetMapping("/therapistrequestdetails/{id}")
-    public ModelAndView viewTherapistRequestDetails(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView("therapistRequestDetails.html");
-        TherapistRequest request = this.therapistRequestRepository.findById(id);
-        modelAndView.addObject("request", request);
-        return modelAndView;
+    public ModelAndView viewTherapistRequestDetails(@PathVariable("id") int id, HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView modelAndView = new ModelAndView("therapistRequestDetails.html");
+            TherapistRequest request = this.therapistRequestRepository.findById(id);
+            modelAndView.addObject("request", request);
+            return modelAndView;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
     }
 
     @PostMapping("/therapistsrequests/acceptRequest")
@@ -316,11 +336,15 @@ public class AdminController {
     }
 
     @GetMapping("/addtherapist")
-    public ModelAndView getAddTherapist() {
-        ModelAndView mav = new ModelAndView("addTherapistAdminDash.html");
-        Therapist therapist = new Therapist();
-        mav.addObject("therapist", therapist);
-        return mav;
+    public ModelAndView getAddTherapist(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("addTherapistAdminDash.html");
+            Therapist therapist = new Therapist();
+            mav.addObject("therapist", therapist);
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
     }
 
     @PostMapping("/addtherapist")

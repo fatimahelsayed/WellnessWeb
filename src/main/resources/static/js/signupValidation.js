@@ -107,7 +107,6 @@ function signUpAjax() {
       success: function (result) {
         if (result.status == "success") {
           window.location.href = result.data;
-          // alertShow("Account created successfully, log in to access it");
         } else if (Array.isArray(result.data)) {
           result.data.forEach(function (error) {
             if (error === "EmailExists") {

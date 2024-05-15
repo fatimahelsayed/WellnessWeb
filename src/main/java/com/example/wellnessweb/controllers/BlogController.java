@@ -35,21 +35,25 @@ public class BlogController {
     @Autowired
     private CustomerRepository customerRepository;
 
-
     @GetMapping("addBlog")
     public ModelAndView getBlogForm(HttpSession session) {
-        ModelAndView mav = new ModelAndView("addBlog.html");
-        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
-        mav.addObject("illnesses", illnessRepository.findAll());
-        Blogs blogObj = new Blogs();
-        blogObj.setUserID(loggedInUser.getID()); 
-        mav.addObject("customer", loggedInUser);
-        mav.addObject("blogObj", blogObj);
-        return mav;
+        if (session.getAttribute("loggedInUser") != null) {
+            ModelAndView mav = new ModelAndView("addBlog.html");
+            Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+            mav.addObject("illnesses", illnessRepository.findAll());
+            Blogs blogObj = new Blogs();
+            blogObj.setUserID(loggedInUser.getID());
+            mav.addObject("customer", loggedInUser);
+            mav.addObject("blogObj", blogObj);
+            return mav;
+        }
+        return new ModelAndView("redirect:/login");
+
     }
-    
+
     @PostMapping("addBlog")
-    public ModelAndView saveBlog(@ModelAttribute Blogs blogObj, @RequestParam("illnessName") String illnessName, HttpSession session) {
+    public ModelAndView saveBlog(@ModelAttribute Blogs blogObj, @RequestParam("illnessName") String illnessName,
+            HttpSession session) {
         blogObj.setIllnessName(illnessName);
         blogObj.setDate(LocalDate.now());
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
@@ -59,21 +63,20 @@ public class BlogController {
         modelAndView.setViewName("redirect:/home");
         return modelAndView;
     }
-    
 
     @GetMapping("viewblog/{id}")
     public ModelAndView getBlogById(@PathVariable("id") int id) {
         ModelAndView mav = new ModelAndView("blogs.html");
         Blogs blogObj = blogsRepository.findById(id).orElse(null);
-            
+
         if (blogObj != null) {
             Customer author = customerRepository.findById(blogObj.getUserID()).orElse(null);
-            
+
             if (author != null) {
                 mav.addObject("authorUsername", author.getUsername());
             }
         }
-        
+
         mav.addObject("blogObj", blogObj);
         return mav;
     }

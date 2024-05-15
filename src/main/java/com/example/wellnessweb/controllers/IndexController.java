@@ -5,12 +5,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,11 +73,35 @@ public class IndexController {
     @Autowired
     private ContentRepository contentRepository;
 
+    @Autowired
+    private JavaMailSender emailSender;
+
+    private void sendEmail(String recipientEmail, String subject, String body) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(recipientEmail);
+            message.setSubject(subject);
+            message.setText(body);
+
+            emailSender.send(message);
+            System.out.println("Email sent successfully to: " + recipientEmail);
+        } catch (MailException e) {
+            System.err.println("Error sending email: " + e.getMessage());
+        }
+    }
+
     @GetMapping("/home")
     public ModelAndView getHome() {
         ModelAndView mav = new ModelAndView("home.html");
-
             List<Content> recentArticles = contentRepository.findTop4ByOrderByDateDesc();
+            String base64Image;
+            List<String> images = new ArrayList<>();
+            for (Content content : recentArticles) {
+                byte[] image = content.getImage();
+                base64Image = (image != null) ? Base64.getEncoder().encodeToString(image) : "";
+                images.add(base64Image);
+            }
+            mav.addObject("images", images);
             mav.addObject("recentArticles", recentArticles);
             return mav;
         
@@ -352,27 +380,22 @@ public class IndexController {
         return mav;
     }
 
-    @GetMapping("/addBlog")
-    public ModelAndView getaddBlog() {
-        ModelAndView mav = new ModelAndView("addBlog.html");
-        return mav;
-    }
-
     @GetMapping("/content")
     public ModelAndView getContent() {
         ModelAndView mav = new ModelAndView("content.html");
         return mav;
     }
 
-    @GetMapping("/editprofile")
-    public ModelAndView getEditProfile() {
-        ModelAndView mav = new ModelAndView("editUserProfile.html");
-        return mav;
-    }
-
     @GetMapping("/contactus")
     public ModelAndView getContactUs() {
         ModelAndView mav = new ModelAndView("contactus.html");
+        return mav;
+    }
+    @PostMapping("/contactus")
+    public ModelAndView postContactForm() {
+        SimpleMailMessage message = new SimpleMailMessage();
+        ModelAndView mav = new ModelAndView("contactus.html");
+        mav.addObject("message", message);
         return mav;
     }
 

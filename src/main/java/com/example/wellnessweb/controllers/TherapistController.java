@@ -229,9 +229,11 @@ public class TherapistController {
         System.out.println("old pass: " + loggedInTherapist.getPassword());
         if (imageName != null) {
             loggedInTherapist.setImage(imageName);
+            
         }
         if (valid) {
             this.therapistRepository.save(loggedInTherapist);
+
             session.setAttribute("loggedInTherapist", loggedInTherapist);
             mav.setViewName("redirect:/therapistdashboard");
         }

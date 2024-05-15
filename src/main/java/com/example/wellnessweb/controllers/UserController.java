@@ -122,10 +122,14 @@ public class UserController {
 
     @GetMapping("editaccount")
     public ModelAndView getUpdateAccountForm(HttpSession session) {
-        ModelAndView mav = new ModelAndView("userProfileEdit.html");
-        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
-        mav.addObject("customer", loggedInUser);
-        return mav;
+        if (session.getAttribute("loggedInUser") != null) {
+
+            ModelAndView mav = new ModelAndView("userProfileEdit.html");
+            Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+            mav.addObject("customer", loggedInUser);
+            return mav;
+        }
+        return new ModelAndView("redirect:/login");
     }
 
     @PostMapping("/editaccount")
@@ -156,10 +160,14 @@ public class UserController {
 
     @GetMapping("changepassword")
     public ModelAndView getChangePasswordForm(HttpSession session) {
-        ModelAndView mav = new ModelAndView("changePasswordUserProfile.html");
-        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
-        mav.addObject("customer", loggedInCustomer);
-        return mav;
+        if (session.getAttribute("loggedInUser") != null) {
+            ModelAndView mav = new ModelAndView("changePasswordUserProfile.html");
+            Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
+            mav.addObject("customer", loggedInCustomer);
+            return mav;
+        }
+        return new ModelAndView("redirect:/login");
+
     }
 
     @PostMapping("changepassword")
@@ -209,6 +217,14 @@ public class UserController {
         mav.addObject("customer", loggedInUser);
         mav.addObject("userBlogs", userBlogs);
         return mav;
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+        if (session != null) {
+            session.invalidate();
+        }
+        return new ModelAndView("redirect:/home");
     }
 
 }

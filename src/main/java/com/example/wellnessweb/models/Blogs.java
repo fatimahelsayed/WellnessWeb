@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class Blogs implements Serializable {
     private int ID;
     private LocalDate Date;
     private LocalTime Time;
+    @Column(columnDefinition = "LONGTEXT")
     private String ContentofBlog;
     private String TitleofBlog;
     private String IntroofBlog;

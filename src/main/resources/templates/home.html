@@ -133,15 +133,16 @@
             </div>
             <div class="articles">
                 
-                <div class="article" th:each="article : ${recentArticles}">
+                <div class="article" th:each="article, idx  : ${recentArticles}">
                     <div class="article-content">
                         <a class="article-category" th:text="${article.illnessName}"></a>
                         <br>
                         <a th:href="@{/content/viewContent/{id}(id=${article.ID})}" class="article-title" th:text="${article.titleofArticle}"></a>
                         <p class="article-summary" th:text="${article.introofArticle}"></p>
-                        <div class="article-details">18 min read</div>
                     </div>
-                    <img th:src="'data:image/jpeg;base64,' + ${base64Image}" alt="illness Image">
+                    <div th:if="${not #strings.isEmpty(images[idx.index])}">
+                        <img th:src="'data:image/jpeg;base64,' + ${images[idx.index]}" alt="illness Image">
+                    </div>
                 </div>
                
             </div>
