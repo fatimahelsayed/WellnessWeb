@@ -140,6 +140,7 @@ public class ContentController {
         mav.addObject("contentList", contentList);
 
         Illness illness = illnessRepository.findByName(illnessName);
+        mav.addObject("illnessesName", illness.getName());
         mav.addObject("illnessesDesc", illness.getDescription());
         mav.addObject("illnessesSymptoms", illness.getSymptoms());
 

@@ -137,7 +137,6 @@ public class TherapistController {
         if (session.getAttribute("loggedInTherapist") != null) {
             ModelAndView mav = new ModelAndView("therapistDash.html");
             Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
-            TherapistRequest therapistRequest = (TherapistRequest) session.getAttribute("therapistReq");
             LocalDate currentDate = LocalDate.now();
             LocalTime currentTime = LocalTime.now();
 
@@ -145,8 +144,14 @@ public class TherapistController {
                     .findFirstByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(
                             loggedInTherapist.getID(), "RESERVED", currentDate, currentTime);
 
+            long blogCount = this.blogsRepository.countByUserID(loggedInTherapist.getID());
+
+            long therapySessionCount = this.therapySessionRepository.countByTherapistID(loggedInTherapist.getID());
+
             mav.addObject("upcomingSessions", upcomingSessions);
             mav.addObject("therapist", loggedInTherapist);
+            mav.addObject("blogCount", blogCount);
+            mav.addObject("therapySessionCount", therapySessionCount);
             return mav;
         }
         return new ModelAndView("redirect:/employeelogin");
@@ -169,6 +174,7 @@ public class TherapistController {
         ModelAndView mav = new ModelAndView("addSessionTherapistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         mav.addObject("newSession", new TherapySession());
+        mav.addObject("therapist", loggedInTherapist);
         return mav;
     }
 
@@ -229,7 +235,7 @@ public class TherapistController {
         System.out.println("old pass: " + loggedInTherapist.getPassword());
         if (imageName != null) {
             loggedInTherapist.setImage(imageName);
-            
+
         }
         if (valid) {
             this.therapistRepository.save(loggedInTherapist);

@@ -15,9 +15,11 @@ public class Blogs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+    private int userID;
     private LocalDate Date;
     private LocalTime Time;
     @Column(columnDefinition = "LONGTEXT")
+    @Lob
     private String ContentofBlog;
     private String TitleofBlog;
     private String IntroofBlog;
@@ -25,7 +27,6 @@ public class Blogs implements Serializable {
 
 
 
-    private int userID;
     public Blogs(int iD, int userID, LocalDate date, LocalTime time, String contentofBlog, String titleofBlog,
             String introofBlog, String illnessName) {
         ID = iD;

@@ -21,6 +21,8 @@ public class Subtopics {
     private int ID;
 
     private String subtopicTitle;
+    @Column(columnDefinition = "LONGTEXT")
+    @Lob
     private String subtopicContent;
 
     @ManyToOne(fetch = FetchType.LAZY)

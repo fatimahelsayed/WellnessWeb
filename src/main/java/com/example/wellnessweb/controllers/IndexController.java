@@ -7,6 +7,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,21 +94,19 @@ public class IndexController {
     @GetMapping("/home")
     public ModelAndView getHome() {
         ModelAndView mav = new ModelAndView("home.html");
-            List<Content> recentArticles = contentRepository.findTop4ByOrderByDateDesc();
-            String base64Image;
-            List<String> images = new ArrayList<>();
-            for (Content content : recentArticles) {
-                byte[] image = content.getImage();
-                base64Image = (image != null) ? Base64.getEncoder().encodeToString(image) : "";
-                images.add(base64Image);
-            }
-            mav.addObject("images", images);
-            mav.addObject("recentArticles", recentArticles);
-            return mav;
-        
+        List<Content> recentArticles = contentRepository.findTop4ByOrderByDateDesc();
+        String base64Image;
+        List<String> images = new ArrayList<>();
+        for (Content content : recentArticles) {
+            byte[] image = content.getImage();
+            base64Image = (image != null) ? Base64.getEncoder().encodeToString(image) : "";
+            images.add(base64Image);
+        }
+        mav.addObject("images", images);
+        mav.addObject("recentArticles", recentArticles);
+        return mav;
+
     }
-
-
 
     @GetMapping("/login")
     public ModelAndView getLogin() {
@@ -177,7 +176,7 @@ public class IndexController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Object> saveCustomer(@RequestBody String customerJSON, HttpSession session)
+    public ResponseEntity<Object> saveCustomer(@RequestBody String customerJSON)
             throws JsonMappingException, JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         Customer customer = objectMapper.readValue(customerJSON, Customer.class);
@@ -199,9 +198,8 @@ public class IndexController {
             String encoddedPassword = BCrypt.hashpw(customer.getPassword(), BCrypt.gensalt(12));
             customer.setPassword(encoddedPassword);
             this.customerRepository.save(customer);
-            session.setAttribute("loggedInUser", customer);
             // modelAndView.setViewName("redirect:/profile");
-            ServiceResponse<String> response = new ServiceResponse<String>("success", "/profile");
+            ServiceResponse<String> response = new ServiceResponse<String>("success", "/login");
             return new ResponseEntity<Object>(response, HttpStatus.OK);
         }
         if (errors.size() > 0) {
@@ -334,13 +332,25 @@ public class IndexController {
         LocalDate currentDate = LocalDate.now();
         LocalTime currentTime = LocalTime.now();
 
-        List<TherapySession> therapysessions = this.therapySessionRepository
-                .findByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(
-                        therapistId, "UNRESERVED", currentDate, currentTime);
+        List<TherapySession> todaySessions = therapySessionRepository
+                .findByTherapistIDAndStatusAndDateOrderByDateAscStartTimeAsc(
+                        therapistId, "UNRESERVED", currentDate);
+
+        List<TherapySession> filteredTodaySessions = todaySessions.stream()
+                .filter(session -> session.getStartTime().isAfter(currentTime))
+                .collect(Collectors.toList());
+
+        List<TherapySession> futureSessions = therapySessionRepository
+                .findByTherapistIDAndStatusAndDateAfterOrderByDateAscStartTimeAsc(
+                        therapistId, "UNRESERVED", currentDate);
+
+        List<TherapySession> allSessions = new ArrayList<>();
+        allSessions.addAll(filteredTodaySessions);
+        allSessions.addAll(futureSessions);
 
         ModelAndView mav = new ModelAndView("booktherapysession");
         mav.addObject("therapist", therapist);
-        mav.addObject("therapysessions", therapysessions);
+        mav.addObject("therapysessions", allSessions);
         return mav;
     }
 
@@ -391,11 +401,20 @@ public class IndexController {
         ModelAndView mav = new ModelAndView("contactus.html");
         return mav;
     }
+
     @PostMapping("/contactus")
     public ModelAndView postContactForm() {
         SimpleMailMessage message = new SimpleMailMessage();
         ModelAndView mav = new ModelAndView("contactus.html");
         mav.addObject("message", message);
+        return mav;
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        session.invalidate();
+        mav.setViewName("redirect:/home");
         return mav;
     }
 
