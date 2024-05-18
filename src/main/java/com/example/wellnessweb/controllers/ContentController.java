@@ -123,7 +123,7 @@ public class ContentController {
 
             contentRepository.save(articleObj);
 
-            return new ModelAndView("redirect:/home");
+            return new ModelAndView("redirect:/therapistdashboard/publishedArticles");
         } catch (IOException e) {
             e.printStackTrace();
             return new ModelAndView("error.html");
