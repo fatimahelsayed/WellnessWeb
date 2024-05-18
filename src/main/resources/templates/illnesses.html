@@ -10,9 +10,8 @@
         th:href="@{https://res.cloudinary.com/abdel-rahman-ali/image/upload/v1535988515/rosa-favicon.png}">
     <link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css}">
 
-    <!--Fonts-->
-    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}"
-        rel="stylesheet">
+    <!-- Fonts -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" th:href="@{/CSS/home.css}">
 
 </head>
@@ -29,24 +28,24 @@
 
     #displayed-blogs {
         height: 600px;
-
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform: translateY(-220px);
+        
     }
 
     .blog-container {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        grid-gap: 10px;
-        margin-top: 20px;
-        text-decoration: none;
-        max-width: 1200px;
-        /* Set maximum width */
-
-
-
+        grid-gap: 20px; /* Increased gap for better spacing */
+        max-width: 1200px; /* Set maximum width */
+        width: 100%; /* Ensure it takes full width of parent */
+        padding: 0 20px; /* Add some padding to the sides */
+        justify-content: center; /* Center items horizontally */
     }
 
     .articles-list {
-        transform: translateY(20px);
         border: 1px solid #ccc;
         padding: 12px;
         border-radius: 5px;
@@ -56,25 +55,18 @@
         /* Add margin between each blog title container */
         text-transform: capitalize;
         font-size: 14px;
-        margin-left: 50px;
-
-
-
+        text-align: center; /* Center the text inside each container */
     }
 
     .articles-list a {
-        text-decoration: none;
-        /* Remove underline from links */
-        color: inherit;
-        /* Inherit the color from parent */
+        text-decoration: none; /* Remove underline from links */
+        color: inherit; /* Inherit the color from parent */
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
 
     .articles-list a:hover {
-        color: #495d4a;
-        /* Change color on hover */
-        transition: 0.7s ease;
-        /* Add transition effect */
+        color: #495d4a; /* Change color on hover */
+        transition: 0.7s ease; /* Add transition effect */
     }
 
     .blog-date {
