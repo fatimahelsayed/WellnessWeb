@@ -38,7 +38,7 @@
                         </div>
                         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                             <div class="d-flex justify-content-between">
-                                <a th:href="@{/editprofile}" class="btn btn-sm mr-4 btn-default">Edit</a>
+                                <a th:href="@{/profile/editaccount}" class="btn btn-sm mr-4 btn-default">Edit</a>
                             </div>
                         </div>
                         <div class="card-body pt-0">
@@ -49,25 +49,9 @@
                                             <span class="heading" th:text="${customer.username}"></span>
                                             <span class="description"></span>
                                         </div>
-                                        <!-- <div>
-
-                                            <span class="heading">0</span>
-                                            <span class="description">Cart</span>
-                                        </div>
-                                        <div>
-                                            <span class="heading">
-                                                3
-                                            </span>
-                                            <span class="description">wishlist</span>
-                                        </div> -->
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="text-center">
-                                <h5 class="h3">
-                                    Lana Hamed<span class="font-weight-light">
-                                </h5>
-                            </div> -->
                             <div class="text-center">
                                 <h5 class="h3" th:text="${customer.email}">
                                     <span class="font-weight-light">
@@ -87,7 +71,7 @@
                             <div class="fs-8" th:text="'End Time: ' + ${therapySession.EndTime}"></div>
                         </div>
                         <div th:if="${therapist == null}" class="card-header bg-transparent">
-                            <h3>You do not have any sessions</h3>
+                            <h3>You do not have any reserved sessions</h3>
                         </div>
                     </div>
 

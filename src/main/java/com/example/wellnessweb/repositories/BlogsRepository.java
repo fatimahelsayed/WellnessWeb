@@ -10,6 +10,7 @@ import com.example.wellnessweb.models.Blogs;
 public interface BlogsRepository extends JpaRepository<Blogs,Integer> {
     List<Blogs> findAll();
     List<Blogs> findAllByUserID(int userID);
+    long countByUserID(int userID);
     List<Blogs> findTop50ByOrderByDateDescTimeDesc();
     Optional<Blogs> findById(int ID);
 

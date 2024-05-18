@@ -32,7 +32,7 @@
                         </div>
                         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                             <div class="d-flex justify-content-between">
-                                <a href="" class="btn btn-sm mr-4 btn-primary">Edit</a>
+                                <a href="" class="btn btn-sm mr-4 btn-primary" th:href="@{/therapistdashboard/editaccount}">Edit</a>
                             </div>
                         </div>
                         <div class="card-body pt-0">
@@ -109,7 +109,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Blogs</h5>
-                                    <span class="h2 font-weight-bold mb-0">5</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${blogCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-gradient-warning">
@@ -125,7 +125,7 @@
                             <div class="row">
                                 <div class="col">
                                     <h5 class="card-title text-uppercase text-muted mb-0">Sessions</h5>
-                                    <span class="h2 font-weight-bold mb-0">9</span>
+                                    <span class="h2 font-weight-bold mb-0" th:text="${therapySessionCount}"></span>
                                 </div>
                                 <div class="col-auto">
                                     <div class="icon icon-shape text-white rounded-circle shadow bg-yellow">

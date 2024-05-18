@@ -10,8 +10,10 @@ import java.util.List;
 
 
 public interface TherapySessionRepository extends JpaRepository<TherapySession,Integer>{ 
-    List<TherapySession> findByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(int therapistID, String status, LocalDate date, LocalTime startTime);
+    List<TherapySession> findByTherapistIDAndStatusAndDateOrderByDateAscStartTimeAsc(int therapistId, String status, LocalDate date);
+    List<TherapySession> findByTherapistIDAndStatusAndDateAfterOrderByDateAscStartTimeAsc(int therapistId, String status, LocalDate date);
     TherapySession findFirstByTherapistIDAndStatusAndDateAfterAndStartTimeAfterOrderByDateAscStartTimeAsc(int therapistID, String status, LocalDate date, LocalTime startTime);
     List<TherapySession> findByTherapistID(int therapistID);
     TherapySession findById( int iD);
+    long countByTherapistID(int therapistID);
 }

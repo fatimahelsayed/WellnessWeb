@@ -15,24 +15,18 @@ public class Blogs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+    private int userID;
+    private LocalDate date;
+    private LocalTime time;
     @Column(columnDefinition = "LONGTEXT")
+    @Lob
     private String ContentofBlog;
     private String TitleofBlog;
     private String IntroofBlog;
     private String illnessName;
-    private int userID;
-    private LocalDate date;
-    private LocalTime time;
 
-
-
-  
-
-
-
-
-    public Blogs(int iD, String contentofBlog, String titleofBlog, String introofBlog, String illnessName, int userID,
-            LocalDate date, LocalTime time) {
+    public Blogs(int iD, int userID, LocalDate date, LocalTime time, String contentofBlog, String titleofBlog,
+            String introofBlog, String illnessName) {
         ID = iD;
         ContentofBlog = contentofBlog;
         TitleofBlog = titleofBlog;
