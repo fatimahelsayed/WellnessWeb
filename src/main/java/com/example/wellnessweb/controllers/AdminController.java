@@ -1,5 +1,6 @@
 package com.example.wellnessweb.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.example.wellnessweb.models.Admin;
@@ -29,6 +31,8 @@ import com.example.wellnessweb.repositories.BlogsRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapistRequestRepository;
+
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -57,37 +61,46 @@ public class AdminController {
     private JavaMailSender emailSender;
 
     @GetMapping("")
-    public ModelAndView getAdminDashboard() {
-        ModelAndView mav = new ModelAndView("admindashboard.html");
+    public ModelAndView getAdminDashboard(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("admindashboard.html");
 
-        List<Customer> recentCustomers = this.customerRepository.findTop5ByOrderByCreatedAtDesc();
-        mav.addObject("recentCustomers", recentCustomers);
+            List<Customer> recentCustomers = this.customerRepository.findTop5ByOrderByCreatedAtDesc();
+            mav.addObject("recentCustomers", recentCustomers);
 
-        List<TherapistRequest> recentRequests = this.therapistRequestRepository.findByIsAcceptedOrderByCreatedAtDesc("Pending");
-        mav.addObject("recentRequests", recentRequests);
+            List<TherapistRequest> recentRequests = this.therapistRequestRepository
+                    .findByIsAcceptedOrderByCreatedAtDesc("Pending");
+            mav.addObject("recentRequests", recentRequests);
 
-        List<Therapist> recentTherapists = this.therapistRepository.findTop5ByOrderByCreatedAtDesc();
-        mav.addObject("recentTherapists", recentTherapists);
+            List<Therapist> recentTherapists = this.therapistRepository.findTop5ByOrderByCreatedAtDesc();
+            mav.addObject("recentTherapists", recentTherapists);
 
-        long blogCount = this.blogsRepository.count();
-        long customerCount = this.customerRepository.count();
-        long therapistCount = this.therapistRepository.count();
+            long blogCount = this.blogsRepository.count();
+            long customerCount = this.customerRepository.count();
+            long therapistCount = this.therapistRepository.count();
 
-        mav.addObject("blogCount", blogCount);
-        mav.addObject("customerCount", customerCount);
-        mav.addObject("therapistCount", therapistCount);
+            mav.addObject("blogCount", blogCount);
+            mav.addObject("customerCount", customerCount);
+            mav.addObject("therapistCount", therapistCount);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
     }
 
     @GetMapping("/therapistsrequests")
-    public ModelAndView getTherapistRequests() {
-        ModelAndView mav = new ModelAndView("viewTherapistsRequests.html");
+    public ModelAndView getTherapistRequests(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("viewTherapistsRequests.html");
 
-        List<TherapistRequest> requests = this.therapistRequestRepository.findByIsAccepted("Pending");
-        mav.addObject("requests", requests);
+            List<TherapistRequest> requests = this.therapistRequestRepository.findByIsAccepted("Pending");
+            mav.addObject("requests", requests);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
     }
 
     @GetMapping("/downloadResume/{phoneNumber}")
@@ -142,31 +155,41 @@ public class AdminController {
     }
 
     @GetMapping("/customers")
-    public ModelAndView getCustomers() {
-        ModelAndView mav = new ModelAndView("viewCustomers.html");
+    public ModelAndView getCustomers(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("viewCustomers.html");
 
-        List<Customer> customers = this.customerRepository.findAll();
-        mav.addObject("customers", customers);
+            List<Customer> customers = this.customerRepository.findAll();
+            mav.addObject("customers", customers);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
     }
 
     @GetMapping("/therapists")
-    public ModelAndView getTherapists() {
-        ModelAndView mav = new ModelAndView("viewTherapistsAdminDash.html");
+    public ModelAndView getTherapists(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("viewTherapistsAdminDash.html");
 
-        List<Therapist> therapists = this.therapistRepository.findAll();
-        mav.addObject("therapists", therapists);
+            List<Therapist> therapists = this.therapistRepository.findAll();
+            mav.addObject("therapists", therapists);
 
-        return mav;
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
     }
 
     @GetMapping("/therapistrequestdetails/{id}")
-    public ModelAndView viewTherapistRequestDetails(@PathVariable("id") int id) {
-        ModelAndView modelAndView = new ModelAndView("therapistRequestDetails.html");
-        TherapistRequest request = this.therapistRequestRepository.findById(id);
-        modelAndView.addObject("request", request);
-        return modelAndView;
+    public ModelAndView viewTherapistRequestDetails(@PathVariable("id") int id, HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView modelAndView = new ModelAndView("therapistRequestDetails.html");
+            TherapistRequest request = this.therapistRequestRepository.findById(id);
+            modelAndView.addObject("request", request);
+            return modelAndView;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
     }
 
     @PostMapping("/therapistsrequests/acceptRequest")
@@ -284,4 +307,103 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/deletetherapist")
+    public ModelAndView deleteTherapist(@RequestParam("id") int therapistID) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            therapistRepository.deleteById(therapistID);
+            modelAndView.setViewName("redirect:/admindashboard/therapists");
+
+        } catch (Exception e) {
+            System.out.println("Error deleting therapist: " + e.getMessage());
+        }
+
+        return modelAndView;
+    }
+
+    @PostMapping("/deletecustomer")
+    public ModelAndView deleteCustomer(@RequestParam("id") int customerID) {
+        ModelAndView modelAndView = new ModelAndView();
+        try {
+            customerRepository.deleteById(customerID);
+            modelAndView.setViewName("redirect:/admindashboard/customers");
+
+        } catch (Exception e) {
+            System.out.println("Error deleting therapist: " + e.getMessage());
+        }
+
+        return modelAndView;
+    }
+
+    @GetMapping("/addtherapist")
+    public ModelAndView getAddTherapist(HttpSession session) {
+        if (session.getAttribute("loggedInEmp") != null) {
+            ModelAndView mav = new ModelAndView("addTherapistAdminDash.html");
+            Therapist therapist = new Therapist();
+            mav.addObject("therapist", therapist);
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
+
+    }
+
+    @PostMapping("/addtherapist")
+    public ModelAndView saveTherapistRequest(@ModelAttribute Therapist therapist,
+            @RequestParam("imageFile") MultipartFile imageFile) {
+
+        ModelAndView modelAndView = new ModelAndView();
+        String encoddedPassword = BCrypt.hashpw(therapist.getPassword(), BCrypt.gensalt(12));
+        therapist.setPassword(encoddedPassword);
+
+        try {
+            boolean emailExists = therapistRequestRepository.existsByEmail(therapist.getEmail());
+            boolean phoneNumberExists = therapistRequestRepository.existsByPhoneNumber(therapist.getPhoneNumber());
+
+            if (emailExists || phoneNumberExists) {
+                modelAndView.setViewName("redirect:/admindashboard/addtherapist?therapistAlreadyExists");
+                return modelAndView;
+            }
+
+            String imageName = handleImageUpload(imageFile, therapist.getPhoneNumber());
+
+            if (imageName != null) {
+                therapist.setImage(imageName);
+            }
+
+            this.therapistRepository.save(therapist);
+            modelAndView.setViewName("redirect:/admindashboard/therapists");
+        } catch (Exception e) {
+            System.out.println("Error adding class: " + e.getMessage());
+            modelAndView.setViewName("error_page");
+        }
+
+        return modelAndView;
+    }
+
+    private String handleImageUpload(MultipartFile file, String phoneNumber) {
+        String imageName = null;
+        try {
+            if (!file.isEmpty()) {
+                String originalFilename = file.getOriginalFilename();
+                String fileExtension = originalFilename.substring(originalFilename.lastIndexOf('.')).toLowerCase();
+
+                // Check if the file extension is one of the allowed image formats
+                if (fileExtension.equals(".jpg") || fileExtension.equals(".jpeg") || fileExtension.equals(".png")
+                        || fileExtension.equals(".gif")) {
+                    String newFileName = phoneNumber + fileExtension;
+                    String uploadDir = System.getProperty("user.dir") + "/src/main/resources/static/images/";
+                    String imagePath = uploadDir + newFileName;
+
+                    File destImage = new File(imagePath);
+                    file.transferTo(destImage);
+                    imageName = newFileName;
+                } else {
+                    System.out.println("Invalid image format: " + fileExtension);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error storing image: " + e.getMessage());
+        }
+        return imageName;
+    }
 }

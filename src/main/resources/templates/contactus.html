@@ -26,12 +26,12 @@
         <div class="text-block">
             <h1 class="title">Contact us</h4>
                 <p>Please use the menu below to provide feedback on the content and design of our site, make a reprint request, or send us comments and questions. We would love to hear from you!</p>
-                <form class="contactus-form" onsubmit="validateForm()">
-                    <input id="email" type="text" placeholder="email" />
+                <form th:action="@{/contactus}" method="post" class="contactus-form" onsubmit="validateForm()">
+                    <input id="email" name="email" type="text" placeholder="email" />
                     <span id="email-error" class="error-message"></span>
-                    <input id="Name" type="text" placeholder="name" />
+                    <input id="Name" type="text"name="subject" placeholder="Subject" />
                     <span id="name-error" class="error-message"></span>
-                    <textarea id="letter" placeholder="Comments or Questions" /></textarea>
+                    <textarea id="letter" name="body" placeholder="Comments or Questions" /></textarea>
                     <span id="letter-error" class="error-message"></span>
                     <input value="Submit" type="submit" class="contactus-btn">
                 </form>

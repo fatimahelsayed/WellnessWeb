@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,13 +15,40 @@ public class Blogs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private int UserID;
     private LocalDate Date;
     private LocalTime Time;
+    @Column(columnDefinition = "LONGTEXT")
     private String ContentofBlog;
     private String TitleofBlog;
     private String IntroofBlog;
     private String illnessName;
+
+
+
+    private int userID;
+    public Blogs(int iD, int userID, LocalDate date, LocalTime time, String contentofBlog, String titleofBlog,
+            String introofBlog, String illnessName) {
+        ID = iD;
+        this.userID = userID;
+        Date = date;
+        Time = time;
+        ContentofBlog = contentofBlog;
+        TitleofBlog = titleofBlog;
+        IntroofBlog = introofBlog;
+        this.illnessName = illnessName;
+    }
+
+
+    public int getUserID() {
+        return userID;
+    }
+
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+
 
 
 
@@ -44,16 +72,7 @@ public class Blogs implements Serializable {
     }
 
 
-    public int getUserID() {
-        return UserID;
-    }
-
-
-    public void setUserID(int userID) {
-        UserID = userID;
-    }
-
-
+  
     public LocalDate getDate() {
         return Date;
     }
@@ -106,17 +125,7 @@ public class Blogs implements Serializable {
     }
 
 
-    public Blogs(int iD, int userID, LocalDate date, LocalTime time, String contentofBlog,
-            String titleofBlog, String introofBlog, String illnessName) {
-        ID = iD;
-        UserID = userID;
-        Date = date;
-        Time = time;
-        ContentofBlog = contentofBlog;
-        TitleofBlog = titleofBlog;
-        IntroofBlog = introofBlog;
-        this.illnessName = illnessName;
-    }
+   
 
 
     public Blogs() {

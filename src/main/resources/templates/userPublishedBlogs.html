@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Profile Dashboard</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <link rel="stylesheet"
+        href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
+
+    <!--Fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Cabin|Herr+Von+Muellerhoff|Source+Sans+Pro" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/CSS/admindashboard.css}">
+
+</head>
+
+<style>
+    .blog-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        grid-gap: 10px;
+        margin-top: 20px;
+
+    }
+
+    .blog-item {
+        transform: translateY(20px);
+        border: 1px solid #ccc;
+        padding: 12px;
+        border-radius: 5px;
+        background-color: rgba(249, 249, 249, 0.6); /* Set the background color with transparency */
+        margin-bottom: 10px; /* Add margin between each blog title container */
+        max-width: 550px;
+        text-transform: capitalize;
+        font-size: 14px;
+
+
+    }
+
+    .blog-title:hover{
+        color: #495d4a;
+        transition: 0.7s ease;
+    }
+
+    .blog-date{
+        font-style: italic;
+        font-size: 13px;        
+    }
+
+    .btn {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 5px 10px;
+        background-color: #3b4a3b;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn:hover {
+        background-color: #495d4a;
+        color: white;
+    }
+
+ 
+</style>
+
+<body>
+    <!-- navbar start -->
+    <div th:replace="~{partials/userProfileSideBar}"></div>
+    <div class="main-content" id="panel">
+        <div th:replace="~{partials/userProfileNavBar}"></div>
+        <div class="container-fluid pt-3">
+            <div class="row removable">
+                <div class="col-lg">
+                    <div th:if="${#lists.isEmpty(userBlogs)}">
+                        <h1>You've published no blogs yet</h1>
+                        <a href="/blogs/addBlog" class="btn">Start Blogging</a>
+                    </div>
+
+                    <div th:if="${not #lists.isEmpty(userBlogs)}">
+
+                    <h1>Your Published Blogs</h1> <span>                        
+                        <a href="/blogs/addBlog" class="btn">Add a Blog</a>
+                    </span>
+
+                        <div th:each="blog : ${userBlogs}" class="blog-item">
+                            <a th:href="@{'/blogs/viewblog/' + ${blog.ID}}">
+                                <h2 class="blog-title" th:text="${blog.TitleofBlog}"></h2>
+                            </a>
+                            <div class="blog-date" th:text="${blog.Date}"></div>
+
+                        </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <script
+            src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/jquery.min.js"></script>
+        <script
+            src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/bootstrap.bundle.min.js"></script>
+        <script
+            src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/js.cookie.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <script
+            src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/chart.extension.js"></script>
+        <script
+            src="https://rawcdn.githack.com/Loopple/loopple-public-assets/7bb803d2af2ab6d71d429b0cb459c24a4cd0fbb4/argon-dashboard/js/argon.min.js"></script>
+</body>
+</html>

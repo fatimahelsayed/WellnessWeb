@@ -3,6 +3,7 @@ package com.example.wellnessweb.controllers;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.example.wellnessweb.models.Blogs;
 import com.example.wellnessweb.models.Customer;
 import com.example.wellnessweb.models.ReservedTherapySession;
 import com.example.wellnessweb.models.ServiceResponse;
@@ -25,6 +27,8 @@ import com.example.wellnessweb.repositories.ReservedTherapySessionRepository;
 import com.example.wellnessweb.repositories.TherapistRepository;
 import com.example.wellnessweb.repositories.TherapySessionRepository;
 import com.example.wellnessweb.repositories.CustomerRepository;
+import com.example.wellnessweb.repositories.BlogsRepository;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,6 +49,9 @@ public class UserController {
 
     @Autowired
     private TherapistRepository therapistRepository;
+
+    @Autowired
+    private BlogsRepository blogsRepository;
 
     public List<String> checkForExistingFields(Customer customer, Customer loggedInUser) {
         List<String> errors = new ArrayList<>();
@@ -115,10 +122,14 @@ public class UserController {
 
     @GetMapping("editaccount")
     public ModelAndView getUpdateAccountForm(HttpSession session) {
-        ModelAndView mav = new ModelAndView("userProfileEdit.html");
-        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
-        mav.addObject("customer", loggedInUser);
-        return mav;
+        if (session.getAttribute("loggedInUser") != null) {
+
+            ModelAndView mav = new ModelAndView("userProfileEdit.html");
+            Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+            mav.addObject("customer", loggedInUser);
+            return mav;
+        }
+        return new ModelAndView("redirect:/login");
     }
 
     @PostMapping("/editaccount")
@@ -147,6 +158,38 @@ public class UserController {
         return null;
     }
 
+    @GetMapping("changepassword")
+    public ModelAndView getChangePasswordForm(HttpSession session) {
+        if (session.getAttribute("loggedInUser") != null) {
+            ModelAndView mav = new ModelAndView("changePasswordUserProfile.html");
+            Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
+            mav.addObject("customer", loggedInCustomer);
+            return mav;
+        }
+        return new ModelAndView("redirect:/login");
+
+    }
+
+    @PostMapping("changepassword")
+    public ResponseEntity<Object> changePassword(@RequestBody Map<String, String> passwordMap,
+            HttpSession session) throws JsonProcessingException {
+        String oldPassword = passwordMap.get("oldPassword");
+        String newPassword = passwordMap.get("newPassword");
+        System.out.println(oldPassword);
+        Customer loggedInCustomer = (Customer) session.getAttribute("loggedInUser");
+        ServiceResponse<String> response;
+        if (BCrypt.checkpw(oldPassword, loggedInCustomer.getPassword())) {
+            String encoddedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+            loggedInCustomer.setPassword(encoddedPassword);
+            session.setAttribute("loggedInUser", loggedInCustomer);
+            this.customerRepository.save(loggedInCustomer);
+            response = new ServiceResponse<String>("success", "/profile/editaccount");
+        } else {
+            response = new ServiceResponse<String>("error", "Invalid Old Password");
+        }
+        return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/bookedSessions")
     public ModelAndView getBookedSessions(HttpSession session) {
         Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
@@ -164,6 +207,24 @@ public class UserController {
 
         return mav;
 
+    }
+
+    @GetMapping("/publishedBlogs")
+    public ModelAndView getUserPublishedBlogs(HttpSession session) {
+        ModelAndView mav = new ModelAndView("userPublishedBlogs.html");
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        List<Blogs> userBlogs = blogsRepository.findAllByUserID(loggedInUser.getID());
+        mav.addObject("customer", loggedInUser);
+        mav.addObject("userBlogs", userBlogs);
+        return mav;
+    }
+
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpSession session) {
+        if (session != null) {
+            session.invalidate();
+        }
+        return new ModelAndView("redirect:/home");
     }
 
 }

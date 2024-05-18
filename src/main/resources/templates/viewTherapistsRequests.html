@@ -15,120 +15,84 @@
 <body>
     <div th:replace="~{partials/adminDashSideBar}"></div>
     <div class="main-content" id="panel">
-        <nav class="navbar navbar-top navbar-expand navbar-dark border-bottom bg-warning" id="navbarTop">
-            <div class="container-fluid">
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav align-items-center  ml-md-auto ">
-                        <li class="nav-item d-xl-none">
-                            <div class="pr-3 sidenav-toggler sidenav-toggler-dark active" data-action="sidenav-pin"
-                                data-target="#sidenav-main">
-                                <div class="sidenav-toggler-inner">
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
-                                    <i class="sidenav-toggler-line"></i>
+        <div th:replace="~{partials/adminDashNavBar}"></div>
+        <div class="container-fluid pt-3">
+            <div class="row removable">
+                <div class="col-lg">
+                    <div class="card">
+                        <div class="card-header border-0">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="mb-0">Therapist Requests</h3>
+                                </div>
+                                <div class="col text-right">
+                                    <input id="searchBar" onkeyup="myFunction()" class="table-search-bar"
+                                    placeholder="Search for a Therapist" />                                
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav align-items-center  ml-auto ml-md-0 ">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <div class="media align-items-center">
-                                    <span class="avatar avatar-sm rounded-circle">
-                                        <img alt="Image placeholder" th:src="@{assets/user icon.png}">
-                                    </span>
-                                    <div class="media-body  ml-2  d-none d-lg-block">
-                                        <span class="mb-0 text-sm  font-weight-bold">Admin</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <div class="dropdown-menu  dropdown-menu-right ">
-                                <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome</h6>
-                                </div>
-                                <a href="#!" class="dropdown-item">
-                                    <i class="fa fa-user"></i>
-                                    <span>My profile</span>
-                                </a>
-                                <a href="#!" class="dropdown-item">
-                                    <i class="fa fa-tools"></i>
-                                    <span>Settings</span>
-                                </a>
-                                <div class="dropdown-divider"></div>
-                                <a th:href="@{/home}" class="dropdown-item">
-                                    <i class="fa fa-sign-out-alt"></i>
-                                    <span>Logout</span>
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-
-        <div class="card">
-            <div class="card-header border-0">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <h3 class="mb-0">Therapist Requests</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="adminDashTable" class="table align-items-center table-flush">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Age</th>
+                                        <th scope="col">Gender</th>
+                                        <th scope="col">Phone Number</th>
+                                        <th scope="col">Specialization</th>
+                                        <th scope="col">Education</th>
+                                        <th scope="col">Experience</th>
+                                        <th scope="col">Languages</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Resume</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="request : ${requests}">
+                                        <td th:text="${request.name}"></td>
+                                        <td th:text="${request.age}"></td>
+                                        <td th:text="${request.gender}"></td>
+                                        <td th:text="${request.phoneNumber}"></td>
+                                        <td th:text="${request.specialization}"></td>
+                                        <td th:text="${request.education}"></td>
+                                        <td th:text="${request.experience}"></td>
+                                        <td th:text="${request.languages}"></td>
+                                        <td th:text="${request.email}"></td>
+                                        <td>
+                                            <a th:href="@{'/admindashboard/downloadResume/' + ${request.phoneNumber}}"
+                                                th:text="${request.Resume}"></a>
+                                        </td>
+                                        <td>
+                                            <a th:href="@{'/admindashboard/downloadImage/' + ${request.phoneNumber}}"
+                                                th:text="${request.Image}"></a>
+                                        </td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <form th:action="@{/admindashboard/therapistsrequests/acceptRequest}"
+                                                    method="post">
+                                                    <input type="hidden" name="id" th:value="${request.ID}">
+                                                    <button type="submit"
+                                                        class="btn btn-sm btn-success custom-btn">Accept</button>
+                                                </form>
+                                                <form th:action="@{/admindashboard/therapistsrequests/declineRequest}"
+                                                    method="post">
+                                                    <input type="hidden" name="id" th:value="${request.ID}">
+                                                    <button type="submit" class="btn btn-sm btn-danger">Decline</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="table-responsive">
-                <table class="table align-items-center table-flush">
-                    <thead class="thead-light">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Gender</th>
-                            <th scope="col">Phone Number</th>
-                            <th scope="col">Specialization</th>
-                            <th scope="col">Education</th>
-                            <th scope="col">Experience</th>
-                            <th scope="col">Languages</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Resume</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="request : ${requests}">
-                            <td th:text="${request.name}"></td>
-                            <td th:text="${request.age}"></td>
-                            <td th:text="${request.gender}"></td>
-                            <td th:text="${request.phoneNumber}"></td>
-                            <td th:text="${request.specialization}"></td>
-                            <td th:text="${request.education}"></td>
-                            <td th:text="${request.experience}"></td>
-                            <td th:text="${request.languages}"></td>
-                            <td th:text="${request.email}"></td>
-                            <td>
-                                <a th:href="@{'/admindashboard/downloadResume/' + ${request.phoneNumber}}" th:text="${request.Resume}"></a>
-                            </td>
-                            <td>
-                                <a th:href="@{'/admindashboard/downloadImage/' + ${request.phoneNumber}}" th:text="${request.Image}"></a>
-                            </td>
-                            <td>
-                            <div class="action-buttons">
-                                <form th:action="@{/admindashboard/therapistsrequests/acceptRequest}" method="post">
-                                    <input type="hidden" name="id" th:value="${request.ID}">
-                                    <button type="submit" class="btn btn-sm btn-success custom-btn">Accept</button>
-                                </form>
-                                <form th:action="@{/admindashboard/therapistsrequests/declineRequest}" method="post">
-                                    <input type="hidden" name="id" th:value="${request.ID}">
-                                    <button type="submit" class="btn btn-sm btn-danger">Decline</button>
-                                </form>                                
-                            </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
-    </div>
+        <script th:src="@{/js/adminDash.js}"></script>
+
 </body>
 
 </html>

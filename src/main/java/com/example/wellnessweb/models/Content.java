@@ -10,7 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-
+ 
 import javax.persistence.Lob;
 
 @Entity
@@ -18,8 +18,9 @@ public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private int TherapistID;
-    private LocalDate Date;
+    private int therapistID;
+
+
     private String illnessName;
     private String ContentofArticle;
     private String TitleofArticle;
@@ -27,24 +28,36 @@ public class Content {
     private String quote;
     private String authorOfQuote;
 
-    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL)
- private List<Subtopics> subtopicList;
+    @OneToMany(mappedBy = "content", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Subtopics> subtopicList;
 
-    public Content(int iD, int therapistID, LocalDate date, String illnessName, String contentofArticle,
-            String titleofArticle, String introofArticle, String quote, String authorOfQuote, 
-            byte[] image) {
-        ID = iD;
-        TherapistID = therapistID;
-        Date = date;
-        this.illnessName = illnessName;
-        ContentofArticle = contentofArticle;
-        TitleofArticle = titleofArticle;
-        IntroofArticle = introofArticle;
-        this.quote = quote;
-        this.authorOfQuote = authorOfQuote;
-        this.subtopicList = new ArrayList<>(); // Initialize subtopics with an empty list
-        this.image = image;
-    }
+ private LocalDate date;
+
+
+   
+    public Content(int iD, int therapistID, String illnessName, String contentofArticle, String titleofArticle,
+        String introofArticle, String quote, String authorOfQuote, List<Subtopics> subtopicList, LocalDate date,
+        byte[] image) {
+    ID = iD;
+    this.therapistID = therapistID;
+    this.illnessName = illnessName;
+    ContentofArticle = contentofArticle;
+    TitleofArticle = titleofArticle;
+    IntroofArticle = introofArticle;
+    this.quote = quote;
+    this.authorOfQuote = authorOfQuote;
+    this.subtopicList = subtopicList;
+    this.date = date;
+    this.image = image;
+}
+
+    public LocalDate getDate() {
+    return date;
+}
+
+public void setDate(LocalDate date) {
+    this.date = date;
+}
 
     public List<Subtopics> getSubtopicList() {
         return subtopicList;
@@ -53,6 +66,17 @@ public class Content {
     public void setSubtopicList(List<Subtopics> subtopicList) {
         this.subtopicList = subtopicList;
     }
+
+
+
+    public int getTherapistID() {
+        return therapistID;
+    }
+
+    public void setTherapistID(int therapistID) {
+        this.therapistID = therapistID;
+    }
+
 
     public String getQuote() {
         return quote;
@@ -85,22 +109,9 @@ public class Content {
         ID = iD;
     }
 
-    public int getTherapistID() {
-        return TherapistID;
-    }
+    
 
-    public void setTherapistID(int therapistID) {
-        TherapistID = therapistID;
-    }
-
-    public LocalDate getDate() {
-        return Date;
-    }
-
-    public void setDate(LocalDate date) {
-        Date = date;
-    }
-
+   
     public String getIllnessName() {
         return illnessName;
     }

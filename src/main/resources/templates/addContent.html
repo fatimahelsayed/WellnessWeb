@@ -126,27 +126,28 @@
           <button type="button" class="publish" onclick="addSubtopic()">
             Add Subtopic
           </button>
+
           <script>
             function addSubtopic() {
-         var subtopicContainer = document.getElementById("subtopics-container");
-         var newSubtopicDiv = document.createElement("div");
-       
-         newSubtopicDiv.innerHTML = `
-           <div>
-             <input type="text" class="subtopic-title" th:name="subtopicTitle[]" th:field="*{subtopicList[].subtopicTitle}" placeholder="Enter Subtopic Title" required />
-           </div>
-           <div>
-             <label for="subtopicContent" class="subtopic-title" style="font-size: 22px;">Subtopic Content:</label>
-             <br>
-             <textarea th:name="subtopicContent[]" th:field="*{subtopicList[].subtopicContent}" class="subtopic-content" style="width: 800px; height: 350px;" placeholder="Enter the content of your subtopic here..." required></textarea>
-           </div>
-         `;
-       
-             
-       
-               var styleElement = document.createElement("style");
-               // Define CSS styles
-               var css = `
+              var subtopicContainer = document.getElementById(
+                "subtopics-container"
+              );
+              var newSubtopicDiv = document.createElement("div");
+
+              newSubtopicDiv.innerHTML = `
+        <div>
+            <input type="text" name="subtopicTitles" class="subtopic-title" placeholder="Enter Subtopic Title" required />
+        </div>
+        <div>
+            <label for="subtopicContent" class="subtopic-title" style="font-size: 22px;">Subtopic Content:</label>
+            <br>
+            <textarea name="subtopicContents" class="subtopic-content" style="width: 800px; height: 350px;" placeholder="Enter the content of your subtopic here..." required></textarea>
+        </div>
+    `;
+
+              var styleElement = document.createElement("style");
+              // Define CSS styles
+              var css = `
                   .subtopic-title {
                    padding-top: 24px;
                      border: none;
@@ -170,18 +171,17 @@
                height: 50%;
                    }
                `;
-               // Append CSS styles to the <style> element
-               styleElement.appendChild(document.createTextNode(css));
-               // Append the <style> element to the document's <head>
-               document.head.appendChild(styleElement);
-       
-               subtopicContainer.appendChild(newSubtopicDiv);
-               subtopicsHidden.appendChild(subtopicHidden);
-             }
-           </script>
-          <br />
+              // Append CSS styles to the <style> element
+              styleElement.appendChild(document.createTextNode(css));
+              // Append the <style> element to the document's <head>
+              document.head.appendChild(styleElement);
 
-         
+              // Append the newSubtopicDiv to the subtopics-container
+              subtopicContainer.appendChild(newSubtopicDiv);
+            }
+          </script>
+
+          <br />
 
           <blockquote>
             <textarea
@@ -211,8 +211,6 @@
         </article>
       </form>
     </header>
-
- 
 
     <div th:replace="~{partials/footer}"></div>
   </body>

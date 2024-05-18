@@ -24,7 +24,7 @@
 <header>
     <div class="topic-problem" th:text="${blogObj.illnessName}">Anxiety and Stress</div>
     <div class="blogs-container">
-        <h1 class="blog-title" th:text="${blogObj.titleofBlog}"></h1>
+        <h1 class="blog-title" th:text="${blogObj.titleofBlog}" style="text-transform: capitalize;"></h1>
     </div>
 </header>
 <main>
@@ -33,14 +33,10 @@
 		</p>
 
         <p class="publish-details">
-			<small>By <em>Author Name</em> ,
-				<em th:text="${blogObj.date}"></em>
+            <small>By <em th:text="${authorUsername}"></em> ,</small>
+            <em th:text="${blogObj.date}"></em>
 				</small>
 			</p>
-
-
-
-
 
 
 		<h2 class="blog-topics-title">Content of Blog</h2>

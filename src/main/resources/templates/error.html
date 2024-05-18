@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
                 404
             </div>
             <p class="notfound-subtext">we are sorry, but the page you requested was not found</p>
-            <a href="#" class="home-btn">Return to Homepage</a>
+            <a th:href="@{/home}" class="home-btn">Return to Homepage</a>
         </div>
     </section>
 </body>
