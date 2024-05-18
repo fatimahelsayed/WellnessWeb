@@ -131,7 +131,6 @@ public class TherapistController {
             ModelAndView mav = new ModelAndView("therapistDash.html");
             Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
             TherapistRequest therapistRequest = (TherapistRequest) session.getAttribute("therapistReq");
-
             LocalDate currentDate = LocalDate.now();
             LocalTime currentTime = LocalTime.now();
 
