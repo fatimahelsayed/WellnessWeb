@@ -154,14 +154,17 @@ public class TherapistController {
 
     @GetMapping("viewsessions")
     public ModelAndView getTherapySessions(HttpSession session) {
-        ModelAndView mav = new ModelAndView("sessionsTherapistDash.html");
-        Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
-        List<TherapySession> therapySessions = this.therapySessionRepository
-                .findByTherapistID(loggedInTherapist.getID());
+        if (session.getAttribute("loggedInTherapist") != null) {
+            ModelAndView mav = new ModelAndView("sessionsTherapistDash.html");
+            Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
+            List<TherapySession> therapySessions = this.therapySessionRepository
+                    .findByTherapistID(loggedInTherapist.getID());
 
-        mav.addObject("therapySessions", therapySessions);
-        mav.addObject("therapist", loggedInTherapist);
-        return mav;
+            mav.addObject("therapySessions", therapySessions);
+            mav.addObject("therapist", loggedInTherapist);
+            return mav;
+        }
+        return new ModelAndView("redirect:/employeelogin");
     }
 
     @GetMapping("addsession")
@@ -169,6 +172,7 @@ public class TherapistController {
         ModelAndView mav = new ModelAndView("addSessionTherapistDash.html");
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         mav.addObject("newSession", new TherapySession());
+        mav.addObject("therapist", loggedInTherapist);
         return mav;
     }
 
@@ -178,11 +182,11 @@ public class TherapistController {
         newSession.setTherapistID(loggedInTherapist.getID());
         newSession.setStatus("UNRESERVED");
         this.therapySessionRepository.save(newSession);
-        return new RedirectView("/therapistdashboard/addsession");
+        return new RedirectView("/therapistdashboard/viewsessions");
     }
 
     @GetMapping("sessiondetails")
-    public ModelAndView editClientForm(@RequestParam("id") int sessionId, HttpSession session) {
+    public ModelAndView viewSessionDetails(@RequestParam("id") int sessionId, HttpSession session) {
         ModelAndView mav = new ModelAndView("viewSessionDetailsTherapistDash.html");
         ReservedTherapySession reservedTherapySession = this.reservedTherapySessionRepository
                 .findByTherapySessionID(sessionId);
@@ -199,8 +203,8 @@ public class TherapistController {
         return mav;
     }
 
-    @PostMapping("/deleteTherapySession/{id}")
-    public ModelAndView deleteTherapySession(@PathVariable("id") int id, HttpSession session) {
+    @PostMapping("/deleteTherapySession")
+    public ModelAndView deleteTherapySession(@RequestParam("id") int id, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView();
         Therapist loggedInTherapist = (Therapist) session.getAttribute("loggedInTherapist");
         modelAndView.addObject("therapist", loggedInTherapist);
@@ -229,7 +233,7 @@ public class TherapistController {
         System.out.println("old pass: " + loggedInTherapist.getPassword());
         if (imageName != null) {
             loggedInTherapist.setImage(imageName);
-            
+
         }
         if (valid) {
             this.therapistRepository.save(loggedInTherapist);
