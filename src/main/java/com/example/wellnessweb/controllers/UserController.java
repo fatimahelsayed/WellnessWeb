@@ -4,12 +4,15 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -218,6 +221,40 @@ public class UserController {
         mav.addObject("userBlogs", userBlogs);
         return mav;
     }
+
+    @GetMapping("/feed")
+    public ModelAndView getBlogsFeed(HttpSession session) {
+        ModelAndView mav = new ModelAndView("blogsFeed.html");
+
+        Customer loggedInUser = (Customer) session.getAttribute("loggedInUser");
+        List<Blogs> latestBlogs = blogsRepository.findTop50ByOrderByDateDescTimeDesc();
+
+        if (loggedInUser == null) {
+            return new ModelAndView("redirect:/login");
+        }
+
+        mav.addObject("customer", loggedInUser);
+        mav.addObject("latestBlogs", latestBlogs);
+
+        return mav;
+    }
+
+  
+    @PostMapping("/publishedBlogs/delete/{id}")
+    public ModelAndView deleteBlog(@PathVariable("id") int blogId) {
+        Optional<Blogs> optionalBlog = blogsRepository.findById(blogId);
+        if (!optionalBlog.isPresent()) {
+            ModelAndView mav = new ModelAndView("publishedBlogs.html");
+            mav.addObject("error", "Blog not found");
+            return mav;
+        }
+    
+        blogsRepository.deleteById(blogId);
+    
+        return new ModelAndView("redirect:/profile/publishedBlogs");
+    }
+    
+
 
     @GetMapping("/logout")
     public ModelAndView logout(HttpSession session) {

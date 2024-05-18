@@ -15,27 +15,46 @@ public class Blogs implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
-    private LocalDate Date;
-    private LocalTime Time;
+    private int userID;
+    private LocalDate date;
+    private LocalTime time;
     @Column(columnDefinition = "LONGTEXT")
+    @Lob
     private String ContentofBlog;
     private String TitleofBlog;
     private String IntroofBlog;
     private String illnessName;
 
-
-
-    private int userID;
     public Blogs(int iD, int userID, LocalDate date, LocalTime time, String contentofBlog, String titleofBlog,
             String introofBlog, String illnessName) {
         ID = iD;
-        this.userID = userID;
-        Date = date;
-        Time = time;
         ContentofBlog = contentofBlog;
         TitleofBlog = titleofBlog;
         IntroofBlog = introofBlog;
         this.illnessName = illnessName;
+        this.userID = userID;
+        this.date = date;
+        this.time = time;
+    }
+
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+
+    public void setTime(LocalTime time) {
+        this.time = time;
+    }
+
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
 
@@ -72,26 +91,7 @@ public class Blogs implements Serializable {
     }
 
 
-  
-    public LocalDate getDate() {
-        return Date;
-    }
-
-    public void setDate(LocalDate date) {
-        Date = date;
-    }
-
-
-    public LocalTime getTime() {
-        return Time;
-    }
-
-
-    public void setTime(LocalTime time) {
-        Time = time;
-    }
-
-
+ 
 
 
 

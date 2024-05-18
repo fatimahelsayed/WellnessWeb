@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,11 +20,13 @@ public class Content {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
     private int therapistID;
-
-
     private String illnessName;
+    @Column(columnDefinition = "LONGTEXT")
+    @Lob
     private String ContentofArticle;
     private String TitleofArticle;
+    @Column(columnDefinition = "LONGTEXT")
+    @Lob
     private String IntroofArticle;
     private String quote;
     private String authorOfQuote;
@@ -99,7 +102,8 @@ public void setDate(LocalDate date) {
     }
 
     @Lob
-    private byte[] image;
+    @Column(name = "image", columnDefinition = "LONGBLOB")
+    private byte[] image;    
 
     public int getID() {
         return ID;
