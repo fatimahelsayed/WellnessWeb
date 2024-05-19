@@ -127,7 +127,7 @@
             th:field="*{ContentofArticle}"
             style="width: 850px; height: 400px"
             required 
-            maxlength="1500"
+            maxlength="5000"
             minlength="50"
           ></textarea>
 
@@ -147,12 +147,12 @@
 
               newSubtopicDiv.innerHTML = `
         <div>
-            <input type="text" name="subtopicTitles" class="subtopic-title" placeholder="Enter Subtopic Title" required />
+            <input type="text" name="subtopicTitles" class="subtopic-title" placeholder="Enter Subtopic Title" />
         </div>
         <div>
             <label for="subtopicContent" class="subtopic-title" style="font-size: 22px;">Subtopic Content:</label>
             <br>
-            <textarea name="subtopicContents" class="subtopic-content" style="width: 800px; height: 350px;" placeholder="Enter the content of your subtopic here..." required></textarea>
+            <textarea name="subtopicContents" class="subtopic-content" maxlength="3000" style="width: 800px; height: 350px;" placeholder="Enter the content of your subtopic here..."></textarea>
         </div>
         <button type="button" class="publish" onclick="deleteSubtopic(this)">Delete Subtopic</button>
 
@@ -191,6 +191,18 @@
 
               // Append the newSubtopicDiv to the subtopics-container
               subtopicContainer.appendChild(newSubtopicDiv);
+
+              var subtopicTitles = document.querySelectorAll('input[name="subtopicTitles"]');
+    var subtopicContents = document.querySelectorAll('textarea[name="subtopicContents"]');
+
+    // Loop through each subtopic input and set the required attribute
+    subtopicTitles.forEach(function(input) {
+        input.required = true;
+    });
+
+    subtopicContents.forEach(function(input) {
+        input.required = true;
+    });
             }
             function deleteSubtopic(button) {
             var subtopicContainer = button.parentElement;
