@@ -91,12 +91,13 @@
         </section>
 
         <div th:if="${#lists.isEmpty(contentList)}">
+            <!-- Handle empty content list -->
         </div>
         <div th:if="${!#lists.isEmpty(contentList)}">
             <section id="displayed-blogs">
                 <div class="blog-container">
-                    <div class="articles-list">
-                        <div th:each="article : ${contentList}" class="blog-item">
+                    <div th:each="article : ${contentList}" class="articles-list">
+                        <div class="blog-item">
                             <a th:href="@{'/content/viewContent/' + ${article.ID}}">
                                 <h2 class="blog-title" th:text="${article.TitleofArticle}"></h2>
                             </a>
@@ -104,9 +105,8 @@
                         </div>
                     </div>
                 </div>
-
+            </section>
         </div>
-        </section>
     </div>
 
     <!-- footer -->
