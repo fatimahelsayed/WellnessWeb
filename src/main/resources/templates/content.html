@@ -57,7 +57,7 @@
 		</div>
 
 
-		<blockquote>
+		<blockquote th:if="${not #strings.isEmpty(contentObj.quote)}">
 			<p th:text="${contentObj.quote}"></p>
 			<footer>- <cite th:text="${contentObj.authorOfQuote}"></cite></footer>
 		</blockquote>

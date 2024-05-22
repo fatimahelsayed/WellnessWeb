@@ -73,46 +73,69 @@
 </div>
 
 <header>
-    <form th:action="@{/blogs/addBlog}" th:object="${blogObj}" method="POST">
-        <div class="topic-problem">What topic is your blog related to?
-            <select name="illnessName" th:field="*{illnessName}">
+    <form th:action="@{/blogs/addBlog}" th:object="${blogObj}" method="POST" onsubmit="return validateForm()">
+        <div class="topic-problem">
+            What topic is your blog related to?
+            <select name="illnessName" th:field="*{illnessName}" required>
                 <option value="">Select an illness</option>
                 <option th:each="illness : ${illnesses}" th:value="${illness.name}" th:text="${illness.Name}"></option>
             </select>
-            
-</div>
-
-	<div class="blogs-container">
-		<input type="text" class="blog-title" placeholder="Enter Blog Title" th:field="*{TitleofBlog}">
-		
-	</div>
-
-
-
-<article class="blogs-container">
-    <input type="text" class="blogs-tw" placeholder="Add trigger warnings for readers before proceeding."
-    th:value="${blogObj.IntroofBlog}" th:name="IntroofBlog">
-
-     
-    <p class="publish-details" th:if="${customer != null}">
-        <small>By <em th:text="${customer.username}"></em>, 
-        <em th:text="${#dates.format(#dates.createNow(), 'MM/dd/yyyy')}"></em></small>
-    </p>
+        </div>
     
-
-    <textarea class="blogs-content" placeholder="Enter the content of your first blog here..." 
-    th:field="*{ContentofBlog}" 
-    style="width: 850px; height: 400px;" 
-    rows="40" cols="80"></textarea>
-
-
-        <button type="submit" class="publish">Publish your blog</button>
-
- </article>
- 
+        <div class="blogs-container">
+            <input type="text" class="blog-title" placeholder="Enter Blog Title" th:field="*{TitleofBlog}" required maxlength="50">
+            <!-- Add 'required' attribute to make it mandatory and 'maxlength' to restrict to 50 characters -->
+        </div>
     
-</form>
-
+        <article class="blogs-container">
+            <input type="text" class="blogs-tw" placeholder="Add trigger warnings for readers before proceeding."
+                   th:value="${blogObj.IntroofBlog}" th:name="IntroofBlog" required maxlength="50">
+    
+            <p class="publish-details" th:if="${customer != null}">
+                <small>By <em th:text="${customer.username}"></em>,
+                    <em th:text="${#dates.format(#dates.createNow(), 'MM/dd/yyyy')}"></em></small>
+            </p>
+    
+            <textarea class="blogs-content" placeholder="Enter the content of your first blog here..."
+                      th:field="*{ContentofBlog}" style="width: 850px; height: 400px;"
+                      rows="40" cols="80" required minlength="50"></textarea>
+    
+            <button type="submit" class="publish">Publish your blog</button>
+        </article>
+    </form>
+    
+    <script>
+        function validateForm() {
+            var form = document.forms[0];
+            var illnessName = form.illnessName.value.trim();
+            var blogTitle = form.TitleofBlog.value.trim();
+            var introOfBlog = form.IntroofBlog.value.trim();
+            var contentOfBlog = form.ContentofBlog.value.trim();
+    
+            if (!illnessName || !blogTitle || !introOfBlog || !contentOfBlog) {
+                alert("All fields are mandatory.");
+                return false;
+            }
+    
+            if (blogTitle.length > 50) {
+                alert("Blog title should not exceed 50 characters.");
+                return false;
+            }
+    
+            if (introOfBlog.length > 50) {
+                alert("Trigger warnings should not exceed 50 characters.");
+                return false;
+            }
+    
+            if (contentOfBlog.length < 50) {
+                alert("Content of blog should contain at least 50 characters.");
+                return false;
+            }
+    
+            return true;
+        }
+    </script>
+    
 </header>
 
 

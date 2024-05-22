@@ -74,10 +74,12 @@
         th:object="${articleObj}"
         method="POST"
         enctype="multipart/form-data"
+        
+
       >
         <div class="topic-problem">
           What topic is your article related to?
-          <select name="illnessName" th:field="*{illnessName}">
+          <select name="illnessName" th:field="*{illnessName}" required>
             <option value="">Select an illness</option>
             <option
               th:each="illness : ${illnesses}"
@@ -93,6 +95,8 @@
             class="blog-title"
             placeholder="Enter Article Title"
             th:field="*{TitleofArticle}"
+            id="title"
+            required         
           />
         </div>
 
@@ -102,7 +106,11 @@
             placeholder="Add a short introduction to your article"
             th:field="*{IntroofArticle}"
             style="width: 600px; height: 200px"
-          ></textarea>
+            required 
+            maxlength="400"
+            minlength="50"
+          >
+        </textarea>
 
           <p class="publish-details">
             <small
@@ -118,6 +126,9 @@
             placeholder="Enter the content of your article here..."
             th:field="*{ContentofArticle}"
             style="width: 850px; height: 400px"
+            required 
+            maxlength="5000"
+            minlength="50"
           ></textarea>
 
           <div id="subtopics-container">
@@ -136,13 +147,15 @@
 
               newSubtopicDiv.innerHTML = `
         <div>
-            <input type="text" name="subtopicTitles" class="subtopic-title" placeholder="Enter Subtopic Title" required />
+            <input type="text" name="subtopicTitles" class="subtopic-title" placeholder="Enter Subtopic Title" />
         </div>
         <div>
             <label for="subtopicContent" class="subtopic-title" style="font-size: 22px;">Subtopic Content:</label>
             <br>
-            <textarea name="subtopicContents" class="subtopic-content" style="width: 800px; height: 350px;" placeholder="Enter the content of your subtopic here..." required></textarea>
+            <textarea name="subtopicContents" class="subtopic-content" maxlength="3000" style="width: 800px; height: 350px;" placeholder="Enter the content of your subtopic here..."></textarea>
         </div>
+        <button type="button" class="publish" onclick="deleteSubtopic(this)">Delete Subtopic</button>
+
     `;
 
               var styleElement = document.createElement("style");
@@ -178,7 +191,23 @@
 
               // Append the newSubtopicDiv to the subtopics-container
               subtopicContainer.appendChild(newSubtopicDiv);
+
+              var subtopicTitles = document.querySelectorAll('input[name="subtopicTitles"]');
+    var subtopicContents = document.querySelectorAll('textarea[name="subtopicContents"]');
+
+    // Loop through each subtopic input and set the required attribute
+    subtopicTitles.forEach(function(input) {
+        input.required = true;
+    });
+
+    subtopicContents.forEach(function(input) {
+        input.required = true;
+    });
             }
+            function deleteSubtopic(button) {
+            var subtopicContainer = button.parentElement;
+            subtopicContainer.remove();
+          }
           </script>
 
           <br />
@@ -189,13 +218,15 @@
               th:field="*{quote}"
               placeholder="Enter the quote"
               style="width: 600px; height: 70px"
+              maxlength="100"
             ></textarea>
             <br />
             <input
               type="text"
               th:name="author"
               th:field="*{authorOfQuote}"
-              placeholder="Author of quote"
+              placeholder="Author of quote" 
+              maxlength="50"
             />
           </blockquote>
 
@@ -205,6 +236,7 @@
             name="file"
             accept="image/*"
             class="file-upload-label"
+            required
           />
           <br />
           <button type="submit" class="publish">Publish your article</button>

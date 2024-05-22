@@ -60,8 +60,8 @@ public class BlogController {
         blogObj.setUserID(loggedInUser.getID());
         blogsRepository.save(blogObj);
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/home");
-        return modelAndView;
+        modelAndView.setViewName("redirect:/profile/publishedBlogs");
+        return new ModelAndView("redirect:/profile/publishedBlogs");
     }
 
     @GetMapping("viewblog/{id}")

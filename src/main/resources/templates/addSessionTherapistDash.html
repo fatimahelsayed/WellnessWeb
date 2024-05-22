@@ -19,25 +19,27 @@
         <div class="container-fluid pt-3">
             <div class="row removable">
                 <div class="col-lg">
-                    <form th:action="@{/therapistdashboard/addsession}" th:object="${newSession}" method="post" class="user-form">
+                    <form id="sessionForm" th:action="@{/therapistdashboard/addsession}" th:object="${newSession}" method="post" class="user-form">
                         <h1>Add a Session</h1>
                         <br>
                         <label for="Date">Date</label>
-                        <input name="Date" type="date"  th:field="*{date}">
+                        <input id="date" name="Date" type="date"  th:field="*{date}">
                         <br>
                         <br>
                         <label for="StartTime">From</label>
-                        <input name="StartTime" type="time" th:field="*{startTime}">
+                        <input id="startTime" name="StartTime" type="time" th:field="*{startTime}">
                         <label for="EndTime">To</label>
                         <input name="EndTime" type="time" th:field="*{endTime}">
                         <br>
                         <br>
-                        <button class="btn btn-add-form" type="submit">Add Session</button>
+                        <button id="endTime" class="btn btn-add-form" type="button" onclick="validateAndSubmitForm()">Add Session</button>
+                        <p class="error-message"></p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    <script th:src="@{/js/addSessionValidation.js}"></script>
     <script
         src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/jquery.min.js"></script>
     <script

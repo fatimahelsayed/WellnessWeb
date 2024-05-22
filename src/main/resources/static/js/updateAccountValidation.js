@@ -42,23 +42,23 @@ function validatePasswordForm() {
   // Validate password
   if (password === "") {
     document.getElementById("password-error").innerText =
-      "Please enter your password";
+      "Please enter your old password";
     i = false;
   }
   
   if (newpass === "") {
     document.getElementById("new-pass-error").innerText =
-      "Please enter your password";
+      "Please enter your new password";
     i = false;
   }
   if (confrimpass === "") {
     document.getElementById("confirmed-pass-error").innerText =
-      "Please enter your password";
+      "Please confirm your new password";
     i = false;
   }
   if (confrimpass !== newpass) {
     document.getElementById("confirmed-pass-error").innerText =
-      "New password has to match old password";
+      "The passwords don't match";
     i = false;
   }
 
